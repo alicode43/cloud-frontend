@@ -1,0 +1,386 @@
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #454343;
+            color: #6aa8e7;
+            line-height: 1.6;
+        }
+        
+        header {
+            width: 100%;
+            background-color:#6aa8e7;
+            padding: 0 20px;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 24px;
+            color: #fff;
+        }
+        
+        .logo-circle {
+            width: 40px;
+            height: 40px;
+            background: #34d4e6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-login {
+            background: transparent;
+            border: 2px solid #474849;
+            color: #e9edf0;
+        }
+        
+        .btn-login:hover {
+            background: #2d2b5a;
+            color: #fff;
+        }
+        
+        .btn-signup {
+            background: #2d2b5a;
+            border: none;
+            color: #fff;
+        }
+        
+        .btn-signup:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: #3494E6;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 1100px;
+            margin: 0 auto 30px;
+            color: #454343;
+        }
+        
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .btn-primary {
+            background: #3494E6;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 30px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            padding: 12px 30px;
+            border: 2px solid #3494E6;
+            border-radius: 30px;
+            color: #3494E6;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(52, 148, 230, 0.1);
+        }
+        
+      
+        
+        /* Salesforce Consulting Section */
+        .container-salesforce {
+            padding: 80px 0;
+        }
+        
+        .container-salesforce h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
+        .container-salesforce p {
+            text-align: center;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            color: #d0d0d0;
+        }
+        
+        .services {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+           
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .service {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .service:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .service h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #00a1e0;
+        }
+        
+        .why-us {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 50px;
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+        
+        .why-us h3 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+        
+        .why-us > p {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            font-size: 1.1rem;
+            color: #d0d0d0;
+        }
+        
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .benefit {
+            background: rgba(0, 161, 224, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid #00a1e0;
+            transition: transform 0.3s ease;
+        }
+        
+        .benefit:hover {
+            transform: translateY(-5px);
+        }
+        
+        .benefit h4 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #00a1e0;
+        }
+        
+        /* Departments Section */
+        .departments {
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .departments h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
+        .departments p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            color: #d0d0d0;
+        }
+        
+        .department-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        
+        .department {
+            background: rgba(255, 255, 255, 0.05);
+            width: 250px;
+            padding: 30px 20px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .department:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .department i {
+            font-size: 3rem;
+            color: #3494E6;
+            margin-bottom: 20px;
+        }
+        
+        .department h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 60px 0 30px;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
+        .footer-section p {
+            color: #d0d0d0;
+            margin-bottom: 15px;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section ul li a {
+            color: #d0d0d0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section ul li a:hover {
+            color: #3494E6;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #a0a0a0;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
+            
+            .about-content,
+            .services,
+            .benefits,
+            .department-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .about-card,
+            .service,
+            .benefit,
+            .department {
+                min-width: 100%;
+            }
+            
+            .why-us {
+                padding: 30px 20px;
+            }
+        }
