@@ -6,14 +6,17 @@
         }
         
         body {
-            background-color: #454343;
+            margin: 0;;
+            background-color: #e1dcdc;
             color: #6aa8e7;
             line-height: 1.6;
         }
         
         header {
+            position: sticky;
+            top: 0;
             width: 100%;
-            background-color:#6aa8e7;
+            background-color:#ecf1f3;
             padding: 0 20px;
         }
         
@@ -31,14 +34,16 @@
             gap: 10px;
             font-weight: 700;
             font-size: 24px;
-            color: #fff;
+            color: #25a5bc;
         }
         
         .logo-circle {
             width: 40px;
             height: 40px;
-            background: #34d4e6;
+            background: #134d79dd;
+            color: #e8e8e9;
             border-radius: 50%;
+            font-family:serif;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -60,7 +65,7 @@
         .btn-login {
             background: transparent;
             border: 2px solid #474849;
-            color: #e9edf0;
+            color: #128ce9;
         }
         
         .btn-login:hover {
@@ -79,23 +84,25 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
         
-        /* Hero Section */
+        
         .hero {
             padding: 80px 0;
             text-align: center;
+            background-color: rgb(27, 27, 108);
         }
         
         .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
+            font-size: 4rem;
+            margin-bottom: 10px;
             color: #3494E6;
+            text-shadow: 2px 2px 4px rgba(154, 133, 133, 0.418); 
         }
         
         .hero p {
             font-size: 1.2rem;
             max-width: 1100px;
             margin: 0 auto 30px;
-            color: #454343;
+            color: #faf6f6;
         }
         
         .hero-content {
@@ -157,24 +164,26 @@
             text-align: center;
             font-size: 2.5rem;
             margin-bottom: 20px;
-            color: #fff;
+            color: #5a5757;
         }
+      .container-salesforce h3{
+        text-align: center;
+      }
         
         .container-salesforce p {
             text-align: center;
             font-size: 1.2rem;
             max-width: 800px;
             margin: 0 auto 50px;
-            color: #d0d0d0;
+            color: #727070;
         }
         
         .services {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-           
-            gap: 30px;
-            margin-bottom: 60px;
+            margin-left: 80px; 
+             display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+             max-width: 90%;
         }
         
         .service {
@@ -184,6 +193,7 @@
             padding: 30px;
             border-radius: 15px;
             transition: all 0.3s ease;
+            box-shadow: 0 0 10px 0;
         }
         
         .service:hover {
@@ -208,7 +218,7 @@
             text-align: center;
             font-size: 2rem;
             margin-bottom: 30px;
-            color: #fff;
+            color: #615f5f;
         }
         
         .why-us > p {
@@ -216,12 +226,12 @@
             max-width: 800px;
             margin: 0 auto 40px;
             font-size: 1.1rem;
-            color: #d0d0d0;
+            color: #355e6f;
         }
         
         .benefits {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             gap: 30px;
         }
         
@@ -252,14 +262,14 @@
         .departments h2 {
             font-size: 2.5rem;
             margin-bottom: 20px;
-            color: #fff;
+            color: #5a5858;
         }
         
         .departments p {
             font-size: 1.2rem;
             max-width: 800px;
             margin: 0 auto 50px;
-            color: #d0d0d0;
+            color: #355e6f;
         }
         
         .department-cards {
@@ -267,10 +277,11 @@
             flex-wrap: wrap;
             gap: 30px;
             justify-content: center;
+            
         }
         
         .department {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(152, 211, 222, 0.609);
             width: 250px;
             padding: 30px 20px;
             border-radius: 15px;
@@ -298,15 +309,17 @@
         
         /* Footer */
         footer {
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.635);
             padding: 60px 0 30px;
             margin-top: 40px;
+            justify-content: center;
+            display: flex;
         }
         
         .footer-content {
             display: flex;
             flex-wrap: wrap;
-            gap: 40px;
+            gap: 100px;
             margin-bottom: 40px;
         }
         
