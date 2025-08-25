@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <link rel="stylesheet" href="signup.css">
+</head>
+
+<body>
+    <div class="signup-container">
+        <h2>Create Account</h2>
+        <form id="signupForm">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" placeholder="Enter username" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" placeholder="Enter password" required>
+            </div>
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <input type="password" placeholder="Confirm password" required>
+            </div>
+
+            <!-- Captcha Section -->
+            <div class="form-group captcha-box">
+                <span id="captcha-text"></span>
+                <button type="button" onclick="generateCaptcha()">↻</button>
+            </div>
+            <!-- <div class="form-group">
+                <label>Enter Captcha</label>
+                <input type="text" id="captcha-input" placeholder="Type here" required>
+            </div> -->
+
+            <button type="submit" class="signup-btn">Sign Up</button>
+        </form>
+        <!-- attached login page -->
+        <div class="extra-links">
+            <a href="login.html">Already have an account? Login</a>
+        </div>
+    </div>
+
+    <script>
+        // Generate random captcha
+        function generateCaptcha() {
+            const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+            let captcha = "";
+            for (let i = 0; i < 5; i++) {
+                captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById("captcha-text").textContent = captcha;
+        }
+
+        // Call once when page loads
+        generateCaptcha();
+    </script>
+</body>
+
+</html>
