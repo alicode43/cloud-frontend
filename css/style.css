@@ -625,7 +625,7 @@
 
         /* Footer */
         .footer {
-            background: var(--primary);
+            background: rgb(49, 48, 48);
             color: white;
             padding: 2rem 0;
         }
