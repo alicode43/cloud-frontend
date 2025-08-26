@@ -1,6 +1,6 @@
-/*  *//* CSS Variables */
+/* CSS Variables */
    :root {
-            --font-size: 14px;
+            --font-size: 20px;
             --background: #ffffff;
             --foreground: #27AADC;
             --card: #ffffff;
@@ -28,7 +28,7 @@
 }
 
 body {
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family:Arial, Helvetica, sans-serif;
     font-size: var(--font-size);
     background: var(--background);
     color: var(--foreground);
