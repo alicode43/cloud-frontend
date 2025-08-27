@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salesforce Learning Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navigation">
+        <div class="nav-container">
+            <div class="nav-left">
+                <!-- User Profile -->
+                <div class="user-profile">
+                    <div class="avatar">
+                        <img id="smallImage"alt="User Avatar" class="avatar-image">
+                        <div class="avatar-fallback">JD</div>
+                    </div>
+                    <div class="user-info">
+                        <p class="user-name" id="smallName">Cloud Odyssey</p>
+                        <p class="user-role" id="smallCourse">Course</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Menu -->
+                <div class="nav-menu">
+                    <div class="dropdown">
+                        <button class="nav-button dropdown-trigger" id="dashboardDropdown">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 3v5h5V3zM16 3v5h5V3zM16 16v5h5v-5zM3 16v5h5v-5z"/>
+                            </svg>
+                            <span>Dashboard</span>
+                            <svg class="icon chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="m6 9 6 6 6-6"/>
+                            </svg>
+                        </button>
+                        <div class="dropdown-content" id="dashboardDropdownContent">
+                            <div class="dropdown-item" >
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 3v5h5V3zM16 3v5h5V3zM16 16v5h5v-5zM3 16v5h5v-5z"/>
+                                </svg>
+                                <a href="#section1" class="nav-element">Analytics</a>
+                            </div>
+                            <div class="dropdown-item">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                                </svg>
+                                <a href="#section2" class="nav-element">Progress</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="nav-button">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                        </svg>
+                        <span>Materials</span>
+                    </button>
+
+                    <button class="nav-button">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                            <path d="m5 5 4 4"/>
+                        </svg>
+                        <span>Quizzes</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="nav-right">
+                <button class="profile-button" data-toggle="modal" data-target="#pageModal">View Profile</button>
+            </div>
+        </div>
+    </nav>
+    <!-- profile content -->
+<!-- Bootstrap Modal -->
+            <div class="modal fade" id="pageModal" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"></h5>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span>&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body p-0">
+                            <iframe src="pop.html" width="100%" height="500px" style="border:0;"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+
+        <!-- Analytics Section -->
+        <section class="analytics-section">
+        <div id="section1">
+            <div class="section-header">
+                <h2>Learning Analytics</h2>
+                <p>Track your learning progress and achievements</p>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3>Courses Completed</h3>
+                        <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value">12</div>
+                        <p class="stat-description">Out of 15 enrolled</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 80%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3>Quiz Score</h3>
+                        <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <circle cx="12" cy="12" r="6"/>
+                            <circle cx="12" cy="12" r="2"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value">94%</div>
+                        <p class="stat-description">Average score</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 94%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3>Learning Streak</h3>
+                        <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value">12</div>
+                        <p class="stat-description">Days consecutive</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 86%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity Grid -->
+            <div class="activity-grid">
+                <div class="activity-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polygon points="10,8 16,12 10,16 10,8"/>
+                            </svg>
+                            Last Studied Topic
+                        </h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="topic-info">
+                            <div class="topic-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                                </svg>
+                            </div>
+                            <div class="topic-details">
+                                <h4>Salesforce Marketing Cloud - Email Studio</h4>
+                                <p>Advanced email automation and journey builder concepts</p>
+                                <div class="topic-meta">
+                                    <span class="badge">Chapter 4</span>
+                                    <span class="progress-text">Progress: 67%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 67%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="continue-button">Continue Learning</button>
+                    </div>
+                </div>
+
+                <div class="activity-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Weekly Progress</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="weekly-progress">
+                            <div class="day-progress">
+                                <span>Monday</span>
+                                <div class="progress-bar small">
+                                    <div class="progress-fill" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <div class="day-progress">
+                                <span>Tuesday</span>
+                                <div class="progress-bar small">
+                                    <div class="progress-fill" style="width: 75%"></div>
+                                </div>
+                            </div>
+                            <div class="day-progress">
+                                <span>Wednesday</span>
+                                <div class="progress-bar small">
+                                    <div class="progress-fill" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="day-progress">
+                                <span>Thursday</span>
+                                <div class="progress-bar small">
+                                    <div class="progress-fill" style="width: 60%"></div>
+                                </div>
+                            </div>
+                            <div class="day-progress">
+                                <span>Friday</span>
+                                <div class="progress-bar small">
+                                    <div class="progress-fill" style="width: 95%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="weekly-total">Total: 8.5 hours this week</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </section>
+
+
+
+        <!-- Training Courses Section -->
+        <section class="courses-section">
+            <div id="section2">
+            <div class="section-header">
+                <h2>Training Courses</h2>
+                <p>Comprehensive Salesforce training programs to advance your career</p>
+            </div>
+
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-image" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=200&fit=crop')">
+                        <div class="course-overlay">
+                            <span class="level-badge intermediate">Intermediate</span>
+                        </div>
+                    </div>
+                    <div class="course-content">
+                        <h3>Salesforce Marketing Cloud (SFMC)</h3>
+                        <p>Master email marketing, automation, and customer journey management with Marketing Cloud</p>
+                        
+                        <div class="course-meta">
+                            <div class="meta-item">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12,6 12,12 16,14"/>
+                                </svg>
+                                <span>45 hours</span>
+                            </div>
+                        </div>
+
+                        <div class="course-progress">
+                            <div class="progress-header">
+                                <span>Progress</span>
+                                <span>8/12 modules</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 67%"></div>
+                            </div>
+                            <p class="progress-text">67% complete</p>
+                        </div>
+
+                        <div class="course-actions">
+                            <button class="primary-button">Continue</button>
+                            <button class="icon-button">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+ 
+            </div>
+        </div>
+        </section>
+
+        <!-- Training Heads Section -->
+
+    </main>
+
+    <script src="script.js"></script>
+
+    <script>
+// Get saved object from localStorage
+        const savedData = JSON.parse(localStorage.getItem("studentProfile"));
+
+        if (savedData) {
+            if (savedData.profileImage) {
+                document.getElementById("smallImage").src = savedData.profileImage;
+            }
+        }
+    </script>
+
+</body>
+</html>

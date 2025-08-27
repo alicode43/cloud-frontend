@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: none;
+    }
+    .profile-bg {
+      padding:20px;
+      background-color:#B0E0E6;
+    }
+    .page-title {
+      color:black;
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+    .subtitle {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .profile-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px #0001;
+      padding: 20px;
+      text-align: center;
+    }
+    .profile-image img {
+      width: 110px;
+      height: 110px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid #8bc3fa;
+      margin-bottom: 15px;
+    }
+    .student-name {
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin-bottom: 15px;
+      color: #272525;
+    }
+    .basic-info div {
+      margin-bottom: 5px;
+      font-size: 0.95rem;
+    }
+    .basic-info span {
+      font-weight: 500;
+      color: #333;
+    }
+    .info-box {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 3px 18px #0001;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+    .info-box h4 {
+      font-size: 1rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #232b39;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .icon {
+      color: #4439e1;
+      font-size: 1.1rem;
+    }
+    .info-table td {
+      padding: 4px 8px 4px 0;
+      font-size: 0.95rem;
+      color: #222;
+    }
+    .info-table td:nth-child(2) {
+      width: 12px;
+      text-align: center;
+    }
+    .info-box p {
+      margin: 0;
+      color: #555;
+      font-size: 0.9rem;
+    }
+    .basic-info-table{
+        display: flex;
+        justify-content: center;
+    }
+    .card-back{
+    background-color: rgba(173, 216, 230, 0.3) transparent; /* Light blue transparent */
+    transition: background-color 0.4s ease;
+    margin:20px;
+}
+#profileImage {
+      width: 130px;
+    height: 130px;
+     border-radius: 50%;
+     object-fit: cover;
+    border: 3px solid #4cafef;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    }
+    #profileImage:hover {
+    transform: scale(1.05);
+    }
+    input[type="file"] {
+    display: none;
+    }
+    .card-headings{
+        font-weight: bold;
+    }
+    .update-personal-details{
+      position:absolute;
+      top:10px;
+      right:10px
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-bg">
+    <div class="update-personal-details">
+      <button class="btn btn-tranparent text-center" data-toggle="modal" data-target="#personalDetailsModal2">
+      Update Details
+      </button>
+  </div>
+    <div class="container">
+      <h2 class="page-title">Student Profile</h2>
+      <div class="row">
+        <div class="col-md-5">
+          <div class="profile-card card-back">
+            <div class="profile-image">
+                    <img id="profileImage" src="https://img.freepik.com/premium-photo/happy-man-ai-generated-portrait-user-profile_1119669-1.jpg?w=2000" alt="Profile Picture">
+                    <input type="file" id="fileInput" accept="image/*">
+            </div>
+            <h3 class="student-name" id="cardName">Jayakumar gada</h3>
+             <table class="info-table basic-info-table">
+              <tr><td class="card-headings" id="cardEmp.id">Emp.Id</td><td>:</td><td>321000001</td></tr>
+              <tr><td class="card-headings" id="cardCourse">Course</td><td>:</td><td>SFMC</td></tr>
+            </table>
+            </div>
+        </div>
+        <div class="col-md-7">
+          <div class="info-box card-back">
+            <h4 class=card-headings><span class="icon">&#9745;</span> General Information</h4>
+            <table class="info-table">
+              <tr><td class="card-headings">Phone No</td><td>:</td><td id="cardPhone">9347909241</td></tr>
+              <tr><td class="card-headings">Email Id</td><td>:</td><td id="cardEmail">jayakumar934790@gmail.com</td></tr>
+              <tr><td class="card-headings">Gender</td><td>:</td><td id="cardGender">Male</td></tr>
+              <tr><td class="card-headings">Qualification</td><td>:</td><td id="cardQualification">B.tech</td></tr>
+              <tr><td class="card-headings">Skills</td><td>:</td><td id="cardSkills">HTML , java Script , CSS</td></tr>
+              <tr><td class="card-headings">Address</td><td>:</td><td id="cardAddress">Kakinada , Andhra Pradesh</td></tr>
+              <tr><td class="card-headings">D.O.B</td><td>:</td><td id="cardDob">01/08/2025</td></tr>
+            </table>
+          </div>
+          <!-- <div class="info-box card-back">
+            <h4 class="card-headings"><span class="icon">&#9745;</span> Other Information</h4>
+            <p>
+              I also want to assure you that I am completely flexible and ready to meet all the requirements of the role, including signing the 2-year bond and working night shifts if needed. I see this opportunity as a platform to grow my skills and contribute to the company’s success. I am confident that my dedication and adaptability will help me exceed expectations in this role.
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- this is another form........................................................................ -->
+   <style>
+    .modal-content {
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    }
+    .modal-header {
+      background:#B0E0E6;
+      color: white;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+    .form-control {
+      border-radius: 8px;
+    }
+   </style>
+   <!-- Modal -->
+<div class="modal fade" id="personalDetailsModal2" tabindex="-1" aria-labelledby="personalDetailsLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="personalDetailsLabel">Personal Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <form>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="fullname">Full Name</label>
+              <input type="text" id="fullname" class="form-control" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="EmpId">Emp.Id</label>
+              <input type="tel" id="EmpId" class="form-control" pattern="[0-9]{10}" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="Course">Course</label>
+              <input type="text" id="Course" class="form-control" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" class="form-control" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" class="form-control" pattern="[0-9]{10}" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="dob">Date of Birth</label>
+              <input type="date" id="dob" class="form-control" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="Qualification">Qualification</label>
+              <input type="text" id="Qualification" class="form-control" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="Gender">Gender</label>
+              <input type="text" id="Gender" class="form-control" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="Skills">Skills</label>
+              <input type="text" id="Skills" class="form-control" required>
+            </div>
+            <div class="form-group col-md-12">
+              <label for="Address">Address</label>
+              <input type="text" id="Address" class="form-control" required>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="mt-4">
+            <button type="submit" class="btn btn-info">Submit</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+  <script>
+    const profileImage = document.getElementById("profileImage");
+    const fileInput = document.getElementById("fileInput");
+
+    profileImage.addEventListener("click", () => {
+        fileInput.click();
+    });
+    fileInput.addEventListener("change", () => {
+        const file = fileInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                profileImage.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+            document.addEventListener("DOMContentLoaded", () => {
+            const fieldMap = {
+                fullname: "cardName",
+                EmpId: "cardEmp.id",
+                Course: "cardCourse",
+                email: "cardEmail",
+                phone: "cardPhone",
+                dob: "cardDob",
+                Qualification: "cardQualification",
+                Gender: "cardGender",
+                Skills: "cardSkills",
+                Address: "cardAddress"
+            };
+
+            const profileImage = document.getElementById("profileImage");
+            const fileInput = document.getElementById("fileInput");
+
+            // Load saved profile data
+            const savedData = JSON.parse(localStorage.getItem("studentProfile"));
+            if (savedData) {
+                for (let inputId in savedData) {
+                    if (inputId !== "profileImage") { 
+                        const profileElement = document.getElementById(fieldMap[inputId]);
+                        if (profileElement) profileElement.textContent = savedData[inputId];
+                        const formInput = document.getElementById(inputId);
+                        if (formInput) formInput.value = savedData[inputId];
+                    }
+                }
+
+                // Load saved profile picture
+                if (savedData.profileImage) {
+                    profileImage.src = savedData.profileImage;
+                }
+            }
+
+            // Handle profile image upload
+            profileImage.addEventListener("click", () => fileInput.click());
+            fileInput.addEventListener("change", () => {
+                const file = fileInput.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        profileImage.src = e.target.result;
+
+                        // Save updated image in localStorage along with other data
+                        let currentData = JSON.parse(localStorage.getItem("studentProfile")) || {};
+                        currentData.profileImage = e.target.result;
+                        localStorage.setItem("studentProfile", JSON.stringify(currentData));
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Handle form submission
+            document.querySelector("#personalDetailsModal2 form").addEventListener("submit", (e) => {
+                e.preventDefault();
+
+                let formData = JSON.parse(localStorage.getItem("studentProfile")) || {};
+                for (let inputId in fieldMap) {
+                    const value = document.getElementById(inputId).value.trim();
+                    formData[inputId] = value;
+                    const profileElement = document.getElementById(fieldMap[inputId]);
+                    if (profileElement) profileElement.textContent = value;
+                }
+
+                // Save profile image if exists
+                if (!formData.profileImage) {
+                    formData.profileImage = profileImage.src;
+                }
+
+                localStorage.setItem("studentProfile", JSON.stringify(formData));
+                $('#personalDetailsModal2').modal('hide');
+            });
+        });
+    </script>
+  </body>
+</html>
