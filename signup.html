@@ -12,28 +12,32 @@
     <div class="signup-container">
         <h2>Create Account</h2>
         <form id="signupForm">
+            <!--username  -->
             <div class="form-group">
                 <label>Username</label>
-                <input type="text" placeholder="Enter username" required>
+                <input type="text" id="username" placeholder="Enter username" required>
+                <div class="error" id="usernameError"></div>
             </div>
+            <!-- email -->
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="email" placeholder="Enter email" required>
+                <div class="error" id="emailError"></div>
+            </div>
+            <!-- password -->
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" placeholder="Enter password" required>
+                <input type="password" id="password" placeholder="Enter password" required>
+                <div class="error" id="passwordError"></div>
+                <!-- added class to check strength -->
+                <div class="strength" id="passwordStrength"></div>
             </div>
+            <!-- confirm password -->
             <div class="form-group">
                 <label>Confirm Password</label>
-                <input type="password" placeholder="Confirm password" required>
+                <input type="password" id="confirmPassword" placeholder="Confirm password" required>
+                <div class="error" id="confirmPasswordError"></div>
             </div>
-
-            <!-- Captcha Section -->
-            <div class="form-group captcha-box">
-                <span id="captcha-text"></span>
-                <button type="button" onclick="generateCaptcha()">↻</button>
-            </div>
-            <!-- <div class="form-group">
-                <label>Enter Captcha</label>
-                <input type="text" id="captcha-input" placeholder="Type here" required>
-            </div> -->
 
             <button type="submit" class="signup-btn">Sign Up</button>
         </form>
@@ -44,18 +48,108 @@
     </div>
 
     <script>
-        // Generate random captcha
-        function generateCaptcha() {
-            const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-            let captcha = "";
-            for (let i = 0; i < 5; i++) {
-                captcha += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            document.getElementById("captcha-text").textContent = captcha;
-        }
+        //for username
 
-        // Call once when page loads
-        generateCaptcha();
+        document.getElementById("username").addEventListener("input", function () {
+            let username = this.value.trim();
+            let errorMsg = "";
+
+            // Check if first letter is capital
+            if (username.length > 0 && username[0] !== username[0].toUpperCase()) {
+                errorMsg = "First letter must be capital.";
+            }
+            // Check if only letters (no numbers/special characters)
+            else if (!/^[A-Za-z]*$/.test(username)) {
+                errorMsg = "Username can only contain letters (no numbers or symbols).";
+            }
+
+            document.getElementById("usernameError").textContent = errorMsg;
+        });
+
+        //for email
+
+        document.getElementById("email").addEventListener("input", function () {
+            let email = this.value.trim();
+            let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  // standard email format
+            let errorMsg = "";
+
+            if (email !== "" && !emailRegex.test(email)) {
+                errorMsg = "Please enter a valid email address.";
+            }
+
+            document.getElementById("emailError").textContent = errorMsg;
+        });
+        //for pw
+
+        document.getElementById("password").addEventListener("input", function () {
+            let password = this.value;
+            let errorMsg = "";
+
+            // Regex for strong password: at least 8 chars, 1 uppercase, 1 number, 1 special char
+            let strongRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+            if (password === "") {
+                errorMsg = "Password cannot be empty.";
+            } else if (!strongRegex.test(password)) {
+                errorMsg = "Password must be at least 8 characters, include 1 uppercase, 1 number, and 1 special character.";
+            } else {
+                errorMsg = ""; // ✅ No message if password is valid
+            }
+
+            document.getElementById("passwordError").textContent = errorMsg;
+        });
+
+
+        //for cfm pw
+        document.getElementById("confirmPassword").addEventListener("input", function () {
+            let confirmPassword = this.value;
+            let password = document.getElementById("password").value;
+            let errorMsg = "";
+
+            if (confirmPassword === "") {
+                errorMsg = "Confirm Password cannot be empty.";
+            } else {
+                errorMsg = ""; // ✅ No success message, just clear error
+            }
+
+            document.getElementById("confirmPasswordError").textContent = errorMsg;
+        });
+
+
+
+
+
+        // form submission validation
+        document.getElementById("signupForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // stop form from submitting by default
+
+            let username = document.getElementById("username").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("password").value;
+            let confirmPassword = document.getElementById("confirmPassword").value;
+
+            let usernameError = document.getElementById("usernameError").textContent;
+            let emailError = document.getElementById("emailError").textContent;
+            let passwordError = document.getElementById("passwordError").textContent;
+            let confirmPasswordError = document.getElementById("confirmPasswordError").textContent;
+
+            // Check if any field has an error or is empty
+            if (
+                username === "" || email === "" || password === "" || confirmPassword === "" ||
+                usernameError !== "" || emailError !== "" || passwordError !== "" || confirmPasswordError !== "" ||
+                password !== confirmPassword   // ✅ check directly if passwords don’t match
+            ) {
+                alert("Please fix all errors before submitting.");
+                return; // stop submission
+            }
+
+            // If everything is correct
+            alert("✅ Account created successfully!");
+            this.reset(); // clear the form
+        });
+
+
+
     </script>
 </body>
 
