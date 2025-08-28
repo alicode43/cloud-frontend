@@ -255,9 +255,20 @@ p {
 }
 
 .text-primary {
-    color: rgb(37, 37, 37);
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+font-size: clamp(16px, 2vw, 22px);
+  font-weight: 700;
+  margin: 0;
+
+  /* Gradient text */
+  background: linear-gradient(90deg, #262727, #00c6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* For Firefox */
+  background-clip: text;
+  color: transparent;
 }
+
 
 .text-gray-600 {
     color: #6b7280;
