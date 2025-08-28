@@ -1,12 +1,11 @@
-        
-            // Mobile menu toggle
-            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-            const navLinks = document.querySelector('.nav-links');
-            
-            mobileMenuBtn.addEventListener('click', function() {
-                navLinks.classList.toggle('active');
-                mobileMenuBtn.classList.toggle('active');
-            });
+// Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', function () {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.classList.toggle('active');
+        });
 
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -18,10 +17,8 @@
                         behavior: 'smooth',
                         block: 'start'
                     });
-                    
+
                     // Close mobile menu if open
-                    const navLinks = document.querySelector('.nav-links');
-                    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
                     if (navLinks.classList.contains('active')) {
                         navLinks.classList.remove('active');
                         mobileMenuBtn.classList.remove('active');
@@ -46,7 +43,7 @@
         }, observerOptions);
 
         // Observe elements for scroll animations
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const animatedElements = document.querySelectorAll('.feature-card, .department-card, .section-header');
             animatedElements.forEach(el => {
                 el.style.opacity = '0';
@@ -57,15 +54,198 @@
         });
 
         // Add loading fallback for images
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const images = document.querySelectorAll('img');
             images.forEach(img => {
-                img.addEventListener('error', function() {
+                img.addEventListener('error', function () {
                     this.style.backgroundColor = '#f3f4f6';
                     this.style.display = 'flex';
                     this.style.alignItems = 'center';
                     this.style.justifyContent = 'center';
                     this.alt = 'Image not available';
                 });
+            });
+        });
+
+        // Modal functionality
+        const loginBtn = document.getElementById('loginBtn');
+        const loginModal = document.getElementById('loginModal');
+        const signupModal = document.getElementById('signupModal');
+        const switchToSignup = document.getElementById('switchToSignup');
+        const switchToLogin = document.getElementById('switchToLogin');
+        const closeButtons = document.querySelectorAll('.modal-close');
+
+        // Open login modal
+        loginBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            loginModal.classList.add('active');
+        });
+
+        // Switch to signup modal
+        switchToSignup.addEventListener('click', function () {
+            loginModal.classList.remove('active');
+            signupModal.classList.add('active');
+        });
+
+        // Switch to login modal
+        switchToLogin.addEventListener('click', function () {
+            signupModal.classList.remove('active');
+            loginModal.classList.add('active');
+        });
+
+        // Close modals
+        closeButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                loginModal.classList.remove('active');
+                signupModal.classList.remove('active');
+            });
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function (e) {
+            if (e.target === loginModal) {
+                loginModal.classList.remove('active');
+            }
+            if (e.target === signupModal) {
+                signupModal.classList.remove('active');
+            }
+        });
+
+        // ✅ Validation for Login Form
+        function validateLogin(event) {
+            event.preventDefault();
+
+            let email = document.getElementById("loginEmail").value.trim();
+            let password = document.getElementById("loginPassword").value.trim();
+            let emailError = document.getElementById("loginEmailError");
+            let passwordError = document.getElementById("loginPasswordError");
+
+            let isValid = true;
+
+            // Reset errors
+            emailError.textContent = "";
+            passwordError.textContent = "";
+
+            // Email validation
+            if (email === "") {
+                emailError.textContent = "Email cannot be empty.";
+                isValid = false;
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                emailError.textContent = "Enter a valid email address.";
+                isValid = false;
+            }
+
+            // Password validation
+            if (password === "") {
+                passwordError.textContent = "Password cannot be empty.";
+                isValid = false;
+            } else if (password.length < 6) {
+                passwordError.textContent = "Password must be at least 6 characters.";
+                isValid = false;
+            }
+
+            // If valid
+            if (isValid) {
+                alert("Login Successful ✅");
+                loginModal.classList.remove('active');
+            }
+        }
+
+        // Signup form validation
+        document.addEventListener('DOMContentLoaded', function () {
+            // Username validation
+            document.getElementById("username").addEventListener("input", function () {
+                let username = this.value.trim();
+                let errorMsg = "";
+
+                // Check if first letter is capital
+                if (username.length > 0 && username[0] !== username[0].toUpperCase()) {
+                    errorMsg = "First letter must be capital.";
+                }
+                // Check if only letters (no numbers/special characters)
+                else if (!/^[A-Za-z]*$/.test(username)) {
+                    errorMsg = "Username can only contain letters (no numbers or symbols).";
+                }
+
+                document.getElementById("usernameError").textContent = errorMsg;
+            });
+
+            // Email validation
+            document.getElementById("email").addEventListener("input", function () {
+                let email = this.value.trim();
+                let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  // standard email format
+                let errorMsg = "";
+
+                if (email !== "" && !emailRegex.test(email)) {
+                    errorMsg = "Please enter a valid email address.";
+                }
+
+                document.getElementById("emailError").textContent = errorMsg;
+            });
+
+            // Password validation
+            document.getElementById("password").addEventListener("input", function () {
+                let password = this.value;
+                let errorMsg = "";
+
+                // Regex for strong password: at least 8 chars, 1 uppercase, 1 number, 1 special char
+                let strongRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+                if (password === "") {
+                    errorMsg = "Password cannot be empty.";
+                } else if (!strongRegex.test(password)) {
+                    errorMsg = "Password must be at least 8 characters, include 1 uppercase, 1 number, and 1 special character.";
+                } else {
+                    errorMsg = ""; // ✅ No message if password is valid
+                }
+
+                document.getElementById("passwordError").textContent = errorMsg;
+            });
+
+            // Confirm password validation
+            document.getElementById("confirmPassword").addEventListener("input", function () {
+                let confirmPassword = this.value;
+                let password = document.getElementById("password").value;
+                let errorMsg = "";
+
+                if (confirmPassword === "") {
+                    errorMsg = "Confirm Password cannot be empty.";
+                } else if (confirmPassword !== password) {
+                    errorMsg = "Passwords do not match.";
+                } else {
+                    errorMsg = ""; // ✅ No success message, just clear error
+                }
+
+                document.getElementById("confirmPasswordError").textContent = errorMsg;
+            });
+
+            // Form submission validation
+            document.getElementById("signupForm").addEventListener("submit", function (event) {
+                event.preventDefault(); // stop form from submitting by default
+
+                let username = document.getElementById("username").value.trim();
+                let email = document.getElementById("email").value.trim();
+                let password = document.getElementById("password").value;
+                let confirmPassword = document.getElementById("confirmPassword").value;
+
+                let usernameError = document.getElementById("usernameError").textContent;
+                let emailError = document.getElementById("emailError").textContent;
+                let passwordError = document.getElementById("passwordError").textContent;
+                let confirmPasswordError = document.getElementById("confirmPasswordError").textContent;
+
+                // Check if any field has an error or is empty
+                if (
+                    username === "" || email === "" || password === "" || confirmPassword === "" ||
+                    usernameError !== "" || emailError !== "" || passwordError !== "" || confirmPasswordError !== "" ||
+                    password !== confirmPassword   // ✅ check directly if passwords don't match
+                ) {
+                    alert("Please fix all errors before submitting.");
+                    return; // stop submission
+                }
+
+                // If everything is correct
+                alert("✅ Account created successfully!");
+                this.reset(); // clear the form
+                signupModal.classList.remove('active');
             });
         });
