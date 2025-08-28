@@ -125,7 +125,8 @@
         .btn-primary:hover {
             background: var(--primary-dark);
         }
- /* Mobile Menu Toggle */
+        
+        /* Mobile Menu Toggle */
         .mobile-menu-toggle {
             display: none;
             flex-direction: column;
@@ -150,6 +151,24 @@
         }
 
         /* Mobile Navigation */
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-in-out;
+            z-index: 98;
+        }
+
+        .mobile-nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
         .mobile-nav {
             position: fixed;
             top: 0;
@@ -169,24 +188,6 @@
 
         .mobile-nav.active {
             right: 0;
-        }
-
-        .mobile-nav-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease-in-out;
-            z-index: 98;
-        }
-
-        .mobile-nav-overlay.active {
-            opacity: 1;
-            visibility: visible;
         }
 
         .mobile-nav-link {
@@ -245,13 +246,14 @@
             align-items: center;
             margin-left: 10px;
         }
-    i.fas.fa-history {
-    margin-right: 10px;
-}
+        
+        i.fas.fa-history {
+            margin-right: 10px;
+        }
 
- i.fas.fa-heart {
-    margin-right: 10px;
-}
+        i.fas.fa-heart {
+            margin-right: 10px;
+        }
 
         /* Bubble Categories */
         .bubble-categories {
@@ -601,7 +603,7 @@
             opacity: 0.9;
         }
 
- /* Responsive adjustments */
+        /* Responsive adjustments */
         @media (max-width: 968px) {
             .nav-links {
                 display: none;
@@ -698,6 +700,7 @@
                 transform: rotate(1turn);
             }
         }
+        
     </style>
 </head>
 <body>
@@ -717,8 +720,8 @@
 
                 <!-- Navigation Links -->
                 <div class="nav-links">
-                    <a href="#" class="nav-link">Home</a>
-                    <a href="#" class="nav-link">Courses</a>
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="courses.html" class="nav-link">Courses</a>
                 </div>
                  <!-- Mobile Menu Toggle -->
                 <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">
@@ -733,37 +736,20 @@
      <!-- Mobile Navigation -->
     <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
     <nav class="mobile-nav" id="mobileNav">
-        <a href="#" class="mobile-nav-link">
+        <a href="course.html" class="mobile-nav-link">
             <i class="fas fa-home"></i> Home
         </a>
-        <a href="#" class="mobile-nav-link">
+        <a href="course.html" class="mobile-nav-link">
             <i class="fas fa-book"></i> Courses
         </a>
-        <!-- <a href="#" class="mobile-nav-link">
-            <i class="fas fa-file-alt"></i> Resources
-        </a>
-        <a href="#" class="mobile-nav-link">
-            <i class="fas fa-video"></i> Video Gallery
-        </a>
-        <a href="#" class="mobile-nav-link">
-            <i class="fas fa-history"></i> History
-        </a>
-        <a href="#" class="mobile-nav-link">
-            <i class="fas fa-heart"></i> Favorites
-        </a>
-        
-        <div class="mobile-nav-account">
-            <a href="#" class="btn btn-primary" style="width: 100%; text-align: center;">
-                <i class="fas fa-user"></i> My Account
-            </a>
-        </div> -->
     </nav>
 
     <!-- Page Header -->
     <div class="container">
+       
         <div class="page-header">
-            <h1 class="page-title">Cloud Odyssey Video Gallery</h1>
-            <p class="page-subtitle">Explore our curated collection of training videos</p>
+            <h1 class="page-title" id="page-title">Cloud Odyssey Video Gallery</h1>
+            <p class="page-subtitle" id="page-subtitle">Explore our curated collection of training videos</p>
         </div>
     </div>
 
@@ -782,7 +768,7 @@
 
         <!-- Bubble Categories -->
         <div class="bubble-categories">
-            <div class="bubble-category active" data-category="javascript">
+            <div class="bubble-category" data-category="javascript">
                 <i class="fab fa-js-square"></i> JavaScript
             </div>
             <div class="bubble-category" data-category="html">
@@ -791,9 +777,7 @@
             <div class="bubble-category" data-category="react js">
                 <i class="fab fa-react"></i> React JS
             </div>
-            <div class="bubble-category" data-category="node">
-                <i class="fab fa-node-js"></i> Node.js
-            </div>
+           
             <div class="bubble-category" data-category="salesforce">
                 <i class="fas fa-cloud"></i> Salesforce
             </div>
@@ -862,7 +846,7 @@
     </div>
 
     <script>
-// Mobile menu functionality
+        // Mobile menu functionality
         const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
         const mobileNav = document.getElementById('mobileNav');
         const mobileNavOverlay = document.getElementById('mobileNavOverlay');
@@ -885,11 +869,9 @@
         });
 
         // API key and global variables
-      // const API_KEY = "AIzaSyAdbZki0nwZVRcjyRSosD6D8B-Kh3lPRU8";   //project 0 expired
-      // const API_KEY = "AIzaSyBkX6_OJJvgRAvWN1oYYOU4dq9zueS8gF4";    //project 1
+        //const API_KEY = "AIzaSyBkX6_OJJvgRAvWN1oYYOU4dq9zueS8gF4";
+        // const API_KEY = "AIzaSyBkX6_OJJvgRAvWN1oYYOU4dq9zueS8gF4";    //project 1
       //const API_KEY = "AIzaSyDTcv9gLihbaM4Wq5V1sYh6rbxTDX_aLUA";    //project 2
-
-
         let cachedPages = {};
         const maxVideosPerLoad = 12;
         let category = "javascript";
@@ -898,8 +880,38 @@
 
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
-            fetchVideos(0);
-            fetchChannels(category);
+    // Check if a specific category was selected from the courses page
+    const selectedCategory = localStorage.getItem('selectedCategory');
+    const selectedCourse = localStorage.getItem('selectedCourse');
+    
+    if (selectedCategory && selectedCourse) {
+        // Update the page title and subtitle
+        document.getElementById('page-title').textContent = `${selectedCourse} Videos`;
+        document.getElementById('page-subtitle').textContent = `Explore ${selectedCourse} training videos`;
+        
+        // Set the active category
+        category = selectedCategory;
+        
+        // Set the active bubble
+        document.querySelectorAll('.bubble-category').forEach(bubble => {
+            if (bubble.getAttribute('data-category') === category) {
+                bubble.classList.add('active');
+            } else {
+                bubble.classList.remove('active');
+            }
+        });
+        
+        // Clear the stored category
+        localStorage.removeItem('selectedCategory');
+        localStorage.removeItem('selectedCourse');
+    } else {
+        // Default to JavaScript if no category is specified
+        document.querySelector('[data-category="javascript"]').classList.add('active');
+    }
+    
+    fetchVideos(0);
+    fetchChannels(category);
+    
             
             // Add event listeners to bubble categories
             document.querySelectorAll('.bubble-category').forEach(bubble => {
@@ -1179,6 +1191,7 @@
             sessionStorage.removeItem("favourites");
             showFavourites();
         }
+        
     </script>
 </body>
 </html>
