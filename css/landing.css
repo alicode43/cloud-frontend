@@ -1,6 +1,6 @@
-/*  *//* CSS Variables */
+/* CSS Variables */
    :root {
-            --font-size: 14px;
+            --font-size: 20px;
             --background: #ffffff;
             --foreground: #27AADC;
             --card: #ffffff;
@@ -28,199 +28,13 @@
 }
 
 body {
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family:Arial, Helvetica, sans-serif;
     font-size: var(--font-size);
     background: var(--background);
     color: var(--foreground);
     line-height: 1.5;
     overflow-x: hidden;
 }
-/* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            backdrop-filter: blur(5px);
-        }
-
-        .modal.active {
-            opacity: 1;
-        }
-
-        .modal-content {
-            position: relative;
-            background: white;
-            margin: 5% auto;
-            width: 90%;
-            max-width: 450px;
-            border-radius: 12px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-            transform: translateY(-50px);
-            transition: transform 0.4s ease;
-        }
-
-        .modal.active .modal-content {
-            transform: translateY(0);
-        }
-
-        .modal-header {
-            background: var(--primary);
-            color: white;
-            padding: 20px;
-            text-align: center;
-            position: relative;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: white;
-            background: none;
-            border: none;
-        }
-
-        .modal-body {
-            padding: 25px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #444;
-        }
-
-        .input-with-icon {
-            position: relative;
-        }
-
-        .input-with-icon i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #999;
-        }
-
-        .input-with-icon input {
-            padding-left: 45px;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 14px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(39, 170, 220, 0.2);
-        }
-
-        .password-toggle {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: #999;
-        }
-
-        .btn-auth {
-            width: 100%;
-            padding: 14px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .btn-auth:hover {
-            background: #1e90c0;
-        }
-
-        .auth-footer {
-            text-align: center;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-        }
-
-        .auth-link {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-            cursor: pointer;
-        }
-
-        .auth-link:hover {
-            text-decoration: underline;
-        }
-
-        .password-strength {
-            margin-top: 8px;
-            height: 6px;
-            background: #eee;
-            border-radius: 3px;
-            overflow: hidden;
-        }
-
-        .strength-meter {
-            height: 100%;
-            width: 0;
-            transition: width 0.3s, background 0.3s;
-        }
-
-        .password-requirements {
-            margin-top: 10px;
-            font-size: 12px;
-            color: #666;
-        }
-
-        .requirement {
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-        }
-
-        .requirement i {
-            margin-right: 5px;
-            font-size: 10px;
-        }
-
-        .requirement.met {
-            color: var(--success);
-        }
-
-        .error-message {
-            color: var(--error);
-            font-size: 12px;
-            margin-top: 5px;
-            display: none;
-        }
 
 /* Typography */
 h1 {
@@ -255,9 +69,20 @@ p {
 }
 
 .text-primary {
-    color: rgb(37, 37, 37);
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: clamp(16px, 2vw, 22px);
+    font-weight: 700;
+    margin: 0;
+
+  /* Gradient text */
+   background: linear-gradient(90deg, #262727, #00c6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* For Firefox */
+  background-clip: text;
+  color: transparent;
 }
+
 
 .text-gray-600 {
     color: #6b7280;
@@ -571,7 +396,7 @@ p {
     text-align: center;
 } */
 
-.hero-badge:hover {
+/* .hero-badge:hover {
     transform: scale(1.05);
 }
 
@@ -584,7 +409,7 @@ p {
 .hero-badge p:last-child {
     color: var(--primary);
     font-weight: 600;
-}
+} */
 
 /* Floating Animation Elements */
 .floating-element {
@@ -819,30 +644,7 @@ p {
     flex-grow: 1;
 }
 
-.department-skills {
-    margin-top: auto;
-}
 
-.department-skills p {
-    font-size: 0.875rem;
-    margin-bottom: 0.5rem;
-    color: #1f2937;
-    font-weight: 500;
-}
-
-.skills-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-}
-
-.skill-tag {
-    background: var(--secondary);
-    color: var(--secondary-foreground);
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.25rem;
-    font-size: 0.75rem;
-}
 
 /* Footer */
 .footer {
@@ -893,6 +695,163 @@ p {
     font-size: 0.875rem;
     opacity: 0.9;
 }
+
+
+        /* Modal Styles - IMPROVED */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+            font-family: var(--font-family);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .modal-header h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #27AADC;
+            margin-bottom: 10px;
+            font-family: var(--font-family);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #777;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .modal-switch {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 16px;
+            color: #6b7280;
+        }
+
+        .modal-switch a {
+            color: #27AADC;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .modal-switch a:hover {
+            color: #1e90c0;
+            text-decoration: underline;
+        }
+
+        /* Form Styles - IMPROVED */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #374151;
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            outline: none;
+            transition: all 0.3s;
+            font-size: 16px;
+            font-family: var(--font-family);
+        }
+
+        .form-group input:focus {
+            border-color: #27AADC;
+            box-shadow: 0 0 0 3px rgba(39, 170, 220, 0.2);
+        }
+
+        .error {
+            color: var(--error);
+            font-size: 14px;
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        .form-button {
+            width: 100%;
+            padding: 14px;
+            background: #27AADC;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            font-family: var(--font-family);
+        }
+
+        .form-button:hover {
+            background: #1e90c0;
+            transform: translateY(-2px);
+        }
+
+        .form-divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: #6b7280;
+        }
+
+        .form-divider::before,
+        .form-divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background-color: #e5e7eb;
+        }
+
+        .form-divider span {
+            padding: 0 15px;
+            font-size: 14px;
+        }
 
 /* Animations */
 @keyframes fadeInUp {
