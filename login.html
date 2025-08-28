@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login & Signup</title>
+    <title>Login</title>
     <link rel="stylesheet" href="login.css">
 </head>
 git checkout
@@ -12,59 +12,67 @@ git checkout
     <!-- Login Form -->
     <div class="form-container" id="loginForm">
         <h2>Login</h2>
-        <div class="form-group">
-            <label>Email</label>
-            <input type="email" placeholder="Enter your email">
-        </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" placeholder="Enter your password">
-        </div>
-        <button class="btn">Login</button>
-        <!-- attached sign up page -->
-        <div class="extra-links">
-            <p>Don’t have an account? <a href="#" onclick="showSignup()">Sign Up</a></p>
-        </div>
-    </div>
 
-    <!-- Signup Form -->
-    <div class="form-container" id="signupForm" style="display: none;">
-        <h2>Sign Up</h2>
-        <div class="form-group">
-            <label>Username</label>
-            <input type="text" placeholder="Choose a username">
-        </div>
+        <!-- Email -->
         <div class="form-group">
             <label>Email</label>
-            <input type="email" placeholder="Enter your email">
+            <input type="email" id="loginEmail" placeholder="Enter your email">
+            <p class="error" id="loginEmailError"></p>
         </div>
+
+        <!-- Password -->
         <div class="form-group">
             <label>Password</label>
-            <input type="password" placeholder="Enter your password">
+            <input type="password" id="loginPassword" placeholder="Enter your password">
+            <p class="error" id="loginPasswordError"></p>
         </div>
-        <div class="form-group">
-            <label>Confirm Password</label>
-            <input type="password" placeholder="Confirm your password">
-        </div>
-        <!-- <div class="form-group">
-            <label>Captcha</label>
-            <input type="text" placeholder="Enter Captcha">
-        </div> -->
-        <button class="btn">Sign Up</button>
+
+        <!-- Button -->
+        <button class="btn" onclick="validateLogin(event)">Login</button>
+
         <div class="extra-links">
-            <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
+            <p>Don’t have an account? <a href="signup.html">Sign Up</a></p>
         </div>
     </div>
 
     <script>
-        function showSignup() {
-            document.getElementById("loginForm").style.display = "none";
-            document.getElementById("signupForm").style.display = "block";
-        }
+        // ✅ Validation for Login Form
+        function validateLogin(event) {
+            event.preventDefault();
 
-        function showLogin() {
-            document.getElementById("signupForm").style.display = "none";
-            document.getElementById("loginForm").style.display = "block";
+            let email = document.getElementById("loginEmail").value.trim();
+            let password = document.getElementById("loginPassword").value.trim();
+            let emailError = document.getElementById("loginEmailError");
+            let passwordError = document.getElementById("loginPasswordError");
+
+            let isValid = true;
+
+            // Reset errors
+            emailError.textContent = "";
+            passwordError.textContent = "";
+
+            // Email validation
+            if (email === "") {
+                emailError.textContent = "Email cannot be empty.";
+                isValid = false;
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                emailError.textContent = "Enter a valid email address.";
+                isValid = false;
+            }
+
+            // Password validation
+            if (password === "") {
+                passwordError.textContent = "Password cannot be empty.";
+                isValid = false;
+            } else if (password.length < 6) {
+                passwordError.textContent = "Password must be at least 6 characters.";
+                isValid = false;
+            }
+
+            // If valid
+            if (isValid) {
+                alert("Login Successful ✅");
+            }
         }
     </script>
 </body>
