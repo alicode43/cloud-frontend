@@ -1,4 +1,20 @@
-// Course data
+        // Course data
+   // Watch video function - navigates to video gallery with specific category
+        function watchVideo(category, courseName) {
+            selectCourse(courseName, category);
+        }
+            // Open video modal (for direct video playback - not used in this flow)
+        function openVideo(videoUrl, title) {
+            document.getElementById('video-iframe').src = videoUrl;
+            document.getElementById('video-title').textContent = title;
+            document.getElementById('video-modal').style.display = 'block';
+        }
+
+        // Close video modal
+        function closeVideoModal() {
+            document.getElementById('video-iframe').src = '';
+            document.getElementById('video-modal').style.display = 'none';
+        }
 const courses = [
   {
     id: "html",
@@ -467,26 +483,19 @@ function renderTopicDetail() {
       topic.id
     );
     const row = document.createElement("tr");
-
-    row.innerHTML = `
-                    <td>
-                        <div class="table-topic">
-                            <div class="table-topic-dot ${
-                              completed ? "completed" : ""
-                            }"></div>
-                            <span style="font-weight: 500; color: var(--dark);">${
-                              topic.name
-                            }</span>
-                        </div>
-                    </td>
-                    <td>
-                        <button class="btn btn-primary" onclick="openVideoModal('${
-                          topic.videoId
-                        }', '${topic.name}')">
-                            <i class="fas fa-play"></i>
-                            Watch Video
-                        </button>
-                    </td>
+        row.innerHTML = `
+            <td>
+                <div class="table-topic">
+                    <div class="table-topic-dot ${completed ? "completed" : ""}"></div>
+                    <span style="font-weight: 500; color: var(--dark);">${topic.name}</span>
+                </div>
+            </td>
+            <td>
+                <button class="btn btn-primary" onclick="openVideoModal('${topic.videoId}', '${topic.name}')">
+                    <i class="fas fa-play"></i>
+                    Watch Video
+                </button>
+            </td>
                     <td>
                         <a href="${
                           topic.documentation
@@ -552,13 +561,11 @@ function showDashboard() {
 
 // Modal functions
 function openVideoModal(videoId, title) {
-  const modal = document.getElementById("video-modal");
-  const iframe = document.getElementById("video-iframe");
-  const titleElement = document.getElementById("video-title");
-
-  titleElement.textContent = title;
-  iframe.src = `https://www.youtube.com/embed/${videoId}`;
-  modal.classList.add("active");
+    // Instead of opening a modal, redirect to the video gallery page
+    // with the appropriate category selected
+    localStorage.setItem('selectedCategory', currentState.selectedCourse.id);
+    localStorage.setItem('selectedCourse', currentState.selectedCourse.name);
+    window.location.href = 'v.html';
 }
 
 function closeVideoModal() {

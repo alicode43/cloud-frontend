@@ -255,12 +255,12 @@ p {
 }
 
 .text-primary {
-font-size: clamp(16px, 2vw, 22px);
-  font-weight: 700;
-  margin: 0;
+    font-size: clamp(16px, 2vw, 22px);
+    font-weight: 700;
+    margin: 0;
 
   /* Gradient text */
-  background: linear-gradient(90deg, #262727, #00c6ff);
+   background: linear-gradient(90deg, #262727, #00c6ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
