@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <style>
+    :root {
+      --font-size: 14px;
+      --primary-blue: #0ea5e9;
+      --secondary-blue: #06b6d4;
+      --text-primary: #1f2937;
+      --text-secondary: #374151;
+      --text-muted: #6b7280;
+      --bg-light: #f9fafb;
+      --border-color: #e5e7eb;
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    html {
+      font-size: var(--font-size);
+    }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #ffffff;
+      color: var(--text-primary);
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    .profile-bg {
+      padding: 20px;
+      background-color: #ffffff;
+      min-height: 100vh;
+    }
+
+    .page-title {
+      color: var(--primary-blue);
+      text-align: center;
+      margin-bottom: 3rem;
+      font-size: 2.5rem;
+      font-weight: 600;
+    }
+
+    .update-personal-details {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 10;
+    }
+
+    .update-btn {
+      background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+      color: #ffffff;
+      border: none;
+      padding: 12px 24px;
+      margin-bottom:0px;
+      border-radius: 8px;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .update-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(14, 165, 233, 0.4);
+      color: #ffffff;
+
+    }
+
+    .container-custom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .profile-grid {
+        grid-template-columns: 5fr 7fr;
+      }
+    }
+
+    .profile-card {
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: var(--shadow-lg);
+      padding: 2rem;
+      text-align: center;
+      margin: 20px;
+      transition: all 0.3s ease;
+      border: 1px solid var(--border-color);
+    }
+
+    .card-back {
+      background-color: #ffffff;
+      transition: background-color 0.4s ease;
+    }
+
+    .profile-image {
+      margin-bottom: 1.5rem;
+    }
+
+    #profileImage {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--primary-blue);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
+    }
+
+    #profileImage:hover {
+      transform: scale(1.05);
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .student-name {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: var(--text-primary);
+    }
+
+    .basic-info-table {
+      display: flex;
+      justify-content: center;
+    }
+
+    .info-table {
+      width: auto;
+    }
+
+    .info-table td {
+      padding: 8px 4px;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    .info-table td:nth-child(2) {
+      width: 12px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .card-headings {
+      font-weight: 600;
+      color: var(--primary-blue);
+    }
+
+    .info-box {
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: var(--shadow-lg);
+      padding: 2rem;
+      margin: 20px;
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+
+    .info-box h4 {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      color: var(--primary-blue);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .icon {
+      color: var(--secondary-blue);
+      font-size: 1.2rem;
+    }
+
+    .info-table-full {
+      width: 100%;
+    }
+
+    .info-table-full td {
+      padding: 12px 0;
+      font-size: 0.95rem;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .info-table-full td:first-child {
+      color: var(--primary-blue);
+      font-weight: 600;
+      width: 140px;
+      padding-right: 24px;
+    }
+
+    .info-table-full td:nth-child(2) {
+      color: var(--text-muted);
+      width: 12px;
+      text-align: center;
+    }
+
+    .info-table-full td:last-child {
+      color: var(--text-secondary);
+    }
+
+    /* Modal Styles */
+    .modal-content {
+      border-radius: 16px;
+      box-shadow: var(--shadow-xl);
+      border: 1px solid var(--border-color);
+    }
+
+    .modal-header {
+      background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+      color: #ffffff;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+      padding: 24px;
+      border-bottom: none;
+    }
+
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .modal-body {
+      background-color: #ffffff;
+      padding: 2rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .form-group-full {
+      grid-column: 1 / -1;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      background-color: var(--bg-light);
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+    }
+
+    .submit-btn {
+      background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+      color: #ffffff;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 8px;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+      transition: all 0.2s ease;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(14, 165, 233, 0.4);
+    }
+
+    .close {
+      color: #ffffff;
+      opacity: 0.8;
+    }
+
+    .close:hover {
+      color: #ffffff;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-bg">
+    <div class="update-personal-details">
+    </div>
+
+    <div class="container-custom">
+      <h2 class="page-title">Candidate Profile</h2>
+      
+      <div class="profile-grid">
+        <!-- Profile Card -->
+        <div>
+          <div class="profile-card card-back">
+            <div class="profile-image">
+              <img id="profileImage" src="https://img.freepik.com/premium-photo/happy-man-ai-generated-portrait-user-profile_1119669-1.jpg?w=2000" alt="Profile Picture">
+              <input type="file" id="fileInput" accept="image/*">
+            </div>
+            <h3 class="student-name" id="cardName">Jayakumar gada</h3>
+            <div class="basic-info-table">
+              <table class="info-table">
+                <tbody>
+                  <tr>
+                    <td class="card-headings">Emp.Id</td>
+                    <td>:</td>
+                    <td id="cardEmp.id">321000001</td>
+                  </tr>
+                  <tr>
+                    <td class="card-headings">Course</td>
+                    <td>:</td>
+                    <td id="cardCourse">SFMC</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <button class="update-btn" data-toggle="modal" data-target="#personalDetailsModal2">
+                Update Details
+              </button>
+          </div>
+        </div>
+
+        <!-- Information Card -->
+        <div>
+          <div class="info-box card-back">
+            <h4 class="card-headings">
+              <span class="icon">&#9745;</span> 
+              General Information
+            </h4>
+            <table class="info-table info-table-full">
+              <tbody>
+                <tr>
+                  <td class="card-headings">Phone No</td>
+                  <td>:</td>
+                  <td id="cardPhone">9347909241</td>
+                </tr>
+                <tr>
+                  <td class="card-headings">Email Id</td>
+                  <td>:</td>
+                  <td id="cardEmail">jayakumar934790@gmail.com</td>
+                </tr>
+                <tr>
+                  <td class="card-headings">Gender</td>
+                  <td>:</td>
+                  <td id="cardGender">Male</td>
+                </tr>
+                <tr>
+                  <td class="card-headings">Qualification</td>
+                  <td>:</td>
+                  <td id="cardQualification">B.tech</td>
+                </tr>
+                <tr>
+                  <td class="card-headings">Skills</td>
+                  <td>:</td>
+                  <td id="cardSkills">HTML , java Script , CSS</td>
+                </tr>
+                <tr>
+                  <td class="card-headings">Address</td>
+                  <td>:</td>
+                  <td id="cardAddress">Kakinada , Andhra Pradesh</td>
+                </tr>
+                <tr>
+                  <td class="card-headings">D.O.B</td>
+                  <td>:</td>
+                  <td id="cardDob">01/08/2025</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="personalDetailsModal2" tabindex="-1" aria-labelledby="personalDetailsLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="personalDetailsLabel">Personal Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <form id="profileForm">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="fullname">Full Name</label>
+                <input type="text" id="fullname" name="fullname" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="EmpId">Emp.Id</label>
+                <input type="text" id="EmpId" name="EmpId" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="Course">Course</label>
+                <input type="text" id="Course" name="Course" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" class="form-control" pattern="[0-9]{10}" required>
+              </div>
+              <div class="form-group">
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob" name="dob" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="Qualification">Qualification</label>
+                <input type="text" id="Qualification" name="Qualification" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="Gender">Gender</label>
+                <input type="text" id="Gender" name="Gender" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="Skills">Skills</label>
+                <input type="text" id="Skills" name="Skills" class="form-control" required>
+              </div>
+              <div class="form-group form-group-full">
+                <label for="Address">Address</label>
+                <input type="text" id="Address" name="Address" class="form-control" required>
+              </div>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const fieldMap = {
+        fullname: "cardName",
+        EmpId: "cardEmp.id",
+        Course: "cardCourse",
+        email: "cardEmail",
+        phone: "cardPhone",
+        dob: "cardDob",
+        Qualification: "cardQualification",
+        Gender: "cardGender",
+        Skills: "cardSkills",
+        Address: "cardAddress"
+      };
+
+      const profileImage = document.getElementById("profileImage");
+      const fileInput = document.getElementById("fileInput");
+      const profileForm = document.getElementById("profileForm");
+
+      // Load saved profile data
+      function loadSavedData() {
+        const savedData = localStorage.getItem("studentProfile");
+        if (savedData) {
+          const parsedData = JSON.parse(savedData);
+          
+          // Update profile display
+          for (let inputId in fieldMap) {
+            if (parsedData[inputId]) {
+              const profileElement = document.getElementById(fieldMap[inputId]);
+              if (profileElement) {
+                profileElement.textContent = parsedData[inputId];
+              }
+              
+              // Update form inputs
+              const formInput = document.getElementById(inputId);
+              if (formInput) {
+                formInput.value = parsedData[inputId];
+              }
+            }
+          }
+
+          // Load saved profile picture
+          if (parsedData.profileImage) {
+            profileImage.src = parsedData.profileImage;
+          }
+        }
+      }
+
+      // Handle profile image upload
+      profileImage.addEventListener("click", function() {
+        fileInput.click();
+      });
+
+      fileInput.addEventListener("change", function() {
+        const file = fileInput.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            profileImage.src = e.target.result;
+
+            // Save updated image in localStorage along with other data
+            let currentData = JSON.parse(localStorage.getItem("studentProfile")) || {};
+            currentData.profileImage = e.target.result;
+            localStorage.setItem("studentProfile", JSON.stringify(currentData));
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+      // Handle form submission
+      profileForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(profileForm);
+        let updatedData = JSON.parse(localStorage.getItem("studentProfile")) || {};
+
+        // Update data with form values
+        for (let inputId in fieldMap) {
+          const value = formData.get(inputId).trim();
+          updatedData[inputId] = value;
+          
+          // Update profile display
+          const profileElement = document.getElementById(fieldMap[inputId]);
+          if (profileElement) {
+            profileElement.textContent = value;
+          }
+        }
+
+        // Save profile image if exists
+        if (!updatedData.profileImage) {
+          updatedData.profileImage = profileImage.src;
+        }
+
+        localStorage.setItem("studentProfile", JSON.stringify(updatedData));
+        
+        // Close modal
+        $('#personalDetailsModal2').modal('hide');
+      });
+
+      // Initialize data on load
+      loadSavedData();
+    });
+  </script>
+</body>
+</html>
