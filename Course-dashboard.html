@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Odyssey - Learning Management System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/cloud-frontend/css/Course-dashboard.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar">
+    <div class="navbar-content">
+        <div class="navbar-brand">
+            <div class="brand-info">
+                <div class="brand-icon">
+                    <img src="https://superbcompanies.s3.eu-central-1.amazonaws.com/images/companies/logos/2ff8d2b0-31e2-11ee-8644-91804827fca0.jpg" 
+                         alt="Logo" class="logo" style="width:32px; height:auto; border-radius:6px;">
+                </div>
+                <span class="company-name">Cloud Odyssey Trainig Platform</span>
+            </div>
+
+        </div>
+        <div class="user-profile">
+            <div class="user-button">
+                <div class="user-avatar">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=32&h=32&q=80" alt="User">
+                </div>
+                <span id="user-name">John Doe</span>
+            </div>
+        </div>
+    </div>
+</nav> 
+
+
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar" style="display: none;">
+            <div class="sidebar-header">
+                <div class="sidebar-title-section">
+                    <div class="sidebar-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div>
+                        <h2 class="sidebar-title">Course Topics</h2>
+                        <p class="sidebar-subtitle" id="sidebar-subtitle">Select a course</p>
+                    </div>
+                </div>
+                <div class="progress-overview" id="progress-overview" style="display: none;">
+                    <div class="progress-header">
+                        <span class="progress-label">Progress</span>
+                        <span class="progress-percentage" id="progress-percentage">0%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="progress-bar"></div>
+                    </div>
+                    <div class="progress-stats">
+                        <span class="completed-count" id="completed-count">0 completed</span>
+                        <span class="remaining-count" id="remaining-count">0 remaining</span>
+                    </div>
+                </div>
+            </div>
+            <ul class="topic-list" id="topic-list">
+                <!-- Topics will be populated here -->
+            </ul>
+            <div class="achievement-section" id="achievement-section" style="display: none;">
+                <div class="achievement-content">
+                    <div class="achievement-header">
+                        <i class="fas fa-trophy achievement-icon"></i>
+                        <span class="achievement-title">Course Complete!</span>
+                    </div>
+                    <p class="achievement-text">Congratulations! You've mastered all topics in this course. 🎉</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard View -->
+            <div id="dashboard" class="dashboard">
+                <div class="dashboard-header">
+                    <div class="dashboard-title-section">
+                        <h1 class="dashboard-title">Learning Dashboard</h1>
+                    </div>
+                    <p class="dashboard-subtitle">
+                        Embark on your learning journey with our comprehensive courses designed to elevate your skills
+                    </p>
+                    <div class="feature-indicators">
+                        <div class="feature-item">
+                            <div class="feature-dot interactive"></div>
+                            <span>Interactive Learning</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-dot tracking"></div>
+                            <span>Progress Tracking</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-dot mastery"></div>
+                            <span>Skill Mastery</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="course-grid" id="course-grid">
+                    <!-- Course cards will be populated here -->
+                </div>
+            </div>
+
+            <!-- Topic Detail View -->
+            <div id="topic-detail" class="topic-detail" style="display: none;">
+                <div class="detail-header">
+                    <div class="detail-title-section">
+                        <div class="detail-course-info">
+                            <div class="detail-course-icon" id="detail-course-icon"></div>
+                            <div>
+                                <h1 class="detail-title" id="detail-title">Course Details</h1>
+                                <p class="detail-subtitle">Master your skills with interactive learning</p>
+                            </div>
+                        </div>
+                        <div class="detail-stats">
+                            <div class="stat-item completed-stat">
+                                <i class="fas fa-trophy"></i>
+                                <span id="completed-stat">0 of 0 completed</span>
+                            </div>
+                            <div class="stat-item progress-stat">
+                                <i class="fas fa-target"></i>
+                                <span id="progress-stat">0% progress</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="back-button" onclick="showDashboard()">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Dashboard
+                    </button>
+                </div>
+                <div class="topic-table-container">
+                    <table class="topic-table">
+                        <thead>
+                            <tr>
+                                <th>Topic</th>
+                                <th>Video</th>
+                                <th>Documentation</th>
+                                <th>Quiz</th>
+                                <th>Progress</th>
+                            </tr>
+                        </thead>
+                        <tbody id="topic-table-body">
+                            <!-- Table content will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="video-modal" class="modal">
+        <div class="modal-backdrop" onclick="closeVideoModal()"></div>
+        <div class="modal-content video-modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="video-title">Video Tutorial</h2>
+                <button class="modal-close" onclick="closeVideoModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="video-container">
+                <iframe id="video-iframe" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz Modal -->
+    <div id="quiz-modal" class="modal">
+        <div class="modal-backdrop" onclick="closeQuizModal()"></div>
+        <div class="modal-content quiz-modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="quiz-title">Quiz</h2>
+                <button class="modal-close" onclick="closeQuizModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body quiz-body" id="quiz-content">
+                <!-- Quiz content will be populated here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeQuizModal()" id="quiz-close-btn">Cancel</button>
+                <button class="btn btn-primary" onclick="submitQuiz()" id="submit-quiz-btn">Submit Quiz</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Confetti Container -->
+    <div id="confetti-container" class="confetti-container"></div>
+
+    <script src="/cloud-frontend/js/Course-dashboard.js"></script>
+    <script src="/cloud-frontend/js/Course-dashboard-data.js"></script>
+</body>
+</html>
