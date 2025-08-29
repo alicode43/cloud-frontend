@@ -280,20 +280,20 @@ function renderTopicDetail() {
     row.id = `topic-${topic.id}`;
     row.style.animationDelay = `${index * 0.1}s`;
     
-    row.innerHTML = `
-      <td>
-        <div class="topic-name-cell">
-          <div class="topic-status-dot ${completed ? 'completed' : ''}"></div>
-          <span class="topic-name">${topic.name}</span>
-          ${completed ? '<div class="topic-badge">🎉 Done</div>' : ''}
-        </div>
-      </td>
-      <td>
-        <button class="btn btn-primary" onclick="openVideoModal('${topic.videoId}', '${topic.name}')">
-          <i class="fas fa-play"></i>
-          Watch Video
-        </button>
-      </td>
+ row.innerHTML = `
+  <td>
+    <div class="topic-name-cell">
+      <div class="topic-status-dot ${completed ? 'completed' : ''}"></div>
+      <span class="topic-name">${topic.name}</span>
+      ${completed ? '<div class="topic-badge">🎉 Done</div>' : ''}
+    </div>
+  </td>
+  <td>
+    <button class="btn btn-primary" onclick="openVideoModal('${topic.videoId}', '${topic.name}', '${course.name}')">
+      <i class="fas fa-play"></i>
+      Watch Video
+    </button>
+  </td>
       <td>
         <a href="${topic.documentation}" target="_blank" class="btn-link">
           <i class="fas fa-external-link-alt"></i>
@@ -398,17 +398,9 @@ function triggerCelebration(topicName) {
 }
 
 // Modal functions
-function openVideoModal(videoId, title) {
-  const modal = document.getElementById('video-modal');
-  const iframe = document.getElementById('video-iframe');
-  const titleElement = document.getElementById('video-title');
-  
-  titleElement.textContent = `${title} - Video Tutorial`;
-  iframe.src = `https://www.youtube.com/embed/${videoId}`;
-  modal.classList.add('active');
-  
-  // Prevent body scroll
-  document.body.style.overflow = 'hidden';
+function openVideoModal(videoId, title, courseName) {
+  // Redirect to video gallery with course parameter
+  window.location.href = `v.html?course=${encodeURIComponent(courseName)}&topic=${encodeURIComponent(title)}`;
 }
 
 function closeVideoModal() {
