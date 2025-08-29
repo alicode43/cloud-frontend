@@ -76,6 +76,7 @@ const signupModal = document.getElementById("signupModal");
 const switchToSignup = document.getElementById("switchToSignup");
 const switchToLogin = document.getElementById("switchToLogin");
 const closeButtons = document.querySelectorAll(".modal-close");
+const loginForm = document.getElementById("loginForm");
 
 // Open login modal
 loginBtn.addEventListener("click", function (e) {
@@ -148,13 +149,83 @@ function validateLogin(event) {
 
   // If valid
   if (isValid) {
-    alert("Login Successful ✅");
+    // alert("Login Successful ✅");
+    console.log("Validation Successful ✅");
     loginModal.classList.remove("active");
   }
 }
-
+function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+      const date = new Date();
+      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/; Secure; SameSite=Strict";
+  }
+  
 // Signup form validation
 document.addEventListener("DOMContentLoaded", function () {
+  
+    
+
+
+    loginForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      validateLogin(e)
+
+      const email = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPassword").value.trim();
+      console.log("Email:", email);
+      console.log("Password:", password);
+      if (!email || !password) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      const requestBody = {
+        email: email,
+        password: password,
+      };
+
+      fetch("https://cloud-backend-5oi5.onrender.com/api/v1/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+        redirect: "follow",
+      })
+        .then((response) => {
+          if (!response.ok) {
+            // Try to parse error message JSON if available
+            return response.json().then(errData => {
+              throw new Error(errData.message || "Login failed");
+            });
+          }
+          return response.json();
+        })
+        .then((data) => {
+          if (data.success) {
+            alert(data.message);
+
+            // Store tokens in cookies for 7 days
+            setCookie("accessToken", data.data.accessToken, 7);
+            setCookie("refreshToken", data.data.refreshToken, 7);
+
+            console.log("User logged in:", data.data.user);
+            // Optionally redirect or update UI here
+          } else {
+            throw new Error(data.message || "Login unsuccessful");
+          }
+        })
+        .catch((error) => {
+          alert("Error: " + error.message);
+          console.error("Login error:", error);
+        });
+    });
+
+
   // Username validation
   document.getElementById("username").addEventListener("input", function () {
     let username = this.value.trim();
@@ -207,9 +278,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Confirm password validation
-  document
-    .getElementById("confirmPassword")
-    .addEventListener("input", function () {
+  document.getElementById("confirmPassword").addEventListener("input", function () {
       let confirmPassword = this.value;
       let password = document.getElementById("password").value;
       let errorMsg = "";
@@ -226,9 +295,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
   // Form submission validation
-  document
-    .getElementById("signupForm")
-    .addEventListener("submit", function (event) {
+  document.getElementById("signupForm").addEventListener("submit", function (event) {
       event.preventDefault();
 
       let username = document.getElementById("username").value.trim();
