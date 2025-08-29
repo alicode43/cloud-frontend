@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salesforce Learning Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        :root {
+            --primary: #27AADC;
+            ;
+            --primary-light: #eaf5fe;
+            --secondary: #4a4a4a;
+            --accent: #ff6d01;
+            --success: #2e844a;
+            --warning: #fe9339;
+            --danger: #ea001e;
+            --light-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-primary: #2e2e2e;
+            --text-secondary: #5e5e5e;
+            --border-radius: 12px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f7f9;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .navigation {
+            /* background: linear-gradient(135deg, var(--primary) 0%, #27AADC 100%); */
+            background: white;
+            color: #27AADC;
+            padding: 0.8rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .avatar-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .avatar-fallback {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #27AADC, var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .user-info p {
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .user-role {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 0.5rem;
+            /* color: black; */
+        }
+
+        .nav-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent;
+            border: none;
+            /* color: white; */
+            color: var(--text-secondary);
+            /* color: black; */
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 220px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 0.5rem 0;
+            z-index: 100;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .dropdown-item:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .nav-right .profile-button {
+            /* background: rgba(255, 255, 255, 0.2); */
+            background: #27AADC;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .nav-right .profile-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .section-header {
+            margin-bottom: 2rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .stat-icon {
+            width: 24px;
+            height: 24px;
+            color: var(--primary);
+        }
+
+        .stat-content .stat-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #27AADC);
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+
+        /* Activity Grid */
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .activity-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .card-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .topic-info {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .topic-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .topic-details h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+            color: var(--text-primary);
+        }
+
+        .topic-details p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .topic-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .badge {
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .progress-text {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .continue-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .continue-button:hover {
+            background: #0a5d9e;
+        }
+
+        .weekly-progress {
+            margin-bottom: 1.5rem;
+        }
+
+        .day-progress {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .day-progress span {
+            width: 90px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .progress-bar.small {
+            flex: 1;
+            height: 6px;
+        }
+
+        .weekly-total {
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary);
+            padding: 0.75rem;
+            background: var(--primary-light);
+            border-radius: 8px;
+        }
+
+        /* Courses Section */
+        .courses-section {
+            margin-top: 3rem;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .course-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-image {
+            height: 160px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .course-overlay {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+        }
+
+        .level-badge {
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .level-badge.intermediate {
+            background: var(--warning);
+            color: white;
+        }
+
+        .course-content {
+            padding: 1.5rem;
+        }
+
+        .course-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .course-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+            font-size: 0.95rem;
+        }
+
+        .course-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .course-progress {
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .course-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .primary-button {
+            flex: 1;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .primary-button:hover {
+            background: #0a5d9e;
+        }
+
+        .icon-button {
+            width: 45px;
+            background: var(--light-bg);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-button:hover {
+            background: #e9ecef;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .activity-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-left {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+            }
+
+            .nav-menu {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .nav-right {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
+
+            .stats-grid,
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .topic-info {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .topic-icon {
+                align-self: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 0 1rem;
+            }
+
+            .activity-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-content,
+            .course-content {
+                padding: 1rem;
+            }
+
+            .topic-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Icons */
+        .icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Animation for progress bars */
+        @keyframes grow {
+            from {
+                width: 0%;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        .progress-fill {
+            animation: grow 1.5s ease-out;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navigation">
+        <div class="nav-container">
+            <div class="nav-left">
+                <!-- User Profile -->
+                <div class="user-profile">
+                    <div class="avatar">
+                        <img id="smallImage" alt="User Avatar" class="avatar-image">
+                        <div class="avatar-fallback" style="display: none;">CO</div>
+                    </div>
+                    <div class="user-info">
+                        <p class="user-name" id="smallName">Cloud Odyssey</p>
+                        <p class="user-role" id="smallCourse">Salesforce Training</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Menu -->
+                <div class="nav-menu">
+                    <div class="dropdown">
+                        <button class="nav-button dropdown-trigger" id="dashboardDropdown">
+                            <i class="fas fa-th-large icon"></i>
+                            <span>Dashboard</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </button>
+                        <div class="dropdown-content" id="dashboardDropdownContent">
+                            <div class="dropdown-item">
+                                <i class="fas fa-chart-line icon"></i>
+                                <a href="#section1" class="nav-element">Analytics</a>
+                            </div>
+                            <div class="dropdown-item">
+                                <i class="fas fa-tasks icon"></i>
+                                <a href="#section2" class="nav-element">Progress</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="nav-button">
+                        <i class="fas fa-book icon"></i>
+                        <span>Materials</span>
+                    </button>
+
+                    <button class="nav-button">
+                        <i class="fas fa-question-circle icon"></i>
+                        <span>Quizzes</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="nav-right">
+                <button class="profile-button" data-toggle="modal" data-target="#pageModal">
+                    <i class="fas fa-user-circle"></i> View Profile
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Bootstrap Modal -->
+    <div class="modal fade" id="pageModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">User Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-0">
+                    <iframe src="pop.html" width="100%" height="500px" style="border:0;"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Analytics Section -->
+        <section class="analytics-section">
+            <div id="section1">
+                <div class="section-header">
+                    <h2>Learning Analytics</h2>
+                    <p>Track your learning progress and achievements</p>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <h3>Courses Completed</h3>
+                            <i class="fas fa-book-open stat-icon"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value">12</div>
+                            <p class="stat-description">Out of 15 enrolled</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <h3>Quiz Score</h3>
+                            <i class="fas fa-chart-pie stat-icon"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value">94%</div>
+                            <p class="stat-description">Average score</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 94%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <h3>Learning Streak</h3>
+                            <i class="fas fa-fire stat-icon"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value">12</div>
+                            <p class="stat-description">Days consecutive</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 86%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity Grid -->
+                <div class="activity-grid">
+                    <div class="activity-card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-play-circle icon"></i>
+                                Last Studied Topic
+                            </h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="topic-info">
+                                <div class="topic-icon">
+                                    <i class="fas fa-mail-bulk"></i>
+                                </div>
+                                <div class="topic-details">
+                                    <h4>Salesforce Marketing Cloud - Email Studio</h4>
+                                    <p>Advanced email automation and journey builder concepts</p>
+                                    <div class="topic-meta">
+                                        <span class="badge">Chapter 4</span>
+                                        <span class="progress-text">Progress: 67%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 67%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="continue-button">Continue Learning</button>
+                        </div>
+                    </div>
+
+                    <div class="activity-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Weekly Progress</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="weekly-progress">
+                                <div class="day-progress">
+                                    <span>Monday</span>
+                                    <div class="progress-bar small">
+                                        <div class="progress-fill" style="width: 90%"></div>
+                                    </div>
+                                </div>
+                                <div class="day-progress">
+                                    <span>Tuesday</span>
+                                    <div class="progress-bar small">
+                                        <div class="progress-fill" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                                <div class="day-progress">
+                                    <span>Wednesday</span>
+                                    <div class="progress-bar small">
+                                        <div class="progress-fill" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                                <div class="day-progress">
+                                    <span>Thursday</span>
+                                    <div class="progress-bar small">
+                                        <div class="progress-fill" style="width: 60%"></div>
+                                    </div>
+                                </div>
+                                <div class="day-progress">
+                                    <span>Friday</span>
+                                    <div class="progress-bar small">
+                                        <div class="progress-fill" style="width: 95%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="weekly-total">Total: 8.5 hours this week</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Training Courses Section -->
+        <section class="courses-section">
+            <div id="section2">
+                <div class="section-header">
+                    <h2>Training Courses</h2>
+                    <p>Comprehensive Salesforce training programs to advance your career</p>
+                </div>
+
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-image"
+                            style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=200&fit=crop')">
+                            <div class="course-overlay">
+                                <span class="level-badge intermediate">Intermediate</span>
+                            </div>
+                        </div>
+                        <div class="course-content">
+                            <h3>Salesforce Marketing Cloud (SFMC)</h3>
+                            <p>Master email marketing, automation, and customer journey management with Marketing Cloud
+                            </p>
+
+                            <div class="course-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-clock icon"></i>
+                                    <span>45 hours</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-modules icon"></i>
+                                    <span>12 modules</span>
+                                </div>
+                            </div>
+
+                            <div class="course-progress">
+                                <div class="progress-header">
+                                    <span>Progress</span>
+                                    <span>8/12 modules</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 67%"></div>
+                                </div>
+                                <p class="progress-text">67% complete</p>
+                            </div>
+
+                            <div class="course-actions">
+                                <button class="primary-button">Continue</button>
+                                <button class="icon-button">
+                                    <i class="fas fa-book"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="course-card">
+                        <div class="course-image"
+                            style="background-image: url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=200&fit=crop')">
+                            <div class="course-overlay">
+                                <span class="level-badge intermediate">Intermediate</span>
+                            </div>
+                        </div>
+                        <div class="course-content">
+                            <h3>Salesforce Commerce Cloud</h3>
+                            <p>Learn to build and manage e-commerce storefronts with Commerce Cloud</p>
+
+                            <div class="course-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-clock icon"></i>
+                                    <span>38 hours</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-modules icon"></i>
+                                    <span>10 modules</span>
+                                </div>
+                            </div>
+
+                            <div class="course-progress">
+                                <div class="progress-header">
+                                    <span>Progress</span>
+                                    <span>3/10 modules</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 30%"></div>
+                                </div>
+                                <p class="progress-text">30% complete</p>
+                            </div>
+
+                            <div class="course-actions">
+                                <button class="primary-button">Continue</button>
+                                <button class="icon-button">
+                                    <i class="fas fa-book"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="course-card">
+                        <div class="course-image"
+                            style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=200&fit=crop')">
+                            <div class="course-overlay">
+                                <span class="level-badge intermediate">Advanced</span>
+                            </div>
+                        </div>
+                        <div class="course-content">
+                            <h3>MuleSoft Integration</h3>
+                            <p>Master API-led connectivity and integration patterns with MuleSoft</p>
+
+                            <div class="course-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-clock icon"></i>
+                                    <span>52 hours</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-modules icon"></i>
+                                    <span>14 modules</span>
+                                </div>
+                            </div>
+
+                            <div class="course-progress">
+                                <div class="progress-header">
+                                    <span>Progress</span>
+                                    <span>10/14 modules</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 72%"></div>
+                                </div>
+                                <p class="progress-text">72% complete</p>
+                            </div>
+
+                            <div class="course-actions">
+                                <button class="primary-button">Continue</button>
+                                <button class="icon-button">
+                                    <i class="fas fa-book"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Get saved object from localStorage
+        const savedData = JSON.parse(localStorage.getItem("studentProfile"));
+
+        if (savedData) {
+            if (savedData.profileImage) {
+                document.getElementById("smallImage").src = savedData.profileImage;
+            }
+            if (savedData.name) {
+                document.getElementById("smallName").textContent = savedData.name;
+            }
+            if (savedData.course) {
+                document.getElementById("smallCourse").textContent = savedData.course;
+            }
+        }
+
+        // Add animation to progress bars
+        document.addEventListener('DOMContentLoaded', function () {
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 300);
+            });
+        });
+    </script>
+</body>
+
+</html>
