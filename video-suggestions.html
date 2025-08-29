@@ -700,6 +700,67 @@
                 transform: rotate(1turn);
             }
         }
+         .favBtn.active {
+        background: #e74c3c;
+        color: #fff;
+      }
+
+      .favBtn.active i {
+        color: #fff;
+      }
+
+      /* Remove button inside favourites popup */
+      .removeFavBtn {
+        background: #e74c3c; /* red delete color */
+        color: #fff;
+        border: none;
+        padding: 8px 14px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        margin-top: 10px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: background 0.3s ease, transform 0.2s ease;
+      }
+
+      .removeFavBtn i {
+        font-size: 14px;
+      }
+
+      .removeFavBtn:hover {
+        background: #c0392b; /* darker red */
+        transform: scale(1.05);
+      }
+
+      .removeFavBtn:active {
+        transform: scale(0.95);
+      }
+
+      /* Remove button in Watch History */
+      .removeHistoryBtn {
+        background-color: #f39c12; /* orange to distinguish from red favourites */
+        color: white;
+        border: none;
+        padding: 8px 14px;
+        margin-top: 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: background-color 0.3s ease;
+      }
+
+      .removeHistoryBtn i {
+        font-size: 14px;
+      }
+
+      .removeHistoryBtn:hover {
+        background-color: #d68910; /* darker orange on hover */
+      }
         
     </style>
 </head>
@@ -736,21 +797,22 @@
      <!-- Mobile Navigation -->
     <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
     <nav class="mobile-nav" id="mobileNav">
-        <a href="course.html" class="mobile-nav-link">
+        <a href="index.html" class="mobile-nav-link">
             <i class="fas fa-home"></i> Home
         </a>
-        <a href="course.html" class="mobile-nav-link">
+        <a href="courses.html" class="mobile-nav-link">
             <i class="fas fa-book"></i> Courses
         </a>
     </nav>
 
     <!-- Page Header -->
     <div class="container">
-       
-        <div class="page-header">
-            <h1 class="page-title" id="page-title">Cloud Odyssey Video Gallery</h1>
-            <p class="page-subtitle" id="page-subtitle">Explore our curated collection of training videos</p>
-        </div>
+      <div class="page-header">
+        <h1 class="page-title">Cloud Odyssey Courses</h1>
+        <p class="page-subtitle">
+          Explore our curated collection of training videos
+        </p>
+      </div>
     </div>
 
     <!-- Video Gallery -->
@@ -846,7 +908,7 @@
     </div>
 
     <script>
-        // Mobile menu functionality
+     // Mobile menu functionality
         const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
         const mobileNav = document.getElementById('mobileNav');
         const mobileNavOverlay = document.getElementById('mobileNavOverlay');
@@ -856,85 +918,128 @@
             mobileNav.classList.toggle('active');
             mobileNavOverlay.classList.toggle('active');
             
-            // Toggle body scroll when menu is open
-            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : "";
         }
         
         mobileMenuToggle.addEventListener('click', toggleMobileMenu);
         mobileNavOverlay.addEventListener('click', toggleMobileMenu);
         
-        // Close mobile menu when clicking on links
         document.querySelectorAll('.mobile-nav-link').forEach(link => {
             link.addEventListener('click', toggleMobileMenu);
         });
 
-        // API key and global variables
-        //const API_KEY = "AIzaSyBkX6_OJJvgRAvWN1oYYOU4dq9zueS8gF4";
-        // const API_KEY = "AIzaSyBkX6_OJJvgRAvWN1oYYOU4dq9zueS8gF4";    //project 1
-      //const API_KEY = "AIzaSyDTcv9gLihbaM4Wq5V1sYh6rbxTDX_aLUA";    //project 2
+        // API keys with fallback
+        const API_KEYS = [
+            "AIzaSyAdbZki0nwZVRcjyRSosD6D8B-Kh3lPRU8",
+            "AIzaSyBkX6_OJJvgRAvWN1oYYOU4dq9zueS8gF4",
+            "AIzaSyDTcv9gLihbaM4Wq5V1sYh6rbxTDX_aLUA",
+        ];
+
+        let currentApiIndex = parseInt(localStorage.getItem("currentApiIndex")) || 0;
+        let API_KEY = API_KEYS[currentApiIndex];
+
+        // Get course and topic from URL
+        function getCourseFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('course') || "";
+        }
+
+        function getTopicFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('topic') || "";
+        }
+
+        function getCategoryFromUrl() {
+            const course = getCourseFromUrl();
+            const topic = getTopicFromUrl();
+            
+            // Map course names to search categories
+            const courseToCategory = {
+                "HTML": "html",
+                "CSS": "css",
+                "JavaScript": "javascript",
+                "Salesforce Marketing Cloud": "salesforce marketing cloud",
+                "AMPscript": "ampscript",
+                "SQL": "sql"
+            };
+            
+            // If we have a course from the dashboard, use it
+            if (course && courseToCategory[course]) {
+                return courseToCategory[course];
+            }
+            
+            // Fallback to the category parameter if no course
+            const params = new URLSearchParams(window.location.search);
+            return params.get('category') || "javascript";
+        }
+
+        // Update the page title based on the course
+        function updatePageTitle() {
+            const course = getCourseFromUrl();
+            const topic = getTopicFromUrl();
+            
+            if (course) {
+                document.querySelector('.page-title').textContent = `${course} Videos`;
+                
+                if (topic) {
+                    document.querySelector('.page-subtitle').textContent = 
+                        `Tutorial videos for: ${topic}`;
+                } else {
+                    document.querySelector('.page-subtitle').textContent = 
+                        `Explore ${course} training videos`;
+                }
+            }
+        }
+
+        let category = getCategoryFromUrl();
         let cachedPages = {};
         const maxVideosPerLoad = 12;
-        let category = "javascript";
         let pageTokens = [""];
         let currentPage = 0;
 
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', function() {
-    // Check if a specific category was selected from the courses page
-    const selectedCategory = localStorage.getItem('selectedCategory');
-    const selectedCourse = localStorage.getItem('selectedCourse');
-    
-    if (selectedCategory && selectedCourse) {
-        // Update the page title and subtitle
-        document.getElementById('page-title').textContent = `${selectedCourse} Videos`;
-        document.getElementById('page-subtitle').textContent = `Explore ${selectedCourse} training videos`;
-        
-        // Set the active category
-        category = selectedCategory;
-        
-        // Set the active bubble
-        document.querySelectorAll('.bubble-category').forEach(bubble => {
-            if (bubble.getAttribute('data-category') === category) {
-                bubble.classList.add('active');
-            } else {
-                bubble.classList.remove('active');
-            }
-        });
-        
-        // Clear the stored category
-        localStorage.removeItem('selectedCategory');
-        localStorage.removeItem('selectedCourse');
-    } else {
-        // Default to JavaScript if no category is specified
-        document.querySelector('[data-category="javascript"]').classList.add('active');
-    }
-    
-    fetchVideos(0);
-    fetchChannels(category);
-    
+        document.addEventListener("DOMContentLoaded", function () {
+            updatePageTitle();
             
-            // Add event listeners to bubble categories
-            document.querySelectorAll('.bubble-category').forEach(bubble => {
-                bubble.addEventListener('click', function() {
-                    // Remove active class from all bubbles
-                    document.querySelectorAll('.bubble-category').forEach(b => {
-                        b.classList.remove('active');
-                    });
-                    
-                    // Add active class to clicked bubble
-                    this.classList.add('active');
-                    
-                    // Change category and fetch videos
-                    category = this.getAttribute('data-category');
+            // Set category from URL if present
+            category = getCategoryFromUrl();
+
+            fetchVideos(0);
+            fetchChannels(category);
+
+            // Highlight the active bubble
+            document.querySelectorAll(".bubble-category").forEach((bubble) => {
+                if (bubble.getAttribute("data-category") === category) {
+                    bubble.classList.add("active");
+                } else {
+                    bubble.classList.remove("active");
+                }
+                bubble.addEventListener("click", function () {
+                    document.querySelectorAll(".bubble-category").forEach((b) => b.classList.remove("active"));
+                    this.classList.add("active");
+
+                    category = this.getAttribute("data-category");
                     cachedPages = {};
                     pageTokens = [""];
                     currentPage = 0;
-                    
+
                     fetchVideos(0);
                     fetchChannels(category);
                 });
             });
         });
+
+        function switchToNextApiKey() {
+            if (currentApiIndex < API_KEYS.length - 1) {
+                currentApiIndex++;
+                API_KEY = API_KEYS[currentApiIndex];
+                localStorage.setItem("currentApiIndex", currentApiIndex);
+                console.warn("Switched to backup API key:", API_KEY);
+                return true;
+            } else {
+                console.error("All API keys have failed.");
+                return false;
+            }
+        }
 
         // Fetch videos from YouTube API
         async function fetchVideos(page = 0) {
@@ -949,7 +1054,18 @@
                     return;
                 }
 
-                let API_URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${category}+programming+tutorial&maxResults=${maxVideosPerLoad}&type=video&key=${API_KEY}`;
+                const course = getCourseFromUrl();
+                const topic = getTopicFromUrl();
+                
+                // Create a more specific search query if we have course/topic info
+                let searchQuery = category;
+                if (course && topic) {
+                    searchQuery = `${course} ${topic} tutorial`;
+                } else if (course) {
+                    searchQuery = `${course} programming tutorial`;
+                }
+
+                let API_URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(searchQuery)}&maxResults=${maxVideosPerLoad}&type=video&key=${API_KEY}`;
 
                 if (pageTokens[page]) {
                     API_URL += `&pageToken=${pageTokens[page]}`;
@@ -959,6 +1075,12 @@
                 const data = await res.json();
 
                 if (data.error) {
+                    console.warn("API error:", data.error.message);
+
+                    if (switchToNextApiKey()) {
+                        return fetchVideos(page);
+                    }
+
                     container.innerHTML = `<div class="error-message">Error loading videos: ${data.error.message}</div>`;
                     return;
                 }
@@ -971,8 +1093,9 @@
                 }
 
                 currentPage = page;
-                renderPagination();
+                localStorage.setItem("currentApiIndex", currentApiIndex);
 
+                renderPagination();
             } catch (err) {
                 console.error("Error fetching videos:", err);
                 document.getElementById("video-container").innerHTML = `
@@ -986,18 +1109,21 @@
         // Render videos to the grid
         function renderVideos(videos) {
             const container = document.getElementById("video-container");
-            
+
             if (!videos || videos.length === 0) {
                 container.innerHTML = `<div class="error-message">No videos found for this category.</div>`;
                 return;
             }
-            
+
             container.innerHTML = "";
-            
+            let favourites = JSON.parse(localStorage.getItem("favourites")) || [];
+
             videos.forEach((video) => {
                 const videoId = video.id.videoId;
                 const title = video.snippet.title;
                 const thumbnail = video.snippet.thumbnails.medium.url;
+
+                const isFav = favourites.some((v) => v.id === videoId);
 
                 const card = document.createElement("div");
                 card.classList.add("card");
@@ -1009,8 +1135,10 @@
                         <div class="video-overlay" onclick="saveToHistory('${videoId}', '${title.replace(/'/g, "\\'")}', event)"></div>
                     </div>
                     <h3>${title}</h3>
-                    <button class="favBtn" onclick="addToFavourites('${videoId}', '${title.replace(/'/g, "\\'")}')">
-                        <i class="fas fa-heart"></i> Add to Favorites
+                    <button class="favBtn ${isFav ? "active" : ""}" 
+                        data-id="${videoId}"
+                        onclick="addToFavourites('${videoId}', '${title.replace(/'/g, "\\'")}', this)">
+                        <i class="fas fa-heart"></i> ${isFav ? "Added to Favorites" : "Add to Favorites"}
                     </button>
                 `;
 
@@ -1033,7 +1161,7 @@
 
             for (let i = 0; i < pageTokens.length; i++) {
                 if (i > currentPage + 4) break;
-                
+
                 const pageBtn = document.createElement("button");
                 pageBtn.innerText = i + 1;
                 pageBtn.className = "btn";
@@ -1064,6 +1192,17 @@
                 const container = document.getElementById("channelSuggestions");
                 container.innerHTML = "";
 
+                if (data.error) {
+                    console.warn("API error:", data.error.message);
+
+                    if (switchToNextApiKey()) {
+                        return fetchChannels(query);
+                    }
+
+                    container.innerHTML = "<p>Error loading channels. All API keys failed.</p>";
+                    return;
+                }
+
                 if (!data.items || data.items.length === 0) {
                     container.innerHTML = "<p>No channels found for this category.</p>";
                     return;
@@ -1084,6 +1223,7 @@
                     `;
 
                     container.appendChild(link);
+                    localStorage.setItem("currentApiIndex", currentApiIndex);
                 });
             } catch (err) {
                 console.error("Error fetching channels:", err);
@@ -1111,9 +1251,9 @@
         function showHistory() {
             const modal = document.getElementById("historyModal");
             const list = document.getElementById("historyList");
-            
+
             let history = JSON.parse(localStorage.getItem("history")) || [];
-            
+
             if (history.length === 0) {
                 list.innerHTML = "<p>You haven't watched any videos yet.</p>";
             } else {
@@ -1127,11 +1267,14 @@
                         <div class="video-container">
                             <iframe src="https://www.youtube.com/embed/${video.id}" frameborder="0" allowfullscreen></iframe>
                         </div>
+                        <button class="removeHistoryBtn" onclick="removeFromHistory('${video.id}')">
+                            <i class="fas fa-trash"></i> Remove
+                        </button>
                     `;
                     list.appendChild(item);
                 });
             }
-            
+
             modal.style.display = "flex";
         }
 
@@ -1141,21 +1284,35 @@
             showHistory();
         }
 
+        function removeFromHistory(videoId) {
+            let history = JSON.parse(localStorage.getItem("history")) || [];
+            history = history.filter((v) => v.id !== videoId);
+            localStorage.setItem("history", JSON.stringify(history));
+            showHistory();
+        }
+
         // Close modal
         function closeModal(id) {
             document.getElementById(id).style.display = "none";
         }
 
         // Add video to favorites
-        function addToFavourites(videoId, title) {
-            let favourites = JSON.parse(sessionStorage.getItem("favourites")) || [];
-            
-            if (!favourites.find((v) => v.id === videoId)) {
+        function addToFavourites(videoId, title, btn) {
+            let favourites = JSON.parse(localStorage.getItem("favourites")) || [];
+            const index = favourites.findIndex((v) => v.id === videoId);
+
+            if (index === -1) {
                 favourites.push({ id: videoId, title: title });
-                sessionStorage.setItem("favourites", JSON.stringify(favourites));
-                alert("Added to Favorites!");
+                localStorage.setItem("favourites", JSON.stringify(favourites));
+
+                btn.classList.add("active");
+                btn.innerHTML = '<i class="fas fa-heart"></i> Added to Favorites';
             } else {
-                alert("This video is already in your favorites!");
+                favourites.splice(index, 1);
+                localStorage.setItem("favourites", JSON.stringify(favourites));
+
+                btn.classList.remove("active");
+                btn.innerHTML = '<i class="fas fa-heart"></i> Add to Favorites';
             }
         }
 
@@ -1163,9 +1320,9 @@
         function showFavourites() {
             const modal = document.getElementById("favouritesModal");
             const list = document.getElementById("favouritesList");
-            
-            let favourites = JSON.parse(sessionStorage.getItem("favourites")) || [];
-            
+
+            let favourites = JSON.parse(localStorage.getItem("favourites")) || [];
+
             if (favourites.length === 0) {
                 list.innerHTML = "<p>You haven't added any videos to favorites yet.</p>";
             } else {
@@ -1177,21 +1334,36 @@
                         <h4>${video.title}</h4>
                         <div class="video-container">
                             <iframe src="https://www.youtube.com/embed/${video.id}" frameborder="0" allowfullscreen></iframe>
+                            <div class="video-overlay" onclick="saveToHistory('${video.id}', '${video.title.replace(/'/g, "\\'")}', event)"></div>
                         </div>
+                        <button class="removeFavBtn" onclick="removeFavourite('${video.id}')">
+                            <i class="fas fa-trash"></i> Remove
+                        </button>
                     `;
                     list.appendChild(item);
                 });
             }
-            
+
             modal.style.display = "flex";
         }
 
         // Clear favorites
         function clearFavourites() {
-            sessionStorage.removeItem("favourites");
+            localStorage.removeItem("favourites");
             showFavourites();
         }
-        
+
+        function removeFavourite(videoId) {
+            let favourites = JSON.parse(localStorage.getItem("favourites")) || [];
+            favourites = favourites.filter((v) => v.id !== videoId);
+            localStorage.setItem("favourites", JSON.stringify(favourites));
+            showFavourites();
+            const favBtn = document.querySelector(`.favBtn[data-id="${videoId}"]`);
+            if (favBtn) {
+                favBtn.classList.remove("active");
+                favBtn.innerHTML = `<i class="fas fa-heart"></i> Add to Favourites`;
+            }
+        }  
     </script>
 </body>
 </html>
