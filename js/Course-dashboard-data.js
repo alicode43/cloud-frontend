@@ -16,7 +16,7 @@ const courses = [
       {
         question: "What does HTML stand for?",
         options: [
-          "Hyper Text Markup Language",
+          "Hyper Text Markup Language", 
           "High Tech Modern Language",
           "Home Tool Markup Language",
           "Hyperlink and Text Markup Language"
