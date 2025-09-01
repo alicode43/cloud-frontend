@@ -319,8 +319,8 @@
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
-    color: #003366;
+    background:white;
+    color:#1e293b;;
     border: 1px solid #87CEEB;
     border-radius: 8px;
     padding: 16px 20px;
@@ -335,17 +335,22 @@
   .popup-alert.show {
     transform: translateX(0);
     opacity: 1;
+    border-left: 4px solid #22c55e;
   }
+  .popup-alert.show:hover {
+  background: #1d4ed8;
+}
   
   .popup-title {
-    font-weight: 500;
-    margin-bottom: 4px;
-    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+    flex: 1;
   }
   
   .popup-description {
-    font-size: 12px;
-    opacity: 0.8;
+    color: #64748b;
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
   }
   </style>
 </head>
