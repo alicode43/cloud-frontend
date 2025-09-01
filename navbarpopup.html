@@ -315,13 +315,48 @@
       color: #ffffff;
       opacity: 1;
     }
+    .popup-alert {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+    color: #003366;
+    border: 1px solid #87CEEB;
+    border-radius: 8px;
+    padding: 16px 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateX(400px);
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+    z-index: 1000;
+    max-width: 300px;
+  }
+  
+  .popup-alert.show {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  
+  .popup-title {
+    font-weight: 500;
+    margin-bottom: 4px;
+    font-size: 14px;
+  }
+  
+  .popup-description {
+    font-size: 12px;
+    opacity: 0.8;
+  }
   </style>
 </head>
 <body>
   <div class="profile-bg">
     <div class="update-personal-details">
     </div>
-
+    <div id="popupAlert" class="popup-alert">
+            <div class="popup-title">Form submitted successfully!</div>
+            <div class="popup-description">Your information has been saved.</div>
+      </div>
     <div class="container-custom">
       <h2 class="page-title">Candidate Profile</h2>
       
@@ -472,10 +507,9 @@
       </div>
     </div>
   </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const fieldMap = {
+<script>
+      document.addEventListener("DOMContentLoaded", function () {
+    const fieldMap = {
         fullname: "cardName",
         EmpId: "cardEmp.id",
         Course: "cardCourse",
@@ -485,96 +519,153 @@
         Qualification: "cardQualification",
         Gender: "cardGender",
         Skills: "cardSkills",
-        Address: "cardAddress"
-      };
+        Address: "cardAddress",
+    };
 
-      const profileImage = document.getElementById("profileImage");
-      const fileInput = document.getElementById("fileInput");
-      const profileForm = document.getElementById("profileForm");
+    const profileImage = document.getElementById("profileImage");
+    const fileInput = document.getElementById("fileInput");
+    const profileForm = document.getElementById("profileForm");
 
-      // Load saved profile data
-      function loadSavedData() {
+    // Create popup if it doesn't exist
+    function getPopup() {
+        let popup = document.getElementById("popupAlert");
+        if (!popup) {
+            popup = document.createElement("div");
+            popup.id = "popupAlert";
+            popup.className = "popup-alert";
+            popup.innerHTML = `
+                <div class="popup-title">Profile Updated!</div>
+                <div class="popup-description">Your changes have been saved.</div>
+            `;
+            document.body.appendChild(popup);
+
+            const style = document.createElement("style");
+            style.textContent = `
+                .popup-alert {
+                    position: fixed;
+                    bottom: 20px;
+                    right: 20px;
+                    background: #ADD8E6;
+                    color: #003366;
+                    border: 1px solid #87CEEB;
+                    border-radius: 8px;
+                    padding: 16px 20px;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                    transform: translateX(400px);
+                    opacity: 0;
+                    transition: all 0.3s ease-in-out;
+                    z-index: 1000;
+                    max-width: 300px;
+                }
+                .popup-alert.show {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                .popup-title {
+                    font-weight: 500;
+                    margin-bottom: 4px;
+                    font-size: 14px;
+                }
+                .popup-description {
+                    font-size: 12px;
+                    opacity: 0.8;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        return popup;
+    }
+
+    // Load saved profile data
+    function loadSavedData() {
         const savedData = localStorage.getItem("studentProfile");
-        if (savedData) {
-          const parsedData = JSON.parse(savedData);
-          
-          // Update profile display
-          for (let inputId in fieldMap) {
-            if (parsedData[inputId]) {
-              const profileElement = document.getElementById(fieldMap[inputId]);
-              if (profileElement) {
-                profileElement.textContent = parsedData[inputId];
-              }
-              
-              // Update form inputs
-              const formInput = document.getElementById(inputId);
-              if (formInput) {
-                formInput.value = parsedData[inputId];
-              }
+        if (!savedData) return;
+
+        const parsedData = JSON.parse(savedData) || {};
+        for (const inputId in fieldMap) {
+            const val = parsedData[inputId];
+            if (val != null) {
+                const profileElement = document.getElementById(fieldMap[inputId]);
+                if (profileElement) profileElement.textContent = val;
+
+                const formInput = document.getElementById(inputId);
+                if (formInput) formInput.value = val;
             }
-          }
-
-          // Load saved profile picture
-          if (parsedData.profileImage) {
+        }
+        if (parsedData.profileImage && profileImage) {
             profileImage.src = parsedData.profileImage;
-          }
         }
-      }
+    }
 
-      // Handle profile image upload
-      profileImage.addEventListener("click", function() {
-        fileInput.click();
-      });
+    // Handle profile image upload
+    if (profileImage && fileInput) {
+        profileImage.addEventListener("click", function () {
+            fileInput.click();
+        });
 
-      fileInput.addEventListener("change", function() {
-        const file = fileInput.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = function(e) {
-            profileImage.src = e.target.result;
+        fileInput.addEventListener("change", function () {
+            const file = fileInput.files && fileInput.files[0];
+            if (!file) return;
 
-            // Save updated image in localStorage along with other data
-            let currentData = JSON.parse(localStorage.getItem("studentProfile")) || {};
-            currentData.profileImage = e.target.result;
-            localStorage.setItem("studentProfile", JSON.stringify(currentData));
-          };
-          reader.readAsDataURL(file);
-        }
-      });
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                if (profileImage) profileImage.src = e.target.result;
+                const currentData = JSON.parse(localStorage.getItem("studentProfile")) || {};
+                currentData.profileImage = e.target.result;
+                localStorage.setItem("studentProfile", JSON.stringify(currentData));
+            };
+            reader.readAsDataURL(file);
+        });
+    }
 
-      // Handle form submission
-      profileForm.addEventListener("submit", function(e) {
-        e.preventDefault();
+    // Handle form submission
+    if (profileForm) {
+        profileForm.addEventListener("submit", function (e) {
+            e.preventDefault();
 
-        const formData = new FormData(profileForm);
-        let updatedData = JSON.parse(localStorage.getItem("studentProfile")) || {};
+            const formData = new FormData(profileForm);
+            let updatedData = JSON.parse(localStorage.getItem("studentProfile")) || {};
 
-        // Update data with form values
-        for (let inputId in fieldMap) {
-          const value = formData.get(inputId).trim();
-          updatedData[inputId] = value;
-          
-          // Update profile display
-          const profileElement = document.getElementById(fieldMap[inputId]);
-          if (profileElement) {
-            profileElement.textContent = value;
-          }
-        }
+            for (const inputId in fieldMap) {
+                let value = formData.get(inputId);
+                value = value ? value.trim() : "";
+                updatedData[inputId] = value;
 
-        // Save profile image if exists
-        if (!updatedData.profileImage) {
-          updatedData.profileImage = profileImage.src;
-        }
+                const profileElement = document.getElementById(fieldMap[inputId]);
+                if (profileElement) {
+                    profileElement.textContent = value;
+                }
+            }
 
-        localStorage.setItem("studentProfile", JSON.stringify(updatedData));
-        
-        // Close modal
-        $('#personalDetailsModal2').modal('hide');
-      });
+            if (!updatedData.profileImage && profileImage?.src) {
+                updatedData.profileImage = profileImage.src;
+            }
 
-      // Initialize data on load
-      loadSavedData();
-    });
-  </script>
+            localStorage.setItem("studentProfile", JSON.stringify(updatedData));
+
+            // Show popup reliably
+            const popup = getPopup();
+            popup.classList.remove("show");
+            void popup.offsetWidth; // force reflow
+            popup.classList.add("show");
+
+            setTimeout(() => {
+                popup.classList.remove("show");
+            }, 4000);
+
+            // Close modal if Bootstrap is available
+            if (window.jQuery && typeof $("#personalDetailsModal2").modal === "function") {
+                $("#personalDetailsModal2").modal("hide");
+            }
+
+            // Optional reset
+            profileForm.reset();
+        });
+    }
+
+    // Initialize data on load
+    loadSavedData();
+});
+</script>
 </body>
 </html>
