@@ -700,71 +700,186 @@
                 transform: rotate(1turn);
             }
         }
-         .favBtn.active {
-        background: #e74c3c;
-        color: #fff;
-      }
+        
+        .favBtn.active {
+            background: #e74c3c;
+            color: #fff;
+        }
 
-      .favBtn.active i {
-        color: #fff;
-      }
+        .favBtn.active i {
+            color: #fff;
+        }
 
-      /* Remove button inside favourites popup */
-      .removeFavBtn {
-        background: #e74c3c; /* red delete color */
-        color: #fff;
-        border: none;
-        padding: 8px 14px;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 14px;
-        margin-top: 10px;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        transition: background 0.3s ease, transform 0.2s ease;
-      }
+        /* Remove button inside favourites popup */
+        .removeFavBtn {
+            background: #e74c3c; /* red delete color */
+            color: #fff;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
 
-      .removeFavBtn i {
-        font-size: 14px;
-      }
+        .removeFavBtn i {
+            font-size: 14px;
+        }
 
-      .removeFavBtn:hover {
-        background: #c0392b; /* darker red */
-        transform: scale(1.05);
-      }
+        .removeFavBtn:hover {
+            background: #c0392b; /* darker red */
+            transform: scale(1.05);
+        }
 
-      .removeFavBtn:active {
-        transform: scale(0.95);
-      }
+        .removeFavBtn:active {
+            transform: scale(0.95);
+        }
 
-      /* Remove button in Watch History */
-      .removeHistoryBtn {
-        background-color: #f39c12; /* orange to distinguish from red favourites */
-        color: white;
-        border: none;
-        padding: 8px 14px;
-        margin-top: 10px;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 14px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        transition: background-color 0.3s ease;
-      }
+        /* Remove button in Watch History */
+        .removeHistoryBtn {
+            background-color: #f39c12; /* orange to distinguish from red favourites */
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            margin-top: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background-color 0.3s ease;
+        }
 
-      .removeHistoryBtn i {
-        font-size: 14px;
-      }
+        .removeHistoryBtn i {
+            font-size: 14px;
+        }
 
-      .removeHistoryBtn:hover {
-        background-color: #d68910; /* darker orange on hover */
-      }
+        .removeHistoryBtn:hover {
+            background-color: #d68910; /* darker orange on hover */
+        }
+        
+        /* Full page loading overlay */
+        .page-loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .page-loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .page-loading-content {
+            text-align: center;
+            max-width: 500px;
+            padding: 2rem;
+        }
+        
+        .page-loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(39, 170, 220, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            margin: 0 auto 1.5rem;
+            animation: spin 1s linear infinite;
+        }
+        
+        .page-loading-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+        
+        .page-loading-subtext {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+        
+        .page-loading-progress {
+            height: 6px;
+            background-color: rgba(39, 170, 220, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+        
+        .page-loading-progress-bar {
+            height: 100%;
+            background-color: var(--primary);
+            width: 0%;
+            border-radius: 3px;
+            transition: width 0.4s ease;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Loading animation for cards */
+        .card-loading {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-loading::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            transform: translateX(-100%);
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0) 0,
+                rgba(255, 255, 255, 0.2) 20%,
+                rgba(255, 255, 255, 0.5) 60%,
+                rgba(255, 255, 255, 0)
+            );
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            100% {
+                transform: translateX(100%);
+            }
+        }
         
     </style>
 </head>
 <body>
+    <!-- Full Page Loading Overlay -->
+    <div class="page-loading-overlay" id="pageLoadingOverlay">
+        <div class="page-loading-content">
+            <div class="page-loading-spinner"></div>
+            <h2 class="page-loading-text">Loading Video Content</h2>
+            <p class="page-loading-subtext">Please wait while we prepare your learning experience...</p>
+            <div class="page-loading-progress">
+                <div class="page-loading-progress-bar" id="pageLoadingProgress"></div>
+            </div>
+            <p><small>This will only take a moment</small></p>
+        </div>
+    </div>
+
     <!-- Header -->
     <header class="header">
         <div class="container">
@@ -1132,7 +1247,7 @@
                     <div class="video-container">
                         <img src="${thumbnail}" alt="${title}" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;">
                         <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
-                        <div class="video-overlay" onclick="saveToHistory('${videoId}', '${title.replace(/'/g, "\\'")}', event)"></div>
+                        <div class="video-overlay" onclick="showPageLoading('${videoId}', '${title.replace(/'/g, "\\'")}', event)"></div>
                     </div>
                     <h3>${title}</h3>
                     <button class="favBtn ${isFav ? "active" : ""}" 
@@ -1144,6 +1259,34 @@
 
                 container.appendChild(card);
             });
+        }
+
+        // Show full page loading animation
+        function showPageLoading(videoId, title, event) {
+            const overlay = document.getElementById('pageLoadingOverlay');
+            const progressBar = document.getElementById('pageLoadingProgress');
+            
+            // Show the loading overlay
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Simulate progress (for demonstration purposes)
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += Math.random() * 10;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(progressInterval);
+                    
+                    // After progress completes, show the video
+                    setTimeout(() => {
+                        overlay.classList.remove('active');
+                        document.body.style.overflow = '';
+                        saveToHistory(videoId, title, event);
+                    }, 500);
+                }
+                progressBar.style.width = progress + '%';
+            }, 200);
         }
 
         // Render pagination controls
