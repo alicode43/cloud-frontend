@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Management Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8fafc;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+            background: white;
+            min-height: 100vh;
+        }
+
+        .header {
+            margin-bottom: 32px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #6b7280;
+        }
+
+        .form-type-selector {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .form-type-btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .form-type-btn.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .form-type-btn:not(.active) {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .form-type-btn:not(.active):hover {
+            background: #e5e7eb;
+        }
+
+        .section {
+            margin-bottom: 24px;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid;
+        }
+
+        .section.course-selection {
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+        }
+
+        .section.course-details {
+            background: #eff6ff;
+            border-color: #bfdbfe;
+        }
+
+        .section.topic-details {
+            background: #f9fafb;
+            border-color: #e5e7eb;
+        }
+
+        .section.quiz-section {
+            background: #fffbeb;
+            border-color: #fde68a;
+        }
+
+        .section h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 4px;
+        }
+
+        .form-input {
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            /* ring: 2px solid #2563eb; */
+            border-color: transparent;
+        }
+
+        .textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .course-card {
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+        }
+
+        .course-card:hover {
+            border-color: #10b981;
+        }
+
+        .course-card.selected {
+            border-color: #10b981;
+            background: #dcfce7;
+        }
+
+        .course-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .question-form {
+            margin-bottom: 16px;
+            padding: 16px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .option-input-group {
+            position: relative;
+        }
+
+        .option-input-container {
+            display: flex;
+        }
+
+        .option-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px 0 0 6px;
+        }
+
+        .correct-btn {
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-left: none;
+            border-radius: 0 6px 6px 0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .correct-btn.active {
+            background: #10b981;
+            color: white;
+        }
+
+        .correct-btn:not(.active) {
+            background: #f3f4f6;
+        }
+
+        .correct-btn:not(.active):hover {
+            background: #dcfce7;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #eab308;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #ca8a04;
+        }
+
+        .btn-secondary {
+            background: #8b5cf6;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #7c3aed;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #6b7280;
+            border: 1px solid #d1d5db;
+        }
+
+        .btn-outline:hover {
+            background: #f9fafb;
+        }
+
+        .question-list {
+            margin-top: 16px;
+        }
+
+        .question-item {
+            display: flex;
+            align-items: center;
+            justify-content: between;
+            padding: 12px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .question-content {
+            flex: 1;
+        }
+
+        .question-title {
+            font-weight: 500;
+            color: #1f2937;
+        }
+
+        .question-answer {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+
+        .delete-btn {
+            margin-left: 12px;
+            padding: 4px;
+            color: #dc2626;
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .delete-btn:hover {
+            background: #fee2e2;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 24px;
+        }
+
+        .preview-section {
+            margin-top: 32px;
+            padding: 16px;
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+        }
+
+        .preview-code {
+            background: #1f2937;
+            color: #10b981;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            overflow: auto;
+            max-height: 240px;
+            white-space: pre;
+        }
+
+        .preview-instructions {
+            margin-top: 16px;
+            padding: 12px;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 6px;
+        }
+
+        .preview-instructions p {
+            font-size: 0.875rem;
+            color: #1e40af;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .correct-indicator {
+            margin-left: 8px;
+            color: #10b981;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Course Management</h1>
+            <p>Add new courses or extend existing ones with new topics</p>
+        </div>
+
+        <!-- Form Type Selection -->
+        <div class="form-type-selector">
+            <button id="newCourseBtn" class="form-type-btn active" onclick="setFormType('new')">
+                Add New Course
+            </button>
+            <button id="existingCourseBtn" class="form-type-btn" onclick="setFormType('existing')">
+                Add Topic to Existing Course
+            </button>
+        </div>
+
+        <!-- Course Selection (for existing courses) -->
+        <div id="courseSelection" class="section course-selection hidden">
+            <label style="display: block; font-size: 0.875rem; font-weight: 500; color: #374151; margin-bottom: 8px;">
+                Select Course to Add Topic To:
+            </label>
+            <div class="course-grid" id="courseGrid">
+                <!-- Course cards will be populated by JS -->
+            </div>
+        </div>
+
+        <!-- New Course Details -->
+        <div id="courseDetails" class="section course-details">
+            <h3>Course Details</h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="courseId">Course ID</label>
+                    <input type="text" id="courseId" class="form-input" placeholder="e.g., react">
+                </div>
+                <div class="form-group">
+                    <label for="courseName">Course Name</label>
+                    <input type="text" id="courseName" class="form-input" placeholder="e.g., React">
+                </div>
+                <div class="form-group">
+                    <label for="courseIcon">Icon Class</label>
+                    <input type="text" id="courseIcon" class="form-input" placeholder="e.g., fab fa-react">
+                </div>
+                <div class="form-group">
+                    <label for="courseColor">Color</label>
+                    <input type="color" id="courseColor" class="form-input" value="#000000">
+                </div>
+            </div>
+            <div class="form-group" style="margin-top: 16px;">
+                <label for="courseDescription">Description</label>
+                <textarea id="courseDescription" class="form-input textarea" placeholder="Course description..."></textarea>
+            </div>
+        </div>
+
+        <!-- Topic Details -->
+        <div class="section topic-details">
+            <h3>Topic Details</h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="topicId">Topic ID</label>
+                    <input type="text" id="topicId" class="form-input" placeholder="e.g., react-components">
+                </div>
+                <div class="form-group">
+                    <label for="topicName">Topic Name</label>
+                    <input type="text" id="topicName" class="form-input" placeholder="e.g., React Components">
+                </div>
+                <div class="form-group">
+                    <label for="videoId">Video ID/URL</label>
+                    <input type="text" id="videoId" class="form-input" placeholder="YouTube URL or video ID">
+                </div>
+                <div class="form-group">
+                    <label for="documentation">Documentation URL</label>
+                    <input type="url" id="documentation" class="form-input" placeholder="https://...">
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Questions -->
+        <div class="section quiz-section">
+            <h3>Quiz Questions</h3>
+            
+            <!-- Current Question Form -->
+            <div class="question-form">
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label for="currentQuestion">Question</label>
+                    <input type="text" id="currentQuestion" class="form-input" placeholder="Enter your question...">
+                </div>
+                
+                <div class="options-grid">
+                    <div class="option-input-group">
+                        <label>Option 1 <span id="correct1" class="correct-indicator hidden">(Correct)</span></label>
+                        <div class="option-input-container">
+                            <input type="text" id="option1" class="option-input" placeholder="Option 1...">
+                            <button type="button" class="correct-btn" onclick="setCorrectAnswer(0)" id="correctBtn1">✓</button>
+                        </div>
+                    </div>
+                    <div class="option-input-group">
+                        <label>Option 2 <span id="correct2" class="correct-indicator hidden">(Correct)</span></label>
+                        <div class="option-input-container">
+                            <input type="text" id="option2" class="option-input" placeholder="Option 2...">
+                            <button type="button" class="correct-btn" onclick="setCorrectAnswer(1)" id="correctBtn2">✓</button>
+                        </div>
+                    </div>
+                    <div class="option-input-group">
+                        <label>Option 3 <span id="correct3" class="correct-indicator hidden">(Correct)</span></label>
+                        <div class="option-input-container">
+                            <input type="text" id="option3" class="option-input" placeholder="Option 3...">
+                            <button type="button" class="correct-btn" onclick="setCorrectAnswer(2)" id="correctBtn3">✓</button>
+                        </div>
+                    </div>
+                    <div class="option-input-group">
+                        <label>Option 4 <span id="correct4" class="correct-indicator hidden">(Correct)</span></label>
+                        <div class="option-input-container">
+                            <input type="text" id="option4" class="option-input" placeholder="Option 4...">
+                            <button type="button" class="correct-btn" onclick="setCorrectAnswer(3)" id="correctBtn4">✓</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-primary" onclick="addQuizQuestion()">
+                    <i class="fas fa-plus"></i>
+                    Add Question
+                </button>
+            </div>
+
+            <!-- Added Questions List -->
+            <div id="questionsList" class="question-list hidden">
+                <h4 style="font-weight: 500; color: #1f2937; margin-bottom: 12px;">
+                    Added Questions (<span id="questionCount">0</span>)
+                </h4>
+                <div id="questionsContainer"></div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="actions">
+            <button class="btn btn-outline" onclick="resetForm()">
+                Reset Form
+            </button>
+            
+            <button class="btn btn-secondary" onclick="generateAndCopy()">
+                <i class="fas fa-save"></i>
+                Generate & Copy Data
+            </button>
+        </div>
+
+        <!-- Preview Section -->
+        <div class="preview-section">
+            <h3>Generated Data Preview</h3>
+            <pre id="previewCode" class="preview-code"></pre>
+            
+            <div class="preview-instructions">
+                <p id="instructionsText">
+                    <strong>Instructions:</strong> This generates a complete new course object. Add it to your courses array.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let formType = 'new';
+        let selectedCourse = '';
+        let quizQuestions = [];
+        let currentCorrectAnswer = 0;
+
+        const existingCourses = [
+            { id: "html", name: "HTML", icon: "fab fa-html5", color: "#e34c26" },
+            { id: "css", name: "CSS", icon: "fab fa-css3-alt", color: "#1572b6" },
+            { id: "javascript", name: "JavaScript", icon: "fab fa-js-square", color: "#f7df1e" },
+            { id: "sfmc", name: "Salesforce Marketing Cloud", icon: "fas fa-cloud", color: "#0078d4" },
+            { id: "ampscript", name: "AMPscript", icon: "fas fa-code", color: "#ff6b6b" },
+            { id: "sql", name: "SQL", icon: "fas fa-database", color: "#336791" }
+        ];
+
+        function setFormType(type) {
+            formType = type;
+            
+            // Update button states
+            document.getElementById('newCourseBtn').classList.toggle('active', type === 'new');
+            document.getElementById('existingCourseBtn').classList.toggle('active', type === 'existing');
+            
+            // Show/hide sections
+            document.getElementById('courseSelection').classList.toggle('hidden', type === 'new');
+            document.getElementById('courseDetails').classList.toggle('hidden', type === 'existing');
+            
+            updatePreview();
+        }
+
+        function initializeCourseGrid() {
+            const grid = document.getElementById('courseGrid');
+            grid.innerHTML = '';
+            
+            existingCourses.forEach(course => {
+                const card = document.createElement('div');
+                card.className = 'course-card';
+                card.onclick = () => selectCourse(course.id);
+                card.innerHTML = `
+                    <div class="course-icon">
+                        <i class="${course.icon}"></i>
+                    </div>
+                    <span style="font-weight: 500;">${course.name}</span>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function selectCourse(courseId) {
+            selectedCourse = courseId;
+            
+            // Update visual selection
+            document.querySelectorAll('.course-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            event.target.closest('.course-card').classList.add('selected');
+            
+            updatePreview();
+        }
+
+        function setCorrectAnswer(index) {
+            currentCorrectAnswer = index;
+            
+            // Update button states
+            for (let i = 0; i < 4; i++) {
+                const btn = document.getElementById(`correctBtn${i + 1}`);
+                const indicator = document.getElementById(`correct${i + 1}`);
+                
+                btn.classList.toggle('active', i === index);
+                indicator.classList.toggle('hidden', i !== index);
+            }
+        }
+
+        function addQuizQuestion() {
+            const question = document.getElementById('currentQuestion').value.trim();
+            const options = [
+                document.getElementById('option1').value.trim(),
+                document.getElementById('option2').value.trim(),
+                document.getElementById('option3').value.trim(),
+                document.getElementById('option4').value.trim()
+            ];
+
+            if (question && options.every(opt => opt)) {
+                const questionObj = {
+                    question: question,
+                    options: options,
+                    correct: currentCorrectAnswer
+                };
+
+                quizQuestions.push(questionObj);
+                
+                // Clear form
+                document.getElementById('currentQuestion').value = '';
+                document.getElementById('option1').value = '';
+                document.getElementById('option2').value = '';
+                document.getElementById('option3').value = '';
+                document.getElementById('option4').value = '';
+                
+                // Reset correct answer
+                setCorrectAnswer(0);
+                
+                updateQuestionsList();
+                updatePreview();
+            } else {
+                alert('Please fill in all question fields before adding.');
+            }
+        }
+
+        function removeQuizQuestion(index) {
+            quizQuestions.splice(index, 1);
+            updateQuestionsList();
+            updatePreview();
+        }
+
+        function updateQuestionsList() {
+            const listContainer = document.getElementById('questionsList');
+            const questionsContainer = document.getElementById('questionsContainer');
+            const countSpan = document.getElementById('questionCount');
+
+            if (quizQuestions.length === 0) {
+                listContainer.classList.add('hidden');
+                return;
+            }
+
+            listContainer.classList.remove('hidden');
+            countSpan.textContent = quizQuestions.length;
+
+            questionsContainer.innerHTML = '';
+            quizQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-item';
+                questionDiv.innerHTML = `
+                    <div class="question-content">
+                        <div class="question-title">${q.question}</div>
+                        <div class="question-answer">Correct: ${q.options[q.correct]}</div>
+                    </div>
+                    <button class="delete-btn" onclick="removeQuizQuestion(${index})">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                questionsContainer.appendChild(questionDiv);
+            });
+        }
+
+        function generateCourseData() {
+            const topicData = {
+                id: document.getElementById('topicId').value,
+                name: document.getElementById('topicName').value,
+                videoId: document.getElementById('videoId').value,
+                documentation: document.getElementById('documentation').value,
+                quiz: quizQuestions
+            };
+
+            if (formType === 'new') {
+                const courseData = {
+                    id: document.getElementById('courseId').value,
+                    name: document.getElementById('courseName').value,
+                    icon: document.getElementById('courseIcon').value,
+                    color: document.getElementById('courseColor').value,
+                    description: document.getElementById('courseDescription').value,
+                    topics: [topicData]
+                };
+                return courseData;
+            } else {
+                return topicData;
+            }
+        }
+
+        function updatePreview() {
+            const data = generateCourseData();
+            const previewCode = document.getElementById('previewCode');
+            const instructionsText = document.getElementById('instructionsText');
+
+            previewCode.textContent = JSON.stringify(data, null, 2);
+
+            if (formType === 'new') {
+                instructionsText.innerHTML = '<strong>Instructions:</strong> This generates a complete new course object. Add it to your courses array.';
+            } else {
+                const courseName = selectedCourse ? existingCourses.find(c => c.id === selectedCourse)?.name || '[selected]' : '[selected]';
+                instructionsText.innerHTML = `<strong>Instructions:</strong> This generates a topic object. Add it to the topics array of the ${courseName} course.`;
+            }
+        }
+
+        function generateAndCopy() {
+            const data = generateCourseData();
+            const jsonString = JSON.stringify(data, null, 2);
+            
+            navigator.clipboard.writeText(jsonString).then(() => {
+                alert('Generated data copied to clipboard!');
+            }).catch(err => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = jsonString;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('Generated data copied to clipboard!');
+            });
+        }
+
+        function resetForm() {
+            // Clear all form fields
+            document.getElementById('courseId').value = '';
+            document.getElementById('courseName').value = '';
+            document.getElementById('courseIcon').value = '';
+            document.getElementById('courseColor').value = '#000000';
+            document.getElementById('courseDescription').value = '';
+            
+            document.getElementById('topicId').value = '';
+            document.getElementById('topicName').value = '';
+            document.getElementById('videoId').value = '';
+            document.getElementById('documentation').value = '';
+            
+            document.getElementById('currentQuestion').value = '';
+            document.getElementById('option1').value = '';
+            document.getElementById('option2').value = '';
+            document.getElementById('option3').value = '';
+            document.getElementById('option4').value = '';
+
+            // Reset state
+            quizQuestions = [];
+            selectedCourse = '';
+            setCorrectAnswer(0);
+            
+            // Update UI
+            updateQuestionsList();
+            updatePreview();
+            
+            // Clear course selection
+            document.querySelectorAll('.course-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+        }
+
+        // Event listeners for real-time preview updates
+        function setupEventListeners() {
+            const inputs = ['courseId', 'courseName', 'courseIcon', 'courseColor', 'courseDescription', 
+                          'topicId', 'topicName', 'videoId', 'documentation'];
+            
+            inputs.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.addEventListener('input', updatePreview);
+                }
+            });
+        }
+
+        // Initialize the application
+        function init() {
+            initializeCourseGrid();
+            setupEventListeners();
+            updatePreview();
+            setCorrectAnswer(0); // Set default correct answer
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

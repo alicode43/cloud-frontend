@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cloud Odyssey Training Platform</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/landing.css">
 </head>
+
 <body>
     <!-- Header -->
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <!-- Logo and Platform Name -->
-                <div class="logo-containe">
+                <div class="logo-container">
                     <div class="logo-icon">
-                    <img src="https://superbcompanies.s3.eu-central-1.amazonaws.com/images/companies/logos/2ff8d2b0-31e2-11ee-8644-91804827fca0.jpg" alt="Logo" class="logo">
+                        <img src="https://superbcompanies.s3.eu-central-1.amazonaws.com/images/companies/logos/2ff8d2b0-31e2-11ee-8644-91804827fca0.jpg"
+                            alt="Logo" class="logo">
                     </div>
                     <div>
                         <h1 class="text-primary">Cloud Odyssey Training Platform</h1>
@@ -24,29 +29,22 @@
                 <!-- Navigation Links -->
                 <div class="nav-links">
                     <a href="#why-us" class="nav-link">Why Us</a>
-                    <a href="#" class="btn btn-primary">Login</a>
+                    <a href="#departments" class="nav-link">Departments</a>
+                    <a href="#" class="btn btn-primary" id="loginBtn">Login / Sign-up</a>
                 </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" aria-label="Toggle navigation menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
         </div>
     </header>
 
     <!-- Hero Section -->
     <section class="hero">
-        <!-- Animated Background Images -->
-        <div class="hero-background">
-            <div class="hero-bg-image" id="bg-1">
-                <img src="https://images.unsplash.com/photo-1721444127971-b7d0023bbef2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjbG91ZCUyMGNvbXB1dGluZyUyMHRlY2hub2xvZ3klMjBhYnN0cmFjdHxlbnwxfHx8fDE3NTYxMTgxMTh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" alt="Background 1">
-            </div>
-            <div class="hero-bg-image" id="bg-2">
-                <img src="https://images.unsplash.com/photo-1644325349124-d1756b79dd42?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkaWdpdGFsJTIwdHJhbnNmb3JtYXRpb24lMjBuZXR3b3JrfGVufDF8fHx8MTc1NjExODEyMXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" alt="Background 2">
-            </div>
-            <div class="hero-bg-image" id="bg-3">
-                <img src="https://images.unsplash.com/photo-1680691257251-5fead813b73e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkYXRhJTIwY2VudGVyJTIwc2VydmVycyUyMGJsdWV8ZW58MXx8fHwxNzU2MTE4MTI0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" alt="Background 3">
-            </div>
-            <!-- Gradient Overlay -->
-            <div class="hero-overlay"></div>
-        </div>
-
         <!-- Content -->
         <div class="container">
             <div class="hero-content">
@@ -57,23 +55,22 @@
                             Welcome to Cloud Odyssey Training Platform
                         </h1>
                         <p class="hero-subtitle">
-                            Your journey into the world of cloud starts here!<br> Learn. Explore. Grow.<br> We're excited to have you onboard—let's begin this odyssey together!
+                            Your journey into the world of cloud starts here!<br> Learn. Explore. Grow.<br> We're
+                            excited to have you onboard—let's begin this odyssey together!
                         </p>
                     </div>
-                    
+
                     <div class="hero-buttons">
                         <a href="#" class="btn btn-primary btn-lg">Start Learning Today</a>
                     </div>
-
-                  
                 </div>
 
                 <!-- Hero Image -->
                 <div class="hero-image">
                     <div class="hero-image-container">
-                        <img src="https://appexchange.salesforce.com/partners/servlet/servlet.FileDownload?file=00P4V0000161ayBUAQ" alt="Online learning platform">
+                        <img src="https://appexchange.salesforce.com/partners/servlet/servlet.FileDownload?file=00P4V0000161ayBUAQ"
+                            alt="Online learning platform">
                     </div>
-                   
                 </div>
             </div>
         </div>
@@ -87,13 +84,12 @@
     <!-- Why Us Section -->
     <section id="why-us" class="why-us">
         <div class="container">
-            <!-- Section Header -->
             <div class="section-header">
                 <h2 class="section-title text-gray-900">
-                    Why Choose CO Training Platform ?
+                    Why Choose CO Training Platform?
                 </h2>
                 <p class="section-subtitle">
-                    We provide everything you need to succeed in your cloud technology journey. 
+                    We provide everything you need to succeed in your cloud technology journey.
                     From comprehensive training materials to expert guidance.
                 </p>
             </div>
@@ -103,12 +99,14 @@
                 <div class="feature-card">
                     <div class="feature-content">
                         <div class="feature-image">
-                            <img src="https://learn.g2.com/hubfs/Screenshot%202023-02-20%20at%202.56.32%20PM.png" alt="High-Quality Recordings">
+                            <img src="https://learn.g2.com/hubfs/Screenshot%202023-02-20%20at%202.56.32%20PM.png"
+                                alt="High-Quality Recordings">
                             <div class="feature-icon">📹</div>
                         </div>
                         <h3 class="feature-title text-gray-900">High-Quality Recordings</h3>
                         <p class="feature-description">
-                            Access comprehensive video tutorials and recorded sessions from industry experts. Learn at your own pace with detailed explanations and real-world examples.
+                            Access comprehensive video tutorials and recorded sessions from industry experts. Learn at
+                            your own pace with detailed explanations and real-world examples.
                         </p>
                     </div>
                 </div>
@@ -116,12 +114,14 @@
                 <div class="feature-card">
                     <div class="feature-content">
                         <div class="feature-image">
-                            <img src="https://scoonews.com/wp-content/uploads/2023/04/Dr-Vijay-article-pic-1000x600.jpg" alt="Comprehensive Resources">
+                            <img src="https://scoonews.com/wp-content/uploads/2023/04/Dr-Vijay-article-pic-1000x600.jpg"
+                                alt="Comprehensive Resources">
                             <div class="feature-icon">📚</div>
                         </div>
                         <h3 class="feature-title text-gray-900">Comprehensive Resources</h3>
                         <p class="feature-description">
-                            Gain access to extensive documentation, practice exercises, and downloadable resources to reinforce your learning and build practical skills.
+                            Gain access to extensive documentation, practice exercises, and downloadable resources to
+                            reinforce your learning and build practical skills.
                         </p>
                     </div>
                 </div>
@@ -129,12 +129,14 @@
                 <div class="feature-card">
                     <div class="feature-content">
                         <div class="feature-image">
-                            <img src="https://media.licdn.com/dms/image/v2/D4D0DAQEEMx8Y0xO8Ig/learning-public-crop_288_512/learning-public-crop_288_512/0/1731546670034?e=2147483647&v=beta&t=iMn_vhX-JUnL6CLM9l9SJquT4JbHbWUGz4wpZyAExCA" alt="Expert Articles & Insights">
+                            <img src="https://media.licdn.com/dms/image/v2/D4D0DAQEEMx8Y0xO8Ig/learning-public-crop_288_512/learning-public-crop_288_512/0/1731546670034?e=2147483647&v=beta&t=iMn_vhX-JUnL6CLM9l9SJquT4JbHbWUGz4wpZyAExCA"
+                                alt="Expert Articles & Insights">
                             <div class="feature-icon">👥</div>
                         </div>
                         <h3 class="feature-title text-gray-900">Expert Articles & Insights</h3>
                         <p class="feature-description">
-                            Stay updated with the latest industry trends through our curated articles, blog posts, and insights from certified professionals and thought leaders.
+                            Stay updated with the latest industry trends through our curated articles, blog posts, and
+                            insights from certified professionals and thought leaders.
                         </p>
                     </div>
                 </div>
@@ -143,12 +145,12 @@
     </section>
 
     <!-- Departments Section -->
-    <section class="departments">
+    <section id="departments" class="departments">
         <div class="container">
             <!-- Section Header -->
             <div class="section-header">
                 <h2 class="section-title text-gray-900">
-                    Training Departments</span>
+                    Training Departments
                 </h2>
                 <p class="section-subtitle">
                     Choose your specialization and master the technologies that drive modern enterprise solutions.
@@ -161,9 +163,9 @@
                     <div class="department-icon blue">☁</div>
                     <h3 class="department-title text-gray-900">Salesforce Marketing Cloud (SFMC)</h3>
                     <p class="department-description">
-                        Master email marketing, customer journeys, automation, and data management with Salesforce Marketing Cloud.
+                        Master email marketing, customer journeys, automation, and data management with Salesforce
+                        Marketing Cloud.
                     </p>
-                    
                 </div>
 
                 <div class="department-card">
@@ -172,7 +174,6 @@
                     <p class="department-description">
                         Learn e-commerce development, storefront customization, and digital commerce solutions.
                     </p>
-                    
                 </div>
 
                 <div class="department-card">
@@ -181,7 +182,6 @@
                     <p class="department-description">
                         Become proficient in CRM configuration, custom development, and platform administration.
                     </p>
-                    
                 </div>
 
                 <div class="department-card">
@@ -190,7 +190,6 @@
                     <p class="department-description">
                         Master API development, integration patterns, and enterprise connectivity solutions.
                     </p>
-                   
                 </div>
             </div>
         </div>
@@ -202,9 +201,9 @@
             <div class="footer-content">
                 <!-- Logo and Company Name -->
                 <div class="footer-logo">
-                    <div >
-                                            <img src="https://superbcompanies.s3.eu-central-1.amazonaws.com/images/companies/logos/2ff8d2b0-31e2-11ee-8644-91804827fca0.jpg" alt="Logo" class="logo">
-
+                    <div class="footer-logo-icon">
+                        <img src="https://superbcompanies.s3.eu-central-1.amazonaws.com/images/companies/logos/2ff8d2b0-31e2-11ee-8644-91804827fca0.jpg"
+                            alt="Logo" class="logo">
                     </div>
                     <div>
                         <h3>Cloud Odyssey Training Platform</h3>
@@ -219,83 +218,86 @@
         </div>
     </footer>
 
-    <script>
-        // Background Image Slideshow
-        let currentImageIndex = 0;
-        const backgroundImages = ['bg-1', 'bg-2', 'bg-3'];
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Login</h2>
+                <button class="modal-close">&times;</button>
+            </div>
 
-        function changeBackgroundImage() {
-            // Remove active class from all images
-            backgroundImages.forEach(id => {
-                document.getElementById(id).classList.remove('active');
-            });
+            <!-- Email -->
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="loginEmail" placeholder="Enter your email">
+                <p class="error" id="loginEmailError"></p>
+            </div>
 
-            // Add active class to current image
-            document.getElementById(backgroundImages[currentImageIndex]).classList.add('active');
+            <!-- Password -->
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="loginPassword" placeholder="Enter your password">
+                <p class="error" id="loginPasswordError"></p>
+            </div>
 
-            // Move to next image
-            currentImageIndex = (currentImageIndex + 1) % backgroundImages.length;
-        }
+            <!-- Button -->
+            <button class="form-button" onclick="validateLogin(event)">Login</button>
 
-        // Initialize first image and start slideshow
-        document.addEventListener('DOMContentLoaded', function() {
-            changeBackgroundImage();
-            setInterval(changeBackgroundImage, 5000); // Change every 5 seconds
-        });
+            <div class="modal-switch">
+                <p>Don't have an account? <a id="switchToSignup">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create Account</h2>
+                <button class="modal-close">&times;</button>
+            </div>
 
-        // Intersection Observer for scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+            <form id="signupForm">
+                <!-- Username -->
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="username" placeholder="Enter username" required>
+                    <div class="error" id="usernameError"></div>
+                </div>
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
+                <!-- Email -->
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email" placeholder="Enter email" required>
+                    <div class="error" id="emailError"></div>
+                </div>
 
-        // Observe elements for scroll animations
-        document.addEventListener('DOMContentLoaded', function() {
-            const animatedElements = document.querySelectorAll('.feature-card, .department-card');
-            animatedElements.forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(30px)';
-                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                observer.observe(el);
-            });
-        });
+                <!-- Password -->
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="Enter password" required>
+                    <div class="error" id="passwordError"></div>
+                </div>
 
-        // Add loading fallback for images
-        document.addEventListener('DOMContentLoaded', function() {
-            const images = document.querySelectorAll('img');
-            images.forEach(img => {
-                img.addEventListener('error', function() {
-                    this.style.backgroundColor = '#f3f4f6';
-                    this.style.display = 'flex';
-                    this.style.alignItems = 'center';
-                    this.style.justifyContent = 'center';
-                    this.alt = 'Image not available';
-                });
-            });
-        });
+                <!-- Confirm Password -->
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" id="confirmPassword" placeholder="Confirm password" required>
+                    <div class="error" id="confirmPasswordError"></div>
+                </div>
+
+                <button type="submit" class="form-button">Sign Up</button>
+            </form>
+
+            <div class="modal-switch">
+                <p>Already have an account? <a id="switchToLogin">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/landing.js">
+        
     </script>
 </body>
+
 </html>

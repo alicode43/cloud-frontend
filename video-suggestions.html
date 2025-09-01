@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cloud Odyssey - Video Gallery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary: #27AADC;
+            --primary-dark: #1e90c0;
+            --primary-light: #e6f4ff;
+            --secondary: #f1f1f4;
+            --text-dark: #1f2937;
+            --text-light: #717182;
+            --background: #f9fbfd;
+            --card-bg: #ffffff;
+            --border: rgba(0, 0, 0, 0.1);
+            --success: #2ecc71;
+            --error: #e74c3c;
+            --warning: #f39c12;
+            --radius: 0.625rem;
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--background);
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        /* Header Styles */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            padding: 0.5rem 0;
+        }
+
+        .container {
+            max-width: 1480px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 4rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo {
+            width: 50px;
+            height: auto;
+        }
+
+        .text-primary {
+             /* Gradient text */
+        background: linear-gradient(90deg, #262727, #00c6ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+        /* For Firefox */
+        background-clip: text;
+        color: transparent;
+
+        font-size: clamp(20px, 2vw, 22px);
+
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.2s;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.375rem;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 30px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 101;
+        }
+
+        .mobile-menu-toggle span {
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 5px;
+            transition: all 0.3s linear;
+            position: relative;
+            transform-origin: 1px;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-in-out;
+            z-index: 98;
+        }
+
+        .mobile-nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 320px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            transition: right 0.3s ease-in-out;
+            z-index: 99;
+            padding: 5rem 1.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav-link {
+            display: flex;
+            align-items: center;
+            padding: 1rem 0;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid var(--secondary);
+        }
+
+        .mobile-nav-link i {
+            margin-right: 1rem;
+            color: var(--primary);
+            width: 24px;
+            text-align: center;
+        }
+
+        .mobile-nav-link:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-nav-link:hover {
+            color: var(--primary);
+        }
+
+        .mobile-nav-account {
+            margin-top: auto;
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--secondary);
+        }
+
+        /* Video Gallery Styles */
+        .gallery-container {
+            padding: 1rem;
+        }
+
+        .gallery-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: var(--radius);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .gallery-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            margin-left: 10px;
+        }
+        
+        i.fas.fa-history {
+            margin-right: 10px;
+        }
+
+        i.fas.fa-heart {
+            margin-right: 10px;
+        }
+
+        /* Bubble Categories */
+        .bubble-categories {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+            padding: 0 1rem;
+        }
+
+        .bubble-category {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.8rem 1.5rem;
+            background: var(--primary-light);
+            color: var(--primary);
+            border-radius: 2rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(39, 170, 220, 0.15);
+            border: 2px solid transparent;
+        }
+
+        .bubble-category:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(39, 170, 220, 0.2);
+        }
+
+        .bubble-category.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(39, 170, 220, 0.3);
+        }
+
+        .bubble-category i {
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        /* CHANNEL SUGGESTIONS */
+        .channel-section {
+            margin: 2rem 0;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            padding-left: 0.5rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        #channelSuggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .channel-card {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--card-bg);
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--radius);
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 500;
+            border: 1px solid #e0e6f0;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .channel-card img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+
+        .channel-card:hover {
+            background: #f0f7ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        /* GRID CARDS */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .card h3 {
+            font-size: 1rem;
+            margin: 1rem;
+            color: var(--text-dark);
+            line-height: 1.4;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            overflow: hidden;
+        }
+
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: 2;
+            cursor: pointer;
+        }
+
+        /* FAVORITES BTN */
+        .favBtn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            color: white;
+            font-size: 0.9rem;
+            margin: 0 1rem 1rem;
+            transition: all 0.2s;
+        }
+
+        .favBtn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Pagination */
+        #pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        #pagination .btn {
+            min-width: 40px;
+            height: 40px;
+            background: var(--card-bg);
+            color: var(--primary);
+            border: 1px solid rgba(11, 94, 215, 0.12);
+            border-radius: var(--radius);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease-in-out;
+        }
+
+        #pagination .btn:hover {
+            background: #e9f4ff;
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        #pagination .btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 8px rgba(11, 94, 215, 0.18);
+        }
+
+        #pagination .prev,
+        #pagination .next {
+            padding: 0 1rem;
+            background: #f6fbff;
+            color: var(--primary);
+            border: 1px solid rgba(11, 94, 215, 0.08);
+        }
+
+        #pagination .prev:hover,
+        #pagination .next:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-content h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary);
+        }
+
+        .history-item, .favourite-item {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 1rem;
+        }
+
+        .history-item:last-child, .favourite-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        /* MODAL BUTTONS */
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        button.closeBtn, button.clearBtn {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        button.closeBtn {
+            background: #ff4d4d;
+            border: none;
+            color: white;
+        }
+
+        button.closeBtn:hover {
+            background: #e60000;
+        }
+
+        button.clearBtn {
+            background: var(--primary);
+            border: none;
+            color: white;
+        }
+
+        button.clearBtn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Footer */
+        .footer {
+            background: #1f2937;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .footer-logo img {
+            width: 40px;
+            height: auto;
+        }
+
+        .footer-logo h3 {
+            color: white;
+            font-size: 1.25rem;
+        }
+
+        .footer-copyright {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 968px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-toggle {
+                display: flex;
+            }
+            
+            .header-content {
+                position: relative;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .gallery-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .gallery-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .bubble-categories {
+                gap: 0.5rem;
+            }
+            
+            .bubble-category {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                padding: 1.5rem;
+            }
+            
+            .modal-actions {
+                flex-direction: column;
+            }
+            
+            button.closeBtn, button.clearBtn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-container h1 {
+                font-size: 1.2rem;
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .bubble-category {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            
+            .bubble-category i {
+                margin-right: 0.3rem;
+            }
+        }
+
+        /* Loading animation */
+        .loader {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            grid-column: 1 / -1;
+        }
+
+        .loader::after {
+            content: "";
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--secondary);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: loading 0.8s ease infinite;
+        }
+
+        @keyframes loading {
+            to {
+                transform: rotate(1turn);
+            }
+        }
+         .favBtn.active {
+        background: #e74c3c;
+        color: #fff;
+      }
+
+      .favBtn.active i {
+        color: #fff;
+      }
+
+      /* Remove button inside favourites popup */
+      .removeFavBtn {
+        background: #e74c3c; /* red delete color */
+        color: #fff;
+        border: none;
+        padding: 8px 14px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        margin-top: 10px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: background 0.3s ease, transform 0.2s ease;
+      }
+
+      .removeFavBtn i {
+        font-size: 14px;
+      }
+
+      .removeFavBtn:hover {
+        background: #c0392b; /* darker red */
+        transform: scale(1.05);
+      }
+
+      .removeFavBtn:active {
+        transform: scale(0.95);
+      }
+
+      /* Remove button in Watch History */
+      .removeHistoryBtn {
+        background-color: #f39c12; /* orange to distinguish from red favourites */
+        color: white;
+        border: none;
+        padding: 8px 14px;
+        margin-top: 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: background-color 0.3s ease;
+      }
+
+      .removeHistoryBtn i {
+        font-size: 14px;
+      }
+
+      .removeHistoryBtn:hover {
+        background-color: #d68910; /* darker orange on hover */
+      }
+        
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <!-- Logo and Platform Name -->
+                <div class="logo-container">
+                    <div class="logo-icon">
+                        <img src="https://superbcompanies.s3.eu-central-1.amazonaws.com/images/companies/logos/2ff8d2b0-31e2-11ee-8644-91804827fca0.jpg" alt="Logo" class="logo">
+                    </div>
+                    <div>
+                        <h1 class="text-primary">Cloud Odyssey Training Platform</h1>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="courses.html" class="nav-link">Courses</a>
+                </div>
+                 <!-- Mobile Menu Toggle -->
+                <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+     <!-- Mobile Navigation -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="index.html" class="mobile-nav-link">
+            <i class="fas fa-home"></i> Home
+        </a>
+        <a href="courses.html" class="mobile-nav-link">
+            <i class="fas fa-book"></i> Courses
+        </a>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title">Cloud Odyssey Courses</h1>
+        <p class="page-subtitle">
+          Explore our curated collection of training videos
+        </p>
+      </div>
+    </div>
+
+    <!-- Video Gallery -->
+    <div class="container gallery-container">
+        <div class="gallery-header">
+            <div class="gallery-controls">
+                <button class="btn btn-primary" onclick="showHistory()">
+                    <i class="fas fa-history"></i> View History
+                </button>
+                <button class="btn btn-primary" onclick="showFavourites()">
+                    <i class="fas fa-heart"></i> View Favorites
+                </button>
+            </div>
+        </div>
+
+        <!-- Bubble Categories -->
+        <div class="bubble-categories">
+            <div class="bubble-category" data-category="javascript">
+                <i class="fab fa-js-square"></i> JavaScript
+            </div>
+            <div class="bubble-category" data-category="html">
+                <i class="fab fa-html5"></i> HTML & CSS
+            </div>
+            <div class="bubble-category" data-category="react js">
+                <i class="fab fa-react"></i> React JS
+            </div>
+           
+            <div class="bubble-category" data-category="salesforce">
+                <i class="fas fa-cloud"></i> Salesforce
+            </div>
+            <div class="bubble-category" data-category="sfmc">
+                <i class="fas fa-bullhorn"></i> SFMC
+            </div>
+            <div class="bubble-category" data-category="sfcc">
+                <i class="fas fa-shopping-cart"></i> SFCC
+            </div>
+            <div class="bubble-category" data-category="mulesoft">
+                <i class="fas fa-plug"></i> MuleSoft
+            </div>
+        </div>
+
+        <!-- Channel Suggestions -->
+        <div class="channel-section">
+            <h2 class="section-title">Suggested Channels</h2>
+            <div id="channelSuggestions"></div>
+        </div>
+
+        <!-- Video Grid -->
+        <div id="video-container" class="grid">
+            <div class="loader"></div>
+        </div>
+
+        <!-- Pagination -->
+        <div id="pagination"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="https://superbcompanies.s3.eu-central-1.amazonaws.com/images/companies/logos/2ff8d2b0-31e2-11ee-8644-91804827fca0.jpg" alt="Logo" class="logo">
+                    <h3>Cloud Odyssey Training Platform</h3>
+                </div>
+                <div class="footer-copyright">
+                    <p>© 2025 Cloud Odyssey Training Platform. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div id="historyModal" class="modal">
+        <div class="modal-content">
+            <h2><i class="fas fa-history"></i> Your Watch History</h2>
+            <div id="historyList"></div>
+            <div class="modal-actions">
+                <button class="clearBtn" onclick="clearHistory()">Clear History</button>
+                <button class="closeBtn" onclick="closeModal('historyModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="favouritesModal" class="modal">
+        <div class="modal-content">
+            <h2><i class="fas fa-heart"></i> Your Favorite Videos</h2>
+            <div id="favouritesList"></div>
+            <div class="modal-actions">
+                <button class="clearBtn" onclick="clearFavourites()">Clear Favorites</button>
+                <button class="closeBtn" onclick="closeModal('favouritesModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+     // Mobile menu functionality
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const mobileNav = document.getElementById('mobileNav');
+        const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+        
+        function toggleMobileMenu() {
+            mobileMenuToggle.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            mobileNavOverlay.classList.toggle('active');
+            
+            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : "";
+        }
+        
+        mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+        mobileNavOverlay.addEventListener('click', toggleMobileMenu);
+        
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', toggleMobileMenu);
+        });
+
+        // API keys with fallback
+        const API_KEYS = [
+            "AIzaSyAdbZki0nwZVRcjyRSosD6D8B-Kh3lPRU8",
+            "AIzaSyBkX6_OJJvgRAvWN1oYYOU4dq9zueS8gF4",
+            "AIzaSyDTcv9gLihbaM4Wq5V1sYh6rbxTDX_aLUA",
+        ];
+
+        let currentApiIndex = parseInt(localStorage.getItem("currentApiIndex")) || 0;
+        let API_KEY = API_KEYS[currentApiIndex];
+
+        // Get course and topic from URL
+        function getCourseFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('course') || "";
+        }
+
+        function getTopicFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('topic') || "";
+        }
+
+        function getCategoryFromUrl() {
+            const course = getCourseFromUrl();
+            const topic = getTopicFromUrl();
+            
+            // Map course names to search categories
+            const courseToCategory = {
+                "HTML": "html",
+                "CSS": "css",
+                "JavaScript": "javascript",
+                "Salesforce Marketing Cloud": "salesforce marketing cloud",
+                "AMPscript": "ampscript",
+                "SQL": "sql"
+            };
+            
+            // If we have a course from the dashboard, use it
+            if (course && courseToCategory[course]) {
+                return courseToCategory[course];
+            }
+            
+            // Fallback to the category parameter if no course
+            const params = new URLSearchParams(window.location.search);
+            return params.get('category') || "javascript";
+        }
+
+        // Update the page title based on the course
+        function updatePageTitle() {
+            const course = getCourseFromUrl();
+            const topic = getTopicFromUrl();
+            
+            if (course) {
+                document.querySelector('.page-title').textContent = `${course} Videos`;
+                
+                if (topic) {
+                    document.querySelector('.page-subtitle').textContent = 
+                        `Tutorial videos for: ${topic}`;
+                } else {
+                    document.querySelector('.page-subtitle').textContent = 
+                        `Explore ${course} training videos`;
+                }
+            }
+        }
+
+        let category = getCategoryFromUrl();
+        let cachedPages = {};
+        const maxVideosPerLoad = 12;
+        let pageTokens = [""];
+        let currentPage = 0;
+
+        document.addEventListener("DOMContentLoaded", function () {
+            updatePageTitle();
+            
+            // Set category from URL if present
+            category = getCategoryFromUrl();
+
+            fetchVideos(0);
+            fetchChannels(category);
+
+            // Highlight the active bubble
+            document.querySelectorAll(".bubble-category").forEach((bubble) => {
+                if (bubble.getAttribute("data-category") === category) {
+                    bubble.classList.add("active");
+                } else {
+                    bubble.classList.remove("active");
+                }
+                bubble.addEventListener("click", function () {
+                    document.querySelectorAll(".bubble-category").forEach((b) => b.classList.remove("active"));
+                    this.classList.add("active");
+
+                    category = this.getAttribute("data-category");
+                    cachedPages = {};
+                    pageTokens = [""];
+                    currentPage = 0;
+
+                    fetchVideos(0);
+                    fetchChannels(category);
+                });
+            });
+        });
+
+        function switchToNextApiKey() {
+            if (currentApiIndex < API_KEYS.length - 1) {
+                currentApiIndex++;
+                API_KEY = API_KEYS[currentApiIndex];
+                localStorage.setItem("currentApiIndex", currentApiIndex);
+                console.warn("Switched to backup API key:", API_KEY);
+                return true;
+            } else {
+                console.error("All API keys have failed.");
+                return false;
+            }
+        }
+
+        // Fetch videos from YouTube API
+        async function fetchVideos(page = 0) {
+            try {
+                const container = document.getElementById("video-container");
+                container.innerHTML = '<div class="loader"></div>';
+
+                if (cachedPages[page]) {
+                    renderVideos(cachedPages[page]);
+                    currentPage = page;
+                    renderPagination();
+                    return;
+                }
+
+                const course = getCourseFromUrl();
+                const topic = getTopicFromUrl();
+                
+                // Create a more specific search query if we have course/topic info
+                let searchQuery = category;
+                if (course && topic) {
+                    searchQuery = `${course} ${topic} tutorial`;
+                } else if (course) {
+                    searchQuery = `${course} programming tutorial`;
+                }
+
+                let API_URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(searchQuery)}&maxResults=${maxVideosPerLoad}&type=video&key=${API_KEY}`;
+
+                if (pageTokens[page]) {
+                    API_URL += `&pageToken=${pageTokens[page]}`;
+                }
+
+                const res = await fetch(API_URL);
+                const data = await res.json();
+
+                if (data.error) {
+                    console.warn("API error:", data.error.message);
+
+                    if (switchToNextApiKey()) {
+                        return fetchVideos(page);
+                    }
+
+                    container.innerHTML = `<div class="error-message">Error loading videos: ${data.error.message}</div>`;
+                    return;
+                }
+
+                cachedPages[page] = data.items;
+                renderVideos(data.items);
+
+                if (data.nextPageToken && !pageTokens[page + 1]) {
+                    pageTokens[page + 1] = data.nextPageToken;
+                }
+
+                currentPage = page;
+                localStorage.setItem("currentApiIndex", currentApiIndex);
+
+                renderPagination();
+            } catch (err) {
+                console.error("Error fetching videos:", err);
+                document.getElementById("video-container").innerHTML = `
+                    <div class="error-message">
+                        <p>Failed to load videos. Please check your connection and try again.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Render videos to the grid
+        function renderVideos(videos) {
+            const container = document.getElementById("video-container");
+
+            if (!videos || videos.length === 0) {
+                container.innerHTML = `<div class="error-message">No videos found for this category.</div>`;
+                return;
+            }
+
+            container.innerHTML = "";
+            let favourites = JSON.parse(localStorage.getItem("favourites")) || [];
+
+            videos.forEach((video) => {
+                const videoId = video.id.videoId;
+                const title = video.snippet.title;
+                const thumbnail = video.snippet.thumbnails.medium.url;
+
+                const isFav = favourites.some((v) => v.id === videoId);
+
+                const card = document.createElement("div");
+                card.classList.add("card");
+
+                card.innerHTML = `
+                    <div class="video-container">
+                        <img src="${thumbnail}" alt="${title}" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;">
+                        <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
+                        <div class="video-overlay" onclick="saveToHistory('${videoId}', '${title.replace(/'/g, "\\'")}', event)"></div>
+                    </div>
+                    <h3>${title}</h3>
+                    <button class="favBtn ${isFav ? "active" : ""}" 
+                        data-id="${videoId}"
+                        onclick="addToFavourites('${videoId}', '${title.replace(/'/g, "\\'")}', this)">
+                        <i class="fas fa-heart"></i> ${isFav ? "Added to Favorites" : "Add to Favorites"}
+                    </button>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        // Render pagination controls
+        function renderPagination() {
+            const pagination = document.getElementById("pagination");
+            pagination.innerHTML = "";
+
+            if (currentPage > 0) {
+                const prevBtn = document.createElement("button");
+                prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+                prevBtn.className = "btn prev";
+                prevBtn.onclick = () => fetchVideos(currentPage - 1);
+                pagination.appendChild(prevBtn);
+            }
+
+            for (let i = 0; i < pageTokens.length; i++) {
+                if (i > currentPage + 4) break;
+
+                const pageBtn = document.createElement("button");
+                pageBtn.innerText = i + 1;
+                pageBtn.className = "btn";
+                if (i === currentPage) {
+                    pageBtn.classList.add("active");
+                }
+                pageBtn.onclick = () => fetchVideos(i);
+                pagination.appendChild(pageBtn);
+            }
+
+            if (pageTokens[currentPage + 1]) {
+                const nextBtn = document.createElement("button");
+                nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+                nextBtn.className = "btn next";
+                nextBtn.onclick = () => fetchVideos(currentPage + 1);
+                pagination.appendChild(nextBtn);
+            }
+        }
+
+        // Fetch channel suggestions
+        async function fetchChannels(query) {
+            try {
+                let API_URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}+programming&type=channel&maxResults=5&key=${API_KEY}`;
+
+                const res = await fetch(API_URL);
+                const data = await res.json();
+
+                const container = document.getElementById("channelSuggestions");
+                container.innerHTML = "";
+
+                if (data.error) {
+                    console.warn("API error:", data.error.message);
+
+                    if (switchToNextApiKey()) {
+                        return fetchChannels(query);
+                    }
+
+                    container.innerHTML = "<p>Error loading channels. All API keys failed.</p>";
+                    return;
+                }
+
+                if (!data.items || data.items.length === 0) {
+                    container.innerHTML = "<p>No channels found for this category.</p>";
+                    return;
+                }
+
+                data.items.forEach((ch) => {
+                    const channelId = ch.snippet.channelId;
+                    const channelTitle = ch.snippet.title;
+                    const channelThumb = ch.snippet.thumbnails?.default?.url || "https://via.placeholder.com/32";
+
+                    const link = document.createElement("a");
+                    link.href = `https://www.youtube.com/channel/${channelId}`;
+                    link.target = "_blank";
+                    link.className = "channel-card";
+                    link.innerHTML = `
+                        <img src="${channelThumb}" alt="${channelTitle}">
+                        <span>${channelTitle}</span>
+                    `;
+
+                    container.appendChild(link);
+                    localStorage.setItem("currentApiIndex", currentApiIndex);
+                });
+            } catch (err) {
+                console.error("Error fetching channels:", err);
+            }
+        }
+
+        // Save video to watch history
+        function saveToHistory(videoId, title, event) {
+            let history = JSON.parse(localStorage.getItem("history")) || [];
+
+            if (!history.find((v) => v.id === videoId)) {
+                history.unshift({
+                    id: videoId,
+                    title,
+                    time: new Date().toLocaleString(),
+                });
+                localStorage.setItem("history", JSON.stringify(history));
+            }
+
+            const overlay = event.target;
+            overlay.style.display = "none";
+        }
+
+        // Show watch history modal
+        function showHistory() {
+            const modal = document.getElementById("historyModal");
+            const list = document.getElementById("historyList");
+
+            let history = JSON.parse(localStorage.getItem("history")) || [];
+
+            if (history.length === 0) {
+                list.innerHTML = "<p>You haven't watched any videos yet.</p>";
+            } else {
+                list.innerHTML = "";
+                history.forEach((video) => {
+                    const item = document.createElement("div");
+                    item.className = "history-item";
+                    item.innerHTML = `
+                        <h4>${video.title}</h4>
+                        <p><small>Watched on: ${video.time}</small></p>
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/${video.id}" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <button class="removeHistoryBtn" onclick="removeFromHistory('${video.id}')">
+                            <i class="fas fa-trash"></i> Remove
+                        </button>
+                    `;
+                    list.appendChild(item);
+                });
+            }
+
+            modal.style.display = "flex";
+        }
+
+        // Clear watch history
+        function clearHistory() {
+            localStorage.removeItem("history");
+            showHistory();
+        }
+
+        function removeFromHistory(videoId) {
+            let history = JSON.parse(localStorage.getItem("history")) || [];
+            history = history.filter((v) => v.id !== videoId);
+            localStorage.setItem("history", JSON.stringify(history));
+            showHistory();
+        }
+
+        // Close modal
+        function closeModal(id) {
+            document.getElementById(id).style.display = "none";
+        }
+
+        // Add video to favorites
+        function addToFavourites(videoId, title, btn) {
+            let favourites = JSON.parse(localStorage.getItem("favourites")) || [];
+            const index = favourites.findIndex((v) => v.id === videoId);
+
+            if (index === -1) {
+                favourites.push({ id: videoId, title: title });
+                localStorage.setItem("favourites", JSON.stringify(favourites));
+
+                btn.classList.add("active");
+                btn.innerHTML = '<i class="fas fa-heart"></i> Added to Favorites';
+            } else {
+                favourites.splice(index, 1);
+                localStorage.setItem("favourites", JSON.stringify(favourites));
+
+                btn.classList.remove("active");
+                btn.innerHTML = '<i class="fas fa-heart"></i> Add to Favorites';
+            }
+        }
+
+        // Show favorites modal
+        function showFavourites() {
+            const modal = document.getElementById("favouritesModal");
+            const list = document.getElementById("favouritesList");
+
+            let favourites = JSON.parse(localStorage.getItem("favourites")) || [];
+
+            if (favourites.length === 0) {
+                list.innerHTML = "<p>You haven't added any videos to favorites yet.</p>";
+            } else {
+                list.innerHTML = "";
+                favourites.forEach((video) => {
+                    const item = document.createElement("div");
+                    item.className = "favourite-item";
+                    item.innerHTML = `
+                        <h4>${video.title}</h4>
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/${video.id}" frameborder="0" allowfullscreen></iframe>
+                            <div class="video-overlay" onclick="saveToHistory('${video.id}', '${video.title.replace(/'/g, "\\'")}', event)"></div>
+                        </div>
+                        <button class="removeFavBtn" onclick="removeFavourite('${video.id}')">
+                            <i class="fas fa-trash"></i> Remove
+                        </button>
+                    `;
+                    list.appendChild(item);
+                });
+            }
+
+            modal.style.display = "flex";
+        }
+
+        // Clear favorites
+        function clearFavourites() {
+            localStorage.removeItem("favourites");
+            showFavourites();
+        }
+
+        function removeFavourite(videoId) {
+            let favourites = JSON.parse(localStorage.getItem("favourites")) || [];
+            favourites = favourites.filter((v) => v.id !== videoId);
+            localStorage.setItem("favourites", JSON.stringify(favourites));
+            showFavourites();
+            const favBtn = document.querySelector(`.favBtn[data-id="${videoId}"]`);
+            if (favBtn) {
+                favBtn.classList.remove("active");
+                favBtn.innerHTML = `<i class="fas fa-heart"></i> Add to Favourites`;
+            }
+        }  
+    </script>
+</body>
+</html>
