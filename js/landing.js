@@ -405,62 +405,118 @@ window.addEventListener('click', function (e) {
 
 /* ----------------- LOGIN (Validation + API) -----------------
    NOTE: attached to window so your HTML onclick="validateLogin(event)" works */
+// window.validateLogin = async function (event) {
+//   event.preventDefault();
+
+//   const emailInput = document.getElementById("loginEmail");
+//   const passwordInput = document.getElementById("loginPassword");
+//   const emailError = document.getElementById("loginEmailError");
+//   const passwordError = document.getElementById("loginPasswordError");
+
+//   const email = emailInput.value.trim();
+//   const password = passwordInput.value.trim();
+
+//   let isValid = true;
+
+//   // Reset errors
+//   emailError.textContent = "";
+//   passwordError.textContent = "";
+
+//   // Email validation
+//   if (email === "") {
+//     emailError.textContent = "Email cannot be empty.";
+//     isValid = false;
+//   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+//     emailError.textContent = "Enter a valid email address.";
+//     isValid = false;
+//   }
+
+//   // Password validation
+//   if (password === "") {
+//     passwordError.textContent = "Password cannot be empty.";
+//     isValid = false;
+//   } else if (password.length < 8) {
+//     passwordError.textContent = "Password must be at least 8 characters.";
+//     isValid = false;
+//   }
+
+//   if (!isValid) return;
+
+//   // ---- API Call for login (only after validation passes) ----
+//   try {
+//     const res = await fetch(`${API_BASE}/users/login`, { //placed api in variable
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({ email, password })
+//     });
+
+//     // Try to parse JSON; fallback to text for unexpected responses
+//     let data;
+//     const text = await res.text();
+//     try { data = JSON.parse(text); } catch { data = { message: text }; }
+
+//     if (res.ok) {
+//       alert("✅ Login successful!");
+//       if (data.token) {
+//         // Optional: persist token for later authenticated requests
+//         localStorage.setItem("authToken", data.token);
+//       }
+//       loginModal.classList.remove('active');
+//     } else {
+//       alert("❌ " + (data.message || "Login failed."));
+//     }
+//   } catch (err) {
+//     console.error("❌ Error logging in:", err);
+//     alert("Something went wrong, please try again.");
+//   }
+// };
 window.validateLogin = async function (event) {
   event.preventDefault();
 
-  const emailInput = document.getElementById("loginEmail");
-  const passwordInput = document.getElementById("loginPassword");
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value.trim();
   const emailError = document.getElementById("loginEmailError");
   const passwordError = document.getElementById("loginPasswordError");
 
-  const email = emailInput.value.trim();
-  const password = passwordInput.value.trim();
-
-  let isValid = true;
-
-  // Reset errors
+  // reset errors
   emailError.textContent = "";
   passwordError.textContent = "";
 
-  // Email validation
-  if (email === "") {
+  // validations
+  if (!email) {
     emailError.textContent = "Email cannot be empty.";
-    isValid = false;
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    emailError.textContent = "Enter a valid email address.";
-    isValid = false;
+    return;
   }
-
-  // Password validation
-  if (password === "") {
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    emailError.textContent = "Enter a valid email.";
+    return;
+  }
+  if (!password) {
     passwordError.textContent = "Password cannot be empty.";
-    isValid = false;
-  } else if (password.length < 8) {
+    return;
+  }
+  if (password.length < 8) {
     passwordError.textContent = "Password must be at least 8 characters.";
-    isValid = false;
+    return;
   }
 
-  if (!isValid) return;
-
-  // ---- API Call for login (only after validation passes) ----
   try {
-    const res = await fetch(`${API_BASE}/users/login`, { //placed api in variable
+    const res = await fetch(`${API_BASE}/users/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password })
     });
 
-    // Try to parse JSON; fallback to text for unexpected responses
     let data;
-    const text = await res.text();
-    try { data = JSON.parse(text); } catch { data = { message: text }; }
+    try {
+      data = await res.json(); // try JSON
+    } catch {
+      data = { message: await res.text() }; // fallback
+    }
 
     if (res.ok) {
       alert("✅ Login successful!");
-      if (data.token) {
-        // Optional: persist token for later authenticated requests
-        localStorage.setItem("authToken", data.token);
-      }
+      if (data.token) localStorage.setItem("authToken", data.token);
       loginModal.classList.remove('active');
     } else {
       alert("❌ " + (data.message || "Login failed."));
@@ -472,106 +528,150 @@ window.validateLogin = async function (event) {
 };
 
 /* ----------------- SIGNUP (Validation + API) ----------------- */
-document.addEventListener('DOMContentLoaded', function () {
-  // Username validation
-  document.getElementById("username").addEventListener("input", function () {
-    let username = this.value.trim();
-    let errorMsg = "";
-    if (username.length > 0 && username[0] !== username[0].toUpperCase()) {
-      errorMsg = "First letter must be capital.";
-    } else if (!/^[A-Za-z]*$/.test(username)) {
-      errorMsg = "Username can only contain letters (no numbers or symbols).";
-    }
-    document.getElementById("usernameError").textContent = errorMsg;
-  });
+// document.addEventListener('DOMContentLoaded', function () {
+//   // Username validation
+//   document.getElementById("username").addEventListener("input", function () {
+//     let username = this.value.trim();
+//     let errorMsg = "";
+//     if (username.length > 0 && username[0] !== username[0].toUpperCase()) {
+//       errorMsg = "First letter must be capital.";
+//     } else if (!/^[A-Za-z]*$/.test(username)) {
+//       errorMsg = "Username can only contain letters (no numbers or symbols).";
+//     }
+//     document.getElementById("usernameError").textContent = errorMsg;
+//   });
 
-  // Email validation
-  document.getElementById("email").addEventListener("input", function () {
-    let email = this.value.trim();
-    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    let errorMsg = "";
-    if (email !== "" && !emailRegex.test(email)) {
-      errorMsg = "Please enter a valid email address.";
-    }
-    document.getElementById("emailError").textContent = errorMsg;
-  });
+//   // Email validation
+//   document.getElementById("email").addEventListener("input", function () {
+//     let email = this.value.trim();
+//     let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//     let errorMsg = "";
+//     if (email !== "" && !emailRegex.test(email)) {
+//       errorMsg = "Please enter a valid email address.";
+//     }
+//     document.getElementById("emailError").textContent = errorMsg;
+//   });
 
-  // Password validation
-  document.getElementById("password").addEventListener("input", function () {
-    let password = this.value;
-    let errorMsg = "";
-    let strongRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (password === "") {
-      errorMsg = "Password cannot be empty.";
-    } else if (!strongRegex.test(password)) {
-      errorMsg = "Password must be at least 8 characters, include 1 uppercase, 1 number, and 1 special character.";
-    }
-    document.getElementById("passwordError").textContent = errorMsg;
-  });
+//   // Password validation
+//   document.getElementById("password").addEventListener("input", function () {
+//     let password = this.value;
+//     let errorMsg = "";
+//     let strongRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+//     if (password === "") {
+//       errorMsg = "Password cannot be empty.";
+//     } else if (!strongRegex.test(password)) {
+//       errorMsg = "Password must be at least 8 characters, include 1 uppercase, 1 number, and 1 special character.";
+//     }
+//     document.getElementById("passwordError").textContent = errorMsg;
+//   });
 
-  // Confirm password validation
-  document.getElementById("confirmPassword").addEventListener("input", function () {
-    let confirmPassword = this.value;
-    let password = document.getElementById("password").value;
-    let errorMsg = "";
-    if (confirmPassword === "") {
-      errorMsg = "Confirm Password cannot be empty.";
-    } else if (confirmPassword !== password) {
-      errorMsg = "Passwords do not match.";
-    }
-    document.getElementById("confirmPasswordError").textContent = errorMsg;
-  });
+//   // Confirm password validation
+//   document.getElementById("confirmPassword").addEventListener("input", function () {
+//     let confirmPassword = this.value;
+//     let password = document.getElementById("password").value;
+//     let errorMsg = "";
+//     if (confirmPassword === "") {
+//       errorMsg = "Confirm Password cannot be empty.";
+//     } else if (confirmPassword !== password) {
+//       errorMsg = "Passwords do not match.";
+//     }
+//     document.getElementById("confirmPasswordError").textContent = errorMsg;
+//   });
 
-  // Submit handler (async because we use await fetch)
-  document.getElementById("signupForm").addEventListener("submit", async function (event) {
-    event.preventDefault();
+//   // Submit handler (async because we use await fetch)
+//   document.getElementById("signupForm").addEventListener("submit", async function (event) {
+//     event.preventDefault();
 
-    let username = document.getElementById("username").value.trim();
-    let email = document.getElementById("email").value.trim();
-    let password = document.getElementById("password").value;
-    let confirmPassword = document.getElementById("confirmPassword").value;
+//     let username = document.getElementById("username").value.trim();
+//     let email = document.getElementById("email").value.trim();
+//     let password = document.getElementById("password").value;
+//     let confirmPassword = document.getElementById("confirmPassword").value;
 
-    let usernameError = document.getElementById("usernameError").textContent;
-    let emailError = document.getElementById("emailError").textContent;
-    let passwordError = document.getElementById("passwordError").textContent;
-    let confirmPasswordError = document.getElementById("confirmPasswordError").textContent;
+//     let usernameError = document.getElementById("usernameError").textContent;
+//     let emailError = document.getElementById("emailError").textContent;
+//     let passwordError = document.getElementById("passwordError").textContent;
+//     let confirmPasswordError = document.getElementById("confirmPasswordError").textContent;
 
-    // Block submit if any error/empty
-    if (
-      username === "" || email === "" || password === "" || confirmPassword === "" ||
-      usernameError !== "" || emailError !== "" || passwordError !== "" || confirmPasswordError !== "" ||
-      password !== confirmPassword
-    ) {
-      alert("Please fix all errors before submitting.");
-      return;
-    }
+//     // Block submit if any error/empty
+//     if (
+//       username === "" || email === "" || password === "" || confirmPassword === "" ||
+//       usernameError !== "" || emailError !== "" || passwordError !== "" || confirmPasswordError !== "" ||
+//       password !== confirmPassword
+//     ) {
+//       alert("Please fix all errors before submitting.");
+//       return;
+//     }
 
-    // ---- API Call for signup: Register ----
+//     // ---- API Call for signup: Register ----
+//     try {
+//       const res = await fetch(`${API_BASE}/users/register`, {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ name: username, email, role: "student", password })
+//       });
+
+//       // Parse robustly
+//       let data;
+//       const text = await res.text();
+//       try { data = JSON.parse(text); } catch { data = { message: text }; }
+
+//       if (res.ok) {
+//         alert("✅ Account created successfully!");
+//         console.log("Registered User:", data);
+//         this.reset();
+//         signupModal.classList.remove('active');
+//         // Optionally auto-open login modal
+//         loginModal.classList.add('active');
+//       } else {
+//         alert("❌ " + (data.message || "Registration failed."));
+//       }
+//     } catch (err) {
+//       console.error("❌ Error registering:", err);
+//       alert("Something went wrong, please try again.");
+//     }
+//   });
+document.getElementById("signupForm").addEventListener("submit", async function (event) {
+  event.preventDefault();
+
+  const username = document.getElementById("username").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
+
+  if (!username || !email || !password || !confirmPassword) {
+    alert("Please fill all fields.");
+    return;
+  }
+  if (password !== confirmPassword) {
+    alert("Passwords do not match.");
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/users/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: username, email, role: "student", password })
+    });
+
+    let data;
     try {
-      const res = await fetch(`${API_BASE}/users/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: username, email, role: "student", password })
-      });
-
-      // Parse robustly
-      let data;
-      const text = await res.text();
-      try { data = JSON.parse(text); } catch { data = { message: text }; }
-
-      if (res.ok) {
-        alert("✅ Account created successfully!");
-        console.log("Registered User:", data);
-        this.reset();
-        signupModal.classList.remove('active');
-        // Optionally auto-open login modal
-        loginModal.classList.add('active');
-      } else {
-        alert("❌ " + (data.message || "Registration failed."));
-      }
-    } catch (err) {
-      console.error("❌ Error registering:", err);
-      alert("Something went wrong, please try again.");
+      data = await res.json();
+    } catch {
+      data = { message: await res.text() };
     }
-  });
+
+    if (res.ok) {
+      alert("✅ Account created successfully!");
+      this.reset();
+      signupModal.classList.remove('active');
+      loginModal.classList.add('active');
+    } else {
+      alert("❌ " + (data.message || "Registration failed."));
+    }
+  } catch (err) {
+    console.error("❌ Error registering:", err);
+    alert("Something went wrong, please try again.");
+  }
 });
+
