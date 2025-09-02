@@ -137,17 +137,16 @@ function validateLogin(event) {
   emailError.textContent = "";
   passwordError.textContent = "";
 
-  // Email validation
-  if (email === "") {
+  // validations
+  if (!email) {
     emailError.textContent = "Email cannot be empty.";
-    isValid = false;
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    emailError.textContent = "Enter a valid email address.";
-    isValid = false;
+    return;
   }
-
-  // Password validation
-  if (password === "") {
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    emailError.textContent = "Enter a valid email.";
+    return;
+  }
+  if (!password) {
     passwordError.textContent = "Password cannot be empty.";
     isValid = false;
   } else if (password.length < 6) {
