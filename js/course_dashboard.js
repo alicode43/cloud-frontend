@@ -271,7 +271,21 @@ function renderTopicDetail() {
   completedStat.textContent = `${completedTopics} of ${course.topics.length} completed`;
   progressStat.textContent = `${progressPercentage}% progress`;
 
-  // Render table
+  // Only render table if it's empty (initial load) or if it needs a complete refresh
+  if (tableBody.children.length === 0) {
+    renderTopicTable();
+  } else {
+    // Just update the completion stats without re-rendering
+    updateTopicCompletionDisplay();
+  }
+  
+  detailView.style.display = 'block';
+}
+
+function renderTopicTable() {
+  const tableBody = document.getElementById('topic-table-body');
+  const course = appState.selectedCourse;
+  
   tableBody.innerHTML = '';
   course.topics.forEach((topic, index) => {
     const completed = isTopicCompleted(course.id, topic.id);
@@ -289,7 +303,7 @@ function renderTopicDetail() {
         </div>
       </td>
       <td>
-        <button class="btn btn-primary" onclick="openVideoModal('${topic.videoId}', '${topic.name}')">
+        <button class="btn btn-primary" onclick="openVideoModal('${topic.videoId}', '${topic.name}', '${course.name}')">
           <i class="fas fa-play"></i>
           Watch Video
         </button>
@@ -309,9 +323,10 @@ function renderTopicDetail() {
       <td>
         <div class="progress-checkbox">
           <input type="checkbox" class="checkbox" ${completed ? 'checked' : ''} 
-                 onchange="toggleTopicCompletion('${course.id}', '${topic.id}')">
-          <span class="progress-status ${completed ? 'completed' : 'not-started'}">
-            ${completed ? '🎉 Completed' : 'Not Started'}
+                 onchange="toggleTopicCompletion('${course.id}', '${topic.id}')"
+                 data-topic-id="${topic.id}">
+          <span class="progress-status ${completed ? 'completed' : 'Mark As Completed'}">
+            ${completed ? '🎉 Completed' : 'Mark As Completed'}
           </span>
         </div>
       </td>
@@ -319,8 +334,51 @@ function renderTopicDetail() {
     
     tableBody.appendChild(row);
   });
+}
+
+function updateTopicCompletionDisplay() {
+  const course = appState.selectedCourse;
+  if (!course) return;
   
-  detailView.style.display = 'block';
+  course.topics.forEach(topic => {
+    const row = document.getElementById(`topic-${topic.id}`);
+    if (!row) return;
+    
+    const completed = isTopicCompleted(course.id, topic.id);
+    const statusDot = row.querySelector('.topic-status-dot');
+    const topicBadge = row.querySelector('.topic-badge');
+    const checkbox = row.querySelector('.checkbox');
+    const progressStatus = row.querySelector('.progress-status');
+    
+    // Update status dot
+    if (completed) {
+      statusDot.classList.add('completed');
+    } else {
+      statusDot.classList.remove('completed');
+    }
+    
+    // Update topic badge
+    if (completed && !topicBadge) {
+      const badge = document.createElement('div');
+      badge.className = 'topic-badge';
+      badge.textContent = '🎉 Done';
+      row.querySelector('.topic-name-cell').appendChild(badge);
+    } else if (!completed && topicBadge) {
+      topicBadge.remove();
+    }
+    
+    // Update checkbox
+    checkbox.checked = completed;
+    
+    // Update progress status
+    if (completed) {
+      progressStatus.className = 'progress-status completed';
+      progressStatus.textContent = '🎉 Completed';
+    } else {
+      progressStatus.className = 'progress-status not-started';
+      progressStatus.textContent = 'Mark As Completed';
+    }
+  });
 }
 
 // Navigation functions
@@ -330,7 +388,6 @@ function selectCourse(courseId) {
   if (course) {
     appState.selectedCourse = course;
     
-
     document.getElementById('dashboard').style.display = 'none';
     renderSidebar();
     renderTopicDetail();
@@ -340,11 +397,7 @@ function selectCourse(courseId) {
 function showDashboard() {
   appState.selectedCourse = null;
   
-  // Update navigation
- 
   document.getElementById("sidebar").style.display = "none";
-  
-  // Show dashboard and hide detail view
   document.getElementById('dashboard').style.display = 'block';
   document.getElementById('topic-detail').style.display = 'none';
   
@@ -382,10 +435,21 @@ function toggleTopicCompletion(courseId, topicId) {
     }
   }
   
-  // Re-render components
+  // Update displays efficiently without full re-render
   renderCourseGrid();
   renderSidebar();
-  renderTopicDetail();
+  
+  // Update only the completion display in the table
+  updateTopicCompletionDisplay();
+  
+  // Update the stats
+  const completedTopics = appState.selectedCourse.topics.filter(topic => 
+    isTopicCompleted(courseId, topic.id)
+  ).length;
+  const progressPercentage = Math.round((completedTopics / appState.selectedCourse.topics.length) * 100);
+  
+  document.getElementById('completed-stat').textContent = `${completedTopics} of ${appState.selectedCourse.topics.length} completed`;
+  document.getElementById('progress-stat').textContent = `${progressPercentage}% progress`;
 }
 
 function triggerCelebration(topicName) {
@@ -398,17 +462,9 @@ function triggerCelebration(topicName) {
 }
 
 // Modal functions
-function openVideoModal(videoId, title) {
-  const modal = document.getElementById('video-modal');
-  const iframe = document.getElementById('video-iframe');
-  const titleElement = document.getElementById('video-title');
-  
-  titleElement.textContent = `${title} - Video Tutorial`;
-  iframe.src = `https://www.youtube.com/embed/${videoId}`;
-  modal.classList.add('active');
-  
-  // Prevent body scroll
-  document.body.style.overflow = 'hidden';
+function openVideoModal(videoId, title, courseName) {
+  // Redirect to video gallery with course parameter
+  window.location.href = `video_suggestions.html?course=${encodeURIComponent(courseName)}&topic=${encodeURIComponent(title)}`;
 }
 
 function closeVideoModal() {

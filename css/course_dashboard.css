@@ -8,9 +8,6 @@
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   background: linear-gradient(135deg, #ffffff 0%, #f9fafb 50%, #f3f4f6 100%);
-/* background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 50%, #e5e7eb 100%); */
-/* background: linear-gradient(135deg, #ffffff 0%, #fcfcfc 50%, #f8f9fa 100%); */
-  /* color: #1e293b; */
   line-height: 1.6;
   min-height: 100vh;
 }
@@ -62,11 +59,18 @@ body {
 
 
 .company-name {
-  /* background-color: linear-gradient(90deg, #3e4848, #00c6ff); */
-  color: linear-gradient(90deg, #3e4848, #00c6ff);
-  font-weight: 700;
-  font-size: 1.5rem;
-  letter-spacing: -0.025em;
+    font-size: clamp(16px, 2vw, 22px);
+    font-weight: 700;
+    margin: 0;
+
+  /* Gradient text */
+   background: linear-gradient(90deg, #262727, #00c6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* For Firefox */
+  background-clip: text;
+  color: transparent;
 }
 
 .course-badge {
@@ -118,7 +122,7 @@ body {
   border: none;
   border-radius: 0.75rem;
   padding: 0.5rem 1rem;
-  color: white;
+  color: #27aadc;
   cursor: pointer;
   transition: all 0.3s ease;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -138,7 +142,8 @@ body {
   height: 2.25rem;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  color:black
+  /* border: 2px solid rgba(255, 255, 255, 0.3); */
 }
 
 .user-avatar img {
@@ -474,28 +479,6 @@ body {
   opacity: 0.8;
 }
 
-/* .course-card.completed::after {
-  content: 'Mastered';
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: linear-gradient(135deg, #fbbf24, #f59e0b, #dc2626);
-  color: white;
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
-  animation: slideInRight 0.5s ease-out;
-} */
-
-/* .course-card.completed::after {
-  content: ' 🏆';
-} */
-
 .course-header {
   display: flex;
   align-items: start;
@@ -527,24 +510,6 @@ body {
   transform: rotate(5deg) scale(1.1);
 }
 
-/* .course-icon-container.completed::after {
-  content: '👑 ';
-  position: absolute;
-  top: -0.25rem;
-  right: -0.25rem;
-  width: 1.5rem;
-  height: 1.5rem;
-  background: #22c55e;
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 17px;
-  font-weight: 700;
-  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
-  animation: scaleIn 0.5s ease-out;
-} */
 
 .course-details h3 {
   font-size: 1.25rem;
@@ -611,13 +576,7 @@ body {
   z-index: 10;
 }
 
-/* .course-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
-  z-index: 10;
-} */
+
  .course-footer {
   display: flex;
   justify-content: space-between; /* spread left and right */
@@ -626,13 +585,7 @@ body {
 }
 
 
-/* .course-features {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  font-size: 0.75rem;
-  color: #64748b;
-} */
+
 
 .course-features {
   display: flex;
@@ -678,19 +631,7 @@ body {
   color: #8b5cf6;
 }
 
-/* .start-learning {
-  color: #27aadc;
-  font-weight: 700;
-  font-size: 0.875rem;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: rgba(219, 234, 254, 0.8);
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-  transition: all 0.3s ease;
-} */
+
 
 .start-learning {
   display: flex;
@@ -703,19 +644,13 @@ body {
   white-space: nowrap; /* keep text + arrow together */
 }
 
-/* .start-learning:hover {
-  background: #27aadc;
-  color: white;
-  transform: translateX(4px);
-} */
+
 
 .start-learning:hover {
   color: #1b8db3;
 }
 
-/* .start-learning-arrow {
-  transition: transform 0.3s ease;
-} */
+
 
 .start-learning:hover .start-learning-arrow {
   transform: translateX(4px); /* nice hover animation */
@@ -890,7 +825,6 @@ body {
 }
 
 .topic-status-dot.completed::after {
-  /* content: 'âœ“'; */
   position: absolute;
   inset: 0;
   display: flex;

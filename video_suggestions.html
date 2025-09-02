@@ -840,7 +840,7 @@
                 <!-- Navigation Links -->
                 <div class="nav-links">
                     <a href="index.html" class="nav-link">Home</a>
-                    <a href="Course-dashboard.html" class="nav-link">Courses</a>
+                    <a href="course-dashboard.html" class="nav-link">Courses</a>
                 </div>
                  <!-- Mobile Menu Toggle -->
                 <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">
@@ -1157,6 +1157,19 @@
             }
         }
 
+        function switchToNextApiKey() {
+            if (currentApiIndex < API_KEYS.length - 1) {
+                currentApiIndex++;
+                API_KEY = API_KEYS[currentApiIndex];
+                localStorage.setItem("currentApiIndex", currentApiIndex);
+                console.warn("Switched to backup API key:", API_KEY);
+                return true;
+            } else {
+                console.error("All API keys have failed.");
+                return false;
+            }
+        }
+
         // Fetch videos from YouTube API
         async function fetchVideos(page = 0) {
             try {
@@ -1411,6 +1424,13 @@
             showToast("Video removed from history", "success");
         }
 
+        function removeFromHistory(videoId) {
+            let history = JSON.parse(localStorage.getItem("history")) || [];
+            history = history.filter((v) => v.id !== videoId);
+            localStorage.setItem("history", JSON.stringify(history));
+            showHistory();
+        }
+
         // Close modal
         function closeModal(id) {
             document.getElementById(id).style.display = "none";
@@ -1488,7 +1508,7 @@
             favourites = favourites.filter((v) => v.id !== videoId);
             localStorage.setItem("favourites", JSON.stringify(favourites));
             showFavourites();
-            showToast("Video removed from favorites", "success");
+            showToast("video removed from favorites", "success");
             
             const favBtn = document.querySelector(`.favBtn[data-id="${videoId}"]`);
             if (favBtn) {
