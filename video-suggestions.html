@@ -1336,7 +1336,7 @@
                     time: new Date().toLocaleString(),
                 });
                 localStorage.setItem("history", JSON.stringify(history));
-                showToast("Video added to watch history", "success");
+                // Removed the toast notification for adding to history
             }
 
             const overlay = event.target;
