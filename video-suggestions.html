@@ -1387,7 +1387,7 @@
             history = history.filter((v) => v.id !== videoId);
             localStorage.setItem("history", JSON.stringify(history));
             showHistory();
-            showToast("Video removed from history success");
+            showToast("Video removed from history", "success");
         }
 
         // Close modal
@@ -1406,7 +1406,7 @@
 
                 btn.classList.add("active");
                 btn.innerHTML = '<i class="fas fa-heart"></i> Added to Favorites';
-                showToast("Video added to favorites success");
+                showToast("Video added to favorites", "success");
             } else {
                 favourites.splice(index, 1);
                 localStorage.setItem("favourites", JSON.stringify(favourites));
