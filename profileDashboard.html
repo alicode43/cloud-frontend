@@ -11,10 +11,10 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <style>
+    <!-- <style>
         :root {
             --primary: #27AADC;
-            ;
+
             --primary-light: #eaf5fe;
             --secondary: #4a4a4a;
             --accent: #ff6d01;
@@ -69,6 +69,22 @@
             align-items: center;
             gap: 2rem;
         }
+
+        .company-name {
+            font-size: clamp(16px, 2vw, 22px);
+            font-weight: 700;
+            margin: 0;
+
+            /* Gradient text */
+            background: linear-gradient(90deg, #262727, #00c6ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            /* For Firefox */
+            background-clip: text;
+            color: transparent;
+        }
+
 
         .user-profile {
             display: flex;
@@ -629,6 +645,654 @@
         .progress-fill {
             animation: grow 1.5s ease-out;
         }
+    </style> -->
+    <style>
+        :root {
+            --primary: #27AADC;
+            --primary-light: #eaf5fe;
+            --secondary: #4a4a4a;
+            --accent: #ff6d01;
+            --success: #2e844a;
+            --warning: #fe9339;
+            --danger: #ea001e;
+            --light-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-primary: #2e2e2e;
+            --text-secondary: #5e5e5e;
+            --border-radius: 12px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f7f9;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .navigation {
+            background: white;
+            color: #27AADC;
+            padding: 0.8rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Fix for logo and text alignment */
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+        }
+
+        .brand-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .company-name {
+            font-size: clamp(16px, 2vw, 22px);
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(90deg, #262727, #00c6ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .avatar-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .avatar-fallback {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #27AADC, var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .user-info p {
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .user-role {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 220px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 0.5rem 0;
+            z-index: 100;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .dropdown-item:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .nav-right .profile-button {
+            background: #27AADC;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .nav-right .profile-button:hover {
+            /* background: rgba(255, 255, 255, 0.3); */
+            background: #1e90c0;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .section-header {
+            margin-bottom: 2rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .stat-icon {
+            width: 24px;
+            height: 24px;
+            color: var(--primary);
+        }
+
+        .stat-content .stat-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #27AADC);
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+
+        /* Activity Grid - Fix for centering the Last Studied Topic card */
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            justify-items: center;
+            /* Added to center the card */
+        }
+
+        .activity-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            width: 100%;
+            /* Ensure it takes full width of grid cell */
+            max-width: 500px;
+            /* Limit maximum width */
+        }
+
+        .card-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .topic-info {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .topic-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .topic-details h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+            color: var(--text-primary);
+        }
+
+        .topic-details p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .topic-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .badge {
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .progress-text {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .continue-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .continue-button:hover {
+            background: #1e90c0;
+
+        }
+
+        .weekly-progress {
+            margin-bottom: 1.5rem;
+        }
+
+        .day-progress {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .day-progress span {
+            width: 90px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .progress-bar.small {
+            flex: 1;
+            height: 6px;
+        }
+
+        .weekly-total {
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary);
+            padding: 0.75rem;
+            background: var(--primary-light);
+            border-radius: 8px;
+        }
+
+        /* Courses Section */
+        .courses-section {
+            margin-top: 3rem;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .course-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-image {
+            height: 160px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .course-overlay {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+        }
+
+        .level-badge {
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .level-badge.intermediate {
+            background: var(--warning);
+            color: white;
+        }
+
+        .course-content {
+            padding: 1.5rem;
+        }
+
+        .course-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .course-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+            font-size: 0.95rem;
+        }
+
+        .course-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .course-progress {
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .course-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .primary-button {
+            flex: 1;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .primary-button:hover {
+            background: #1e90c0;
+        }
+
+        .icon-button {
+            width: 45px;
+            background: var(--light-bg);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-button:hover {
+            background: #e9ecef;
+        }
+
+
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .activity-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-left {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+            }
+
+            .nav-menu {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .nav-right {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
+
+            .stats-grid,
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .topic-info {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .topic-icon {
+                align-self: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 0 1rem;
+            }
+
+            .activity-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-content,
+            .course-content {
+                padding: 1rem;
+            }
+
+            .topic-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Icons */
+        .icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Animation for progress bars */
+        @keyframes grow {
+            from {
+                width: 0%;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        .progress-fill {
+            animation: grow 1.5s ease-out;
+        }
+    </style>
+
     </style>
 </head>
 
@@ -636,18 +1300,43 @@
     <!-- Navigation -->
     <nav class="navigation">
         <div class="nav-container">
-            <div class="nav-left">
-                <!-- User Profile -->
-                <div class="user-profile">
-                    <div class="avatar">
-                        <img id="smallImage" alt="User Avatar" class="avatar-image">
-                        <div class="avatar-fallback" style="display: none;">CO</div>
+            <div class="navbar-brand">
+                <div class="brand-info">
+                    <div class="brand-icon">
+                        <img src="https://superbcompanies.s3.eu-central-1.amazonaws.com/images/companies/logos/2ff8d2b0-31e2-11ee-8644-91804827fca0.jpg"
+                            alt="Logo" class="logo" style="width:32px; height:auto; border-radius:6px;">
                     </div>
+                    <span class="company-name">Cloud Odyssey Trainig Platform</span>
+                </div>
+
+            </div>
+            <!-- <div class="nav-left"> -->
+            <!-- User Profile -->
+            <!--  
+                <div class="navbar-brand">
+                    <div class="brand-info">
+                        <div class="brand-icon">
+                            <img src="https://superbcompanies.s3.eu-central-1.amazonaws.com/images/companies/logos/2ff8d2b0-31e2-11ee-8644-91804827fca0.jpg"
+                                alt="Logo" class="logo" style="width:32px; height:auto; border-radius:6px;">
+                        </div>
+                        <span class="company-name">Cloud Odyssey Trainig Platform</span>
+                    </div>
+
+
+                </div>
+                -->
+            <div class="user-profile">
+                <div class="avatar">
+                    <!-- <img id="smallImage" alt="User Avatar" class="avatar-image"> -->
+                    <div class="avatar-fallback" style="display: none;">CO</div>
+                </div>
+                <!--  
                     <div class="user-info">
                         <p class="user-name" id="smallName">Cloud Odyssey</p>
                         <p class="user-role" id="smallCourse">Salesforce Training</p>
                     </div>
                 </div>
+                -->
 
                 <!-- Navigation Menu -->
                 <div class="nav-menu">
@@ -658,13 +1347,13 @@
                             <i class="fas fa-chevron-down icon"></i>
                         </button>
                         <div class="dropdown-content" id="dashboardDropdownContent">
-                            <div class="dropdown-item">
+                            <!-- <div class="dropdown-item">
                                 <i class="fas fa-chart-line icon"></i>
                                 <a href="#section1" class="nav-element">Analytics</a>
-                            </div>
+                            </div> -->
                             <div class="dropdown-item">
                                 <i class="fas fa-tasks icon"></i>
-                                <a href="#section2" class="nav-element">Progress</a>
+                                <a href="#section2" class="nav-element" style="color: black;">Progress</a>
                             </div>
                         </div>
                     </div>
@@ -791,48 +1480,8 @@
                         </div>
                     </div>
 
-                    <div class="activity-card">
-                        <div class="card-header">
-                            <h3 class="card-title">Weekly Progress</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="weekly-progress">
-                                <div class="day-progress">
-                                    <span>Monday</span>
-                                    <div class="progress-bar small">
-                                        <div class="progress-fill" style="width: 90%"></div>
-                                    </div>
-                                </div>
-                                <div class="day-progress">
-                                    <span>Tuesday</span>
-                                    <div class="progress-bar small">
-                                        <div class="progress-fill" style="width: 75%"></div>
-                                    </div>
-                                </div>
-                                <div class="day-progress">
-                                    <span>Wednesday</span>
-                                    <div class="progress-bar small">
-                                        <div class="progress-fill" style="width: 85%"></div>
-                                    </div>
-                                </div>
-                                <div class="day-progress">
-                                    <span>Thursday</span>
-                                    <div class="progress-bar small">
-                                        <div class="progress-fill" style="width: 60%"></div>
-                                    </div>
-                                </div>
-                                <div class="day-progress">
-                                    <span>Friday</span>
-                                    <div class="progress-bar small">
-                                        <div class="progress-fill" style="width: 95%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="weekly-total">Total: 8.5 hours this week</div>
-                        </div>
-                    </div>
+
                 </div>
-            </div>
         </section>
 
         <!-- Training Courses Section -->
