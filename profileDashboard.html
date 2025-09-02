@@ -200,10 +200,11 @@
 
         .nav-right .profile-button {
             background: #27AADC;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            /* border: 1px solid rgba(255, 255, 255, 0.3); */
             color: white;
             padding: 0.3rem 0.8rem;
             border-radius: 10px;
+            border: none;
             cursor: pointer;
             transition: var(--transition);
             font-weight: 500;
@@ -212,6 +213,13 @@
         .nav-right .profile-button:hover {
             /* background: rgba(255, 255, 255, 0.3); */
             background: #1e90c0;
+            border: none;
+        }
+
+        .nav-right .profile-button:active {
+            border: none;
+            outline: none;
+
         }
 
         /* Main Content */
@@ -548,6 +556,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
+            outline: none;
         }
 
         .primary-button:hover {
@@ -676,68 +685,11 @@
                 </div>
 
             </div>
-            <!-- <div class="nav-left"> -->
-            <!-- User Profile -->
-            <!--  
-                <div class="navbar-brand">
-                    <div class="brand-info">
-                        <div class="brand-icon">
-                            <img src="https://superbcompanies.s3.eu-central-1.amazonaws.com/images/companies/logos/2ff8d2b0-31e2-11ee-8644-91804827fca0.jpg"
-                                alt="Logo" class="logo" style="width:32px; height:auto; border-radius:6px;">
-                        </div>
-                        <span class="company-name">Cloud Odyssey Trainig Platform</span>
-                    </div>
 
 
-                </div>
-                -->
-            <div class="user-profile">
-                <div class="avatar">
-                    <!-- <img id="smallImage" alt="User Avatar" class="avatar-image"> -->
-                    <div class="avatar-fallback" style="display: none;">CO</div>
-                </div>
-                <!--  
-                    <div class="user-info">
-                        <p class="user-name" id="smallName">Cloud Odyssey</p>
-                        <p class="user-role" id="smallCourse">Salesforce Training</p>
-                    </div>
-                </div>
-                -->
-
-                <!-- Navigation Menu -->
-                <div class="nav-menu">
-                    <div class="dropdown">
-                        <button class="nav-button dropdown-trigger" id="dashboardDropdown">
-                            <i class="fas fa-th-large icon"></i>
-                            <span>Dashboard</span>
-                            <i class="fas fa-chevron-down icon"></i>
-                        </button>
-                        <div class="dropdown-content" id="dashboardDropdownContent">
-                            <!-- <div class="dropdown-item">
-                                <i class="fas fa-chart-line icon"></i>
-                                <a href="#section1" class="nav-element">Analytics</a>
-                            </div> -->
-                            <div class="dropdown-item">
-                                <i class="fas fa-tasks icon"></i>
-                                <a href="#section2" class="nav-element" style="color: black;">Progress</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button class="nav-button">
-                        <i class="fas fa-book icon"></i>
-                        <span>Materials</span>
-                    </button>
-
-                    <button class="nav-button">
-                        <i class="fas fa-question-circle icon"></i>
-                        <span>Quizzes</span>
-                    </button>
-                </div>
-            </div>
-
+            <!-- view profile button -->
             <div class="nav-right">
-                <button class="profile-button" data-toggle="modal" data-target="#pageModal">
+                <button class="profile-button" data-toggle="modal" data-target="#pageModal" style="outline: none;">
                     <i class="fas fa-user-circle"></i> View Profile
                 </button>
             </div>
@@ -768,7 +720,7 @@
             <div id="section1">
                 <div class="section-header">
                     <h2>Learning Analytics</h2>
-                    <p>Track your learning progress and achievements</p>
+                    <p>Track your learning progress and achievements </p>
                 </div>
 
                 <!-- Stats Grid -->
@@ -779,10 +731,10 @@
                             <i class="fas fa-book-open stat-icon"></i>
                         </div>
                         <div class="stat-content">
-                            <div class="stat-value">12</div>
-                            <p class="stat-description">Out of 15 enrolled</p>
+                            <div class="stat-value">1</div>
+                            <p class="stat-description">Out of 3 enrolled</p>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 80%"></div>
+                                <div class="progress-fill" style="width: 33%"></div>
                             </div>
                         </div>
                     </div>
@@ -793,10 +745,10 @@
                             <i class="fas fa-chart-pie stat-icon"></i>
                         </div>
                         <div class="stat-content">
-                            <div class="stat-value">94%</div>
+                            <div class="stat-value">0%</div>
                             <p class="stat-description">Average score</p>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 94%"></div>
+                                <div class="progress-fill" style="width: 0%"></div>
                             </div>
                         </div>
                     </div>
@@ -810,7 +762,7 @@
                             <div class="stat-value">12</div>
                             <p class="stat-description">Days consecutive</p>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 86%"></div>
+                                <div class="progress-fill" style="width: 12%"></div>
                             </div>
                         </div>
                     </div>
@@ -835,14 +787,14 @@
                                     <p>Advanced email automation and journey builder concepts</p>
                                     <div class="topic-meta">
                                         <span class="badge">Chapter 4</span>
-                                        <span class="progress-text">Progress: 67%</span>
+                                        <span class="progress-text">Progress: 0%</span>
                                     </div>
                                     <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 67%"></div>
+                                        <div class="progress-fill" style="width: 0%"></div>
                                     </div>
                                 </div>
                             </div>
-                            <button class="continue-button">Continue Learning</button>
+                            <button class="continue-button" style="outline: none;">Continue Learning</button>
                         </div>
                     </div>
 
@@ -888,17 +840,37 @@
                                     <span>8/12 modules</span>
                                 </div>
                                 <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 67%"></div>
+                                    <div class="progress-fill" style="width: 0%"></div>
                                 </div>
-                                <p class="progress-text">67% complete</p>
+                                <p class="progress-text">0% complete</p>
                             </div>
 
+                            <!-- <div class="course-actions">
+                                
+                                <button class="primary-button" style="outline: none;">Continue</button>
+                                <button class="icon-button">
+                                    <i class="fas fa-book"></i>
+                                </button>
+                            </div> -->
+
+                            <!-- <div class="course-actions">
+                                <a href="courses-dashboard.html" class="primary-button">Continue</a>
+                                <button class="icon-button">
+                                    <i class="fas fa-book"></i>
+                                </button>
+                            </div> -->
+
                             <div class="course-actions">
-                                <button class="primary-button">Continue</button>
+                                <button class="primary-button" style="outline: none;"
+                                    onclick="window.location.href='course-dashboard.html'">Continue</button>
                                 <button class="icon-button">
                                     <i class="fas fa-book"></i>
                                 </button>
                             </div>
+
+
+
+
                         </div>
                     </div>
 
@@ -930,13 +902,13 @@
                                     <span>3/10 modules</span>
                                 </div>
                                 <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 30%"></div>
+                                    <div class="progress-fill" style="width: 0%"></div>
                                 </div>
-                                <p class="progress-text">30% complete</p>
+                                <p class="progress-text">0% complete</p>
                             </div>
 
                             <div class="course-actions">
-                                <button class="primary-button">Continue</button>
+                                <button class="primary-button" style="outline: none;">Continue</button>
                                 <button class="icon-button">
                                     <i class="fas fa-book"></i>
                                 </button>
@@ -972,13 +944,13 @@
                                     <span>10/14 modules</span>
                                 </div>
                                 <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 72%"></div>
+                                    <div class="progress-fill" style="width: 0%"></div>
                                 </div>
-                                <p class="progress-text">72% complete</p>
+                                <p class="progress-text">0% complete</p>
                             </div>
 
                             <div class="course-actions">
-                                <button class="primary-button">Continue</button>
+                                <button class="primary-button" style="outline: none;">Continue</button>
                                 <button class="icon-button">
                                     <i class="fas fa-book"></i>
                                 </button>
