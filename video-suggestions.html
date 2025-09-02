@@ -330,6 +330,10 @@
             box-shadow: 0 2px 6px rgba(39, 170, 220, 0.15);
             border: 2px solid transparent;
         }
+        .bubble-category.disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
 
         .bubble-category:hover {
             transform: translateY(-2px);
@@ -836,7 +840,7 @@
                 <!-- Navigation Links -->
                 <div class="nav-links">
                     <a href="index.html" class="nav-link">Home</a>
-                    <a href="courses.html" class="nav-link">Courses</a>
+                    <a href="Course-dashboard.html" class="nav-link">Courses</a>
                 </div>
                  <!-- Mobile Menu Toggle -->
                 <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">
@@ -1026,6 +1030,9 @@
             "AIzaSyAdbZki0nwZVRcjyRSosD6D8B-Kh3lPRU8",
             "AIzaSyBkX6_OJJvgRAvWN1oYYOU4dq9zueS8gF4",
             "AIzaSyDTcv9gLihbaM4Wq5V1sYh6rbxTDX_aLUA",
+            "AIzaSyAYcjjQfqU3aJrnKBIxYPGI-Um67kG4lec",
+            "AIzaSyCybsouCljby7-HzWmDA2z3HHMk4yG-oOo",
+            "AIzaSyAloXYUbtNaioq53VrGdbgJt02nU2V_vEo"
         ];
 
         let currentApiIndex = parseInt(localStorage.getItem("currentApiIndex")) || 0;
@@ -1100,27 +1107,41 @@
 
             fetchVideos(0);
             fetchChannels(category);
-
-            // Highlight the active bubble
-            document.querySelectorAll(".bubble-category").forEach((bubble) => {
-                if (bubble.getAttribute("data-category") === category) {
-                    bubble.classList.add("active");
-                } else {
-                    bubble.classList.remove("active");
-                }
-                bubble.addEventListener("click", function () {
-                    document.querySelectorAll(".bubble-category").forEach((b) => b.classList.remove("active"));
-                    this.classList.add("active");
-
-                    category = this.getAttribute("data-category");
-                    cachedPages = {};
-                    pageTokens = [""];
-                    currentPage = 0;
-
-                    fetchVideos(0);
-                    fetchChannels(category);
+// Highlight the active bubble and disable others if a specific course is selected
+            const courseFromUrl = getCourseFromUrl();
+            if (courseFromUrl) {
+                document.querySelectorAll(".bubble-category").forEach((bubble) => {
+                    const bubbleCategory = bubble.getAttribute("data-category");
+                    if (bubbleCategory === category) {
+                        bubble.classList.add("active");
+                    } else {
+                        bubble.classList.add("disabled");
+                    }
                 });
-            });
+            } else {
+                // If no specific course is selected, allow all categories to be clickable
+                document.querySelectorAll(".bubble-category").forEach((bubble) => {
+                    if (bubble.getAttribute("data-category") === category) {
+                        bubble.classList.add("active");
+                    } else {
+                        bubble.classList.remove("active");
+                    }
+                    bubble.classList.remove("disabled");
+                    
+                    bubble.addEventListener("click", function () {
+                        document.querySelectorAll(".bubble-category").forEach((b) => b.classList.remove("active"));
+                        this.classList.add("active");
+
+                        category = this.getAttribute("data-category");
+                        cachedPages = {};
+                        pageTokens = [""];
+                        currentPage = 0;
+
+                        fetchVideos(0);
+                        fetchChannels(category);
+                    });
+                });
+            }
         });
 
         function switchToNextApiKey() {
@@ -1467,7 +1488,7 @@
             favourites = favourites.filter((v) => v.id !== videoId);
             localStorage.setItem("favourites", JSON.stringify(favourites));
             showFavourites();
-            showToast(`"${video.title}" removed from favorites`, "success");
+            showToast("removed from favorites", "success");
             
             const favBtn = document.querySelector(`.favBtn[data-id="${videoId}"]`);
             if (favBtn) {
