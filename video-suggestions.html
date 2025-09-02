@@ -971,7 +971,6 @@
     </div>
 
     <script>
-<<<<<<< HEAD
         // Toast notification function
         function showToast(message, type = "info") {
             const toastContainer = document.getElementById("toastContainer");
@@ -1007,9 +1006,6 @@
         }
 
         // Mobile menu functionality
-=======
-     // Mobile menu functionality
->>>>>>> Pratiksha
         const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
         const mobileNav = document.getElementById('mobileNav');
         const mobileNavOverlay = document.getElementById('mobileNavOverlay');
@@ -1034,12 +1030,9 @@
             "AIzaSyAdbZki0nwZVRcjyRSosD6D8B-Kh3lPRU8",
             "AIzaSyBkX6_OJJvgRAvWN1oYYOU4dq9zueS8gF4",
             "AIzaSyDTcv9gLihbaM4Wq5V1sYh6rbxTDX_aLUA",
-<<<<<<< HEAD
             "AIzaSyAYcjjQfqU3aJrnKBIxYPGI-Um67kG4lec",
             "AIzaSyCybsouCljby7-HzWmDA2z3HHMk4yG-oOo",
             "AIzaSyAloXYUbtNaioq53VrGdbgJt02nU2V_vEo"
-=======
->>>>>>> Pratiksha
         ];
 
         let currentApiIndex = parseInt(localStorage.getItem("currentApiIndex")) || 0;
@@ -1067,13 +1060,9 @@
                 "JavaScript": "javascript",
                 "Salesforce Marketing Cloud": "salesforce marketing cloud",
                 "AMPscript": "ampscript",
-<<<<<<< HEAD
                 "SQL": "sql",
                 // "SFCC": "sfcc",
                 // "MuleSoft": "muleSoft"
-=======
-                "SQL": "sql"
->>>>>>> Pratiksha
             };
             
             // If we have a course from the dashboard, use it
@@ -1118,7 +1107,6 @@
 
             fetchVideos(0);
             fetchChannels(category);
-<<<<<<< HEAD
 // Highlight the active bubble and disable others if a specific course is selected
             const courseFromUrl = getCourseFromUrl();
             if (courseFromUrl) {
@@ -1168,30 +1156,6 @@
                 return false;
             }
         }
-=======
-
-            // Highlight the active bubble
-            document.querySelectorAll(".bubble-category").forEach((bubble) => {
-                if (bubble.getAttribute("data-category") === category) {
-                    bubble.classList.add("active");
-                } else {
-                    bubble.classList.remove("active");
-                }
-                bubble.addEventListener("click", function () {
-                    document.querySelectorAll(".bubble-category").forEach((b) => b.classList.remove("active"));
-                    this.classList.add("active");
-
-                    category = this.getAttribute("data-category");
-                    cachedPages = {};
-                    pageTokens = [""];
-                    currentPage = 0;
-
-                    fetchVideos(0);
-                    fetchChannels(category);
-                });
-            });
-        });
->>>>>>> Pratiksha
 
         function switchToNextApiKey() {
             if (currentApiIndex < API_KEYS.length - 1) {
@@ -1483,20 +1447,14 @@
 
                 btn.classList.add("active");
                 btn.innerHTML = '<i class="fas fa-heart"></i> Added to Favorites';
-<<<<<<< HEAD
                 showToast("Video added to favorites", "success");
-=======
->>>>>>> Pratiksha
             } else {
                 favourites.splice(index, 1);
                 localStorage.setItem("favourites", JSON.stringify(favourites));
 
                 btn.classList.remove("active");
                 btn.innerHTML = '<i class="fas fa-heart"></i> Add to Favorites';
-<<<<<<< HEAD
                 showToast("video removed from favorites", "info");
-=======
->>>>>>> Pratiksha
             }
         }
 
@@ -1546,18 +1504,12 @@
 
         function removeFavourite(videoId) {
             let favourites = JSON.parse(localStorage.getItem("favourites")) || [];
-<<<<<<< HEAD
             const video = favourites.find(v => v.id === videoId);
             favourites = favourites.filter((v) => v.id !== videoId);
             localStorage.setItem("favourites", JSON.stringify(favourites));
             showFavourites();
             showToast("removed from favorites", "success");
             
-=======
-            favourites = favourites.filter((v) => v.id !== videoId);
-            localStorage.setItem("favourites", JSON.stringify(favourites));
-            showFavourites();
->>>>>>> Pratiksha
             const favBtn = document.querySelector(`.favBtn[data-id="${videoId}"]`);
             if (favBtn) {
                 favBtn.classList.remove("active");
