@@ -1508,7 +1508,7 @@
             favourites = favourites.filter((v) => v.id !== videoId);
             localStorage.setItem("favourites", JSON.stringify(favourites));
             showFavourites();
-            showToast("removed from favorites", "success");
+            showToast("video removed from favorites", "success");
             
             const favBtn = document.querySelector(`.favBtn[data-id="${videoId}"]`);
             if (favBtn) {

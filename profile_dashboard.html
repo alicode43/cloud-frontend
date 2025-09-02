@@ -4,14 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salesforce Learning Dashboard</title>
+    <title>Cloud Odyssey Learning Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link rel="icon" type="image/jpg"
+        href="https://superbcompanies.s3.eu-central-1.amazonaws.com/images/companies/logos/2ff8d2b0-31e2-11ee-8644-91804827fca0.jpg">
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
     <style>
         :root {
             --primary: #27AADC;
@@ -198,29 +200,43 @@
             color: var(--primary);
         }
 
+
         .nav-right .profile-button {
-            background: #27AADC;
-            /* border: 1px solid rgba(255, 255, 255, 0.3); */
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 10px;
-            border: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: rgba(255, 255, 255, 0.15);
+            /* slight visible background */
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 0.75rem;
+            padding: 0.5rem 1rem;
+            color: #000;
+            /* make text black so it’s readable */
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.3s ease;
             font-weight: 500;
         }
 
+        .nav-right .profile-button i {
+            font-size: 1.2rem;
+            color: #000;
+            /* make icon also visible */
+        }
+
         .nav-right .profile-button:hover {
-            /* background: rgba(255, 255, 255, 0.3); */
-            background: #1e90c0;
-            border: none;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
         }
 
         .nav-right .profile-button:active {
             border: none;
             outline: none;
-
         }
+
+
+
 
         /* Main Content */
         .main-content {
@@ -682,6 +698,7 @@
                             alt="Logo" class="logo" style="width:32px; height:auto; border-radius:6px;">
                     </div>
                     <span class="company-name">Cloud Odyssey Trainig Platform</span>
+
                 </div>
 
             </div>
@@ -769,37 +786,7 @@
                 </div>
 
                 <!-- Recent Activity Grid -->
-                <div class="activity-grid">
-                    <div class="activity-card">
-                        <div class="card-header">
-                            <h3 class="card-title">
-                                <i class="fas fa-play-circle icon"></i>
-                                Last Studied Topic
-                            </h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="topic-info">
-                                <div class="topic-icon">
-                                    <i class="fas fa-mail-bulk"></i>
-                                </div>
-                                <div class="topic-details">
-                                    <h4>Salesforce Marketing Cloud - Email Studio</h4>
-                                    <p>Advanced email automation and journey builder concepts</p>
-                                    <div class="topic-meta">
-                                        <span class="badge">Chapter 4</span>
-                                        <span class="progress-text">Progress: 0%</span>
-                                    </div>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 0%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="continue-button" style="outline: none;">Continue Learning</button>
-                        </div>
-                    </div>
 
-
-                </div>
         </section>
 
         <!-- Training Courses Section -->
