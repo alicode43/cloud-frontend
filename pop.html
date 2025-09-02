@@ -440,7 +440,8 @@
                                 </tbody>
                             </table>
                         </div>
-                        <button class="update-btn" data-toggle="modal" data-target="#personalDetailsModal2">
+                        <button class="update-btn" data-toggle="modal" data-target="#personalDetailsModal2"
+                            style="outline: none;">
                             Update Details
                         </button>
                     </div>
@@ -507,6 +508,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="personalDetailsLabel">Personal Details</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <!-- close symbol -->
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -559,7 +561,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="submit-btn">Submit</button>
+                        <button type="submit" class="submit-btn" style="outline: none;">Submit</button>
                     </form>
                 </div>
             </div>
@@ -567,6 +569,8 @@
     </div>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            const DEFAULT_PROFILE_IMAGE = "https://img.freepik.com/premium-photo/happy-man-ai-generated-portrait-user-profile_1119669-1.jpg?w=2000";
+
             const fieldMap = {
                 fullname: "cardName",
                 EmpId: "cardEmp.id",
@@ -592,44 +596,10 @@
                     popup.id = "popupAlert";
                     popup.className = "popup-alert";
                     popup.innerHTML = `
-                <div class="popup-title">Profile Updated!</div>
-                <div class="popup-description">Your changes have been saved.</div>
-            `;
+                    <div class="popup-title">Profile Updated!</div>
+                    <div class="popup-description">Your changes have been saved.</div>
+                `;
                     document.body.appendChild(popup);
-
-                    const style = document.createElement("style");
-                    style.textContent = `
-                .popup-alert {
-                    position: fixed;
-                    bottom: 20px;
-                    right: 20px;
-                    background: #ADD8E6;
-                    color: #003366;
-                    border: 1px solid #87CEEB;
-                    border-radius: 8px;
-                    padding: 16px 20px;
-                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                    transform: translateX(400px);
-                    opacity: 0;
-                    transition: all 0.3s ease-in-out;
-                    z-index: 1000;
-                    max-width: 300px;
-                }
-                .popup-alert.show {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-                .popup-title {
-                    font-weight: 500;
-                    margin-bottom: 4px;
-                    font-size: 14px;
-                }
-                .popup-description {
-                    font-size: 12px;
-                    opacity: 0.8;
-                }
-            `;
-                    document.head.appendChild(style);
                 }
                 return popup;
             }
@@ -637,9 +607,8 @@
             // Load saved profile data
             function loadSavedData() {
                 const savedData = localStorage.getItem("studentProfile");
-                if (!savedData) return;
+                const parsedData = savedData ? JSON.parse(savedData) : {};
 
-                const parsedData = JSON.parse(savedData) || {};
                 for (const inputId in fieldMap) {
                     const val = parsedData[inputId];
                     if (val != null) {
@@ -650,8 +619,14 @@
                         if (formInput) formInput.value = val;
                     }
                 }
-                if (parsedData.profileImage && profileImage) {
+
+                // Set profile image or default
+                if (parsedData.profileImage) {
                     profileImage.src = parsedData.profileImage;
+                } else {
+                    profileImage.src = DEFAULT_PROFILE_IMAGE;
+                    parsedData.profileImage = DEFAULT_PROFILE_IMAGE; // store default in localStorage
+                    localStorage.setItem("studentProfile", JSON.stringify(parsedData));
                 }
             }
 
@@ -667,7 +642,7 @@
 
                     const reader = new FileReader();
                     reader.onload = function (e) {
-                        if (profileImage) profileImage.src = e.target.result;
+                        profileImage.src = e.target.result;
                         const currentData = JSON.parse(localStorage.getItem("studentProfile")) || {};
                         currentData.profileImage = e.target.result;
                         localStorage.setItem("studentProfile", JSON.stringify(currentData));
@@ -685,8 +660,7 @@
                     let updatedData = JSON.parse(localStorage.getItem("studentProfile")) || {};
 
                     for (const inputId in fieldMap) {
-                        let value = formData.get(inputId);
-                        value = value ? value.trim() : "";
+                        let value = formData.get(inputId)?.trim() || "";
                         updatedData[inputId] = value;
 
                         const profileElement = document.getElementById(fieldMap[inputId]);
@@ -701,7 +675,7 @@
 
                     localStorage.setItem("studentProfile", JSON.stringify(updatedData));
 
-                    // Show popup reliably
+                    // Show popup
                     const popup = getPopup();
                     popup.classList.remove("show");
                     void popup.offsetWidth; // force reflow
@@ -716,7 +690,7 @@
                         $("#personalDetailsModal2").modal("hide");
                     }
 
-                    // Optional reset
+                    // Optional: reset form
                     profileForm.reset();
                 });
             }
@@ -724,6 +698,7 @@
             // Initialize data on load
             loadSavedData();
         });
+
     </script>
 </body>
 
