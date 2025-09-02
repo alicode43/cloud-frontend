@@ -37,6 +37,57 @@
             line-height: 1.5;
         }
 
+        /* Toast Notification Styles */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(100%);
+            opacity: 0;
+            transition: all 0.3s ease;
+            max-width: 350px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            background-color: var(--success);
+        }
+
+        .toast.error {
+            background-color: var(--error);
+        }
+
+        .toast.info {
+            background-color: var(--primary);
+        }
+
+        .toast.warning {
+            background-color: var(--warning);
+        }
+
+        .toast i {
+            font-size: 18px;
+        }
+
         /* Header Styles */
         .header {
             background: white;
@@ -278,6 +329,10 @@
             transition: all 0.3s ease;
             box-shadow: 0 2px 6px rgba(39, 170, 220, 0.15);
             border: 2px solid transparent;
+        }
+        .bubble-category.disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
         }
 
         .bubble-category:hover {
@@ -765,6 +820,9 @@
     </style>
 </head>
 <body>
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
     <!-- Header -->
     <header class="header">
         <div class="container">
@@ -782,7 +840,7 @@
                 <!-- Navigation Links -->
                 <div class="nav-links">
                     <a href="index.html" class="nav-link">Home</a>
-                    <a href="courses.html" class="nav-link">Courses</a>
+                    <a href="Course-dashboard.html" class="nav-link">Courses</a>
                 </div>
                  <!-- Mobile Menu Toggle -->
                 <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">
@@ -834,20 +892,25 @@
                 <i class="fab fa-js-square"></i> JavaScript
             </div>
             <div class="bubble-category" data-category="html">
-                <i class="fab fa-html5"></i> HTML & CSS
+                <i class="fab fa-html5"></i> HTML
             </div>
-            <div class="bubble-category" data-category="react js">
-                <i class="fab fa-react"></i> React JS
+            <div class="bubble-category" data-category="css">
+                <i class="fas fa-bullhorn"></i> CSS
             </div>
-           
             <div class="bubble-category" data-category="salesforce">
                 <i class="fas fa-cloud"></i> Salesforce
             </div>
-            <div class="bubble-category" data-category="sfmc">
+            <div class="bubble-category" data-category="salesforce marketing cloud">
                 <i class="fas fa-bullhorn"></i> SFMC
             </div>
+            <div class="bubble-category" data-category="ampscript">
+                <i class="fas fa-bullhorn"></i> AMPscript
+            </div>
+            <div class="bubble-category" data-category="sql">
+                <i class="fas fa-shopping-cart"></i> SQL
+            </div>
             <div class="bubble-category" data-category="sfcc">
-                <i class="fas fa-shopping-cart"></i> SFCC
+                <i class="fas fa-plug"></i> SFCC
             </div>
             <div class="bubble-category" data-category="mulesoft">
                 <i class="fas fa-plug"></i> MuleSoft
@@ -908,7 +971,45 @@
     </div>
 
     <script>
+<<<<<<< HEAD
+        // Toast notification function
+        function showToast(message, type = "info") {
+            const toastContainer = document.getElementById("toastContainer");
+            const toast = document.createElement("div");
+            toast.className = `toast ${type}`;
+            
+            // Set icon based on type
+            let icon = "fa-info-circle";
+            if (type === "success") icon = "fa-check-circle";
+            if (type === "error") icon = "fa-exclamation-circle";
+            if (type === "warning") icon = "fa-exclamation-triangle";
+            
+            toast.innerHTML = `
+                <i class="fas ${icon}"></i>
+                <span>${message}</span>
+            `;
+            
+            toastContainer.appendChild(toast);
+            
+            // Trigger reflow for animation
+            void toast.offsetWidth;
+            
+            // Show toast
+            toast.classList.add("show");
+            
+            // Remove toast after 3 seconds
+            setTimeout(() => {
+                toast.classList.remove("show");
+                setTimeout(() => {
+                    toastContainer.removeChild(toast);
+                }, 300);
+            }, 3000);
+        }
+
+        // Mobile menu functionality
+=======
      // Mobile menu functionality
+>>>>>>> Pratiksha
         const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
         const mobileNav = document.getElementById('mobileNav');
         const mobileNavOverlay = document.getElementById('mobileNavOverlay');
@@ -933,6 +1034,12 @@
             "AIzaSyAdbZki0nwZVRcjyRSosD6D8B-Kh3lPRU8",
             "AIzaSyBkX6_OJJvgRAvWN1oYYOU4dq9zueS8gF4",
             "AIzaSyDTcv9gLihbaM4Wq5V1sYh6rbxTDX_aLUA",
+<<<<<<< HEAD
+            "AIzaSyAYcjjQfqU3aJrnKBIxYPGI-Um67kG4lec",
+            "AIzaSyCybsouCljby7-HzWmDA2z3HHMk4yG-oOo",
+            "AIzaSyAloXYUbtNaioq53VrGdbgJt02nU2V_vEo"
+=======
+>>>>>>> Pratiksha
         ];
 
         let currentApiIndex = parseInt(localStorage.getItem("currentApiIndex")) || 0;
@@ -960,7 +1067,13 @@
                 "JavaScript": "javascript",
                 "Salesforce Marketing Cloud": "salesforce marketing cloud",
                 "AMPscript": "ampscript",
+<<<<<<< HEAD
+                "SQL": "sql",
+                // "SFCC": "sfcc",
+                // "MuleSoft": "muleSoft"
+=======
                 "SQL": "sql"
+>>>>>>> Pratiksha
             };
             
             // If we have a course from the dashboard, use it
@@ -1005,6 +1118,57 @@
 
             fetchVideos(0);
             fetchChannels(category);
+<<<<<<< HEAD
+// Highlight the active bubble and disable others if a specific course is selected
+            const courseFromUrl = getCourseFromUrl();
+            if (courseFromUrl) {
+                document.querySelectorAll(".bubble-category").forEach((bubble) => {
+                    const bubbleCategory = bubble.getAttribute("data-category");
+                    if (bubbleCategory === category) {
+                        bubble.classList.add("active");
+                    } else {
+                        bubble.classList.add("disabled");
+                    }
+                });
+            } else {
+                // If no specific course is selected, allow all categories to be clickable
+                document.querySelectorAll(".bubble-category").forEach((bubble) => {
+                    if (bubble.getAttribute("data-category") === category) {
+                        bubble.classList.add("active");
+                    } else {
+                        bubble.classList.remove("active");
+                    }
+                    bubble.classList.remove("disabled");
+                    
+                    bubble.addEventListener("click", function () {
+                        document.querySelectorAll(".bubble-category").forEach((b) => b.classList.remove("active"));
+                        this.classList.add("active");
+
+                        category = this.getAttribute("data-category");
+                        cachedPages = {};
+                        pageTokens = [""];
+                        currentPage = 0;
+
+                        fetchVideos(0);
+                        fetchChannels(category);
+                    });
+                });
+            }
+        });
+
+        function switchToNextApiKey() {
+            if (currentApiIndex < API_KEYS.length - 1) {
+                currentApiIndex++;
+                API_KEY = API_KEYS[currentApiIndex];
+                localStorage.setItem("currentApiIndex", currentApiIndex);
+                console.warn("Switched to backup API key:", API_KEY);
+                return true;
+            } else {
+                console.error("All API keys have failed.");
+                return false;
+            }
+        }
+=======
 
             // Highlight the active bubble
             document.querySelectorAll(".bubble-category").forEach((bubble) => {
@@ -1027,6 +1191,7 @@
                 });
             });
         });
+>>>>>>> Pratiksha
 
         function switchToNextApiKey() {
             if (currentApiIndex < API_KEYS.length - 1) {
@@ -1241,6 +1406,7 @@
                     time: new Date().toLocaleString(),
                 });
                 localStorage.setItem("history", JSON.stringify(history));
+                // Removed the toast notification for adding to history
             }
 
             const overlay = event.target;
@@ -1282,6 +1448,16 @@
         function clearHistory() {
             localStorage.removeItem("history");
             showHistory();
+            showToast("Watch history cleared", "success");
+        }
+
+        function removeFromHistory(videoId) {
+            let history = JSON.parse(localStorage.getItem("history")) || [];
+            const video = history.find(v => v.id === videoId);
+            history = history.filter((v) => v.id !== videoId);
+            localStorage.setItem("history", JSON.stringify(history));
+            showHistory();
+            showToast("Video removed from history", "success");
         }
 
         function removeFromHistory(videoId) {
@@ -1307,12 +1483,20 @@
 
                 btn.classList.add("active");
                 btn.innerHTML = '<i class="fas fa-heart"></i> Added to Favorites';
+<<<<<<< HEAD
+                showToast("Video added to favorites", "success");
+=======
+>>>>>>> Pratiksha
             } else {
                 favourites.splice(index, 1);
                 localStorage.setItem("favourites", JSON.stringify(favourites));
 
                 btn.classList.remove("active");
                 btn.innerHTML = '<i class="fas fa-heart"></i> Add to Favorites';
+<<<<<<< HEAD
+                showToast("video removed from favorites", "info");
+=======
+>>>>>>> Pratiksha
             }
         }
 
@@ -1351,13 +1535,29 @@
         function clearFavourites() {
             localStorage.removeItem("favourites");
             showFavourites();
+            showToast("All favorites cleared", "success");
+            
+            // Update all favorite buttons on the page
+            document.querySelectorAll('.favBtn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.innerHTML = '<i class="fas fa-heart"></i> Add to Favorites';
+            });
         }
 
         function removeFavourite(videoId) {
             let favourites = JSON.parse(localStorage.getItem("favourites")) || [];
+<<<<<<< HEAD
+            const video = favourites.find(v => v.id === videoId);
             favourites = favourites.filter((v) => v.id !== videoId);
             localStorage.setItem("favourites", JSON.stringify(favourites));
             showFavourites();
+            showToast("removed from favorites", "success");
+            
+=======
+            favourites = favourites.filter((v) => v.id !== videoId);
+            localStorage.setItem("favourites", JSON.stringify(favourites));
+            showFavourites();
+>>>>>>> Pratiksha
             const favBtn = document.querySelector(`.favBtn[data-id="${videoId}"]`);
             if (favBtn) {
                 favBtn.classList.remove("active");
