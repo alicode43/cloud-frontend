@@ -464,7 +464,7 @@ function triggerCelebration(topicName) {
 // Modal functions
 function openVideoModal(videoId, title, courseName) {
   // Redirect to video gallery with course parameter
-  window.location.href = `video-suggestions.html?course=${encodeURIComponent(courseName)}&topic=${encodeURIComponent(title)}`;
+  window.location.href = `video_suggestions.html?course=${encodeURIComponent(courseName)}&topic=${encodeURIComponent(title)}`;
 }
 
 function closeVideoModal() {
