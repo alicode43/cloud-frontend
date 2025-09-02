@@ -175,7 +175,7 @@ function setCookie(name, value, days) {
 document.addEventListener("DOMContentLoaded", function () {
   
     
-
+// Login Authintication
 
     loginForm.addEventListener("submit", function (e) {
       e.preventDefault();
@@ -302,6 +302,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
   // Form submission validation
+  // signup authintication
   document.getElementById("signupForm").addEventListener("submit", function (event) {
       event.preventDefault();
 

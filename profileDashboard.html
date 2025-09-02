@@ -198,29 +198,43 @@
             color: var(--primary);
         }
 
+
         .nav-right .profile-button {
-            background: #27AADC;
-            /* border: 1px solid rgba(255, 255, 255, 0.3); */
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 10px;
-            border: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: rgba(255, 255, 255, 0.15);
+            /* slight visible background */
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 0.75rem;
+            padding: 0.5rem 1rem;
+            color: #000;
+            /* make text black so it’s readable */
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.3s ease;
             font-weight: 500;
         }
 
+        .nav-right .profile-button i {
+            font-size: 1.2rem;
+            color: #000;
+            /* make icon also visible */
+        }
+
         .nav-right .profile-button:hover {
-            /* background: rgba(255, 255, 255, 0.3); */
-            background: #1e90c0;
-            border: none;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
         }
 
         .nav-right .profile-button:active {
             border: none;
             outline: none;
-
         }
+
+
+
 
         /* Main Content */
         .main-content {
@@ -692,6 +706,10 @@
                 <button class="profile-button" data-toggle="modal" data-target="#pageModal" style="outline: none;">
                     <i class="fas fa-user-circle"></i> View Profile
                 </button>
+
+
+
+
             </div>
         </div>
     </nav>
@@ -794,7 +812,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <button class="continue-button" style="outline: none;">Continue Learning</button>
+                            <button class="continue-button" style="outline: none;"
+                                onclick="window.location.href='course-dashboard.html'">Continue Learning</button>
                         </div>
                     </div>
 
