@@ -71,6 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Modal functionality
 const loginBtn = document.getElementById("loginBtn");
+const startLearningBtn = document.getElementById('startLearningBtn');
 const loginModal = document.getElementById("loginModal");
 const signupModal = document.getElementById("signupModal");
 const switchToSignup = document.getElementById("switchToSignup");
@@ -83,6 +84,12 @@ loginBtn.addEventListener("click", function (e) {
   e.preventDefault();
   loginModal.classList.add("active");
 });
+
+// NEW: Handle Start Learning button click
+        startLearningBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          signupModal.classList.add('active');
+        });
 
 // Switch to signup modal
 switchToSignup.addEventListener("click", function () {
