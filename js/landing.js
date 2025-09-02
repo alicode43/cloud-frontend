@@ -86,10 +86,10 @@ loginBtn.addEventListener("click", function (e) {
 });
 
 // NEW: Handle Start Learning button click
-        startLearningBtn.addEventListener('click', function (e) {
-          e.preventDefault();
-          signupModal.classList.add('active');
-        });
+         startLearningBtn.addEventListener('click', function (e) {
+           e.preventDefault();
+           signupModal.classList.add('active');
+         });
 
 // Switch to signup modal
 switchToSignup.addEventListener("click", function () {
