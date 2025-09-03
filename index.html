@@ -8,8 +8,1006 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-     <link rel="icon" type="image/jpg" href="https://superbcompanies.s3.eu-central-1.amazonaws.com/images/companies/logos/2ff8d2b0-31e2-11ee-8644-91804827fca0.jpg">
-   <link rel="stylesheet" href="css/landing.css">
+    <link rel="icon" type="image/jpg"
+        href="https://superbcompanies.s3.eu-central-1.amazonaws.com/images/companies/logos/2ff8d2b0-31e2-11ee-8644-91804827fca0.jpg">
+    <style>
+        /* CSS Variables */
+        :root {
+            --font-size: 20px;
+            --background: #ffffff;
+            --foreground: #27AADC;
+            --card: #ffffff;
+            --card-foreground: #27AADC;
+            --primary: #27AADC;
+            --primary-foreground: #ffffff;
+            --secondary: #f1f1f4;
+            --secondary-foreground: #030213;
+            --muted: #ececf0;
+            --muted-foreground: #717182;
+            --accent: #e9ebef;
+            --accent-foreground: #030213;
+            --border: rgba(0, 0, 0, 0.1);
+            --input-background: #f3f3f5;
+            --radius: 0.625rem;
+            --error: #e74c3c;
+            --success: #2ecc71;
+            --font-family: 'Inter', Arial, Helvetica, sans-serif;
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            font-size: var(--font-size);
+            background: var(--background);
+            color: var(--foreground);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        p {
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: 1480px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .text-primary {
+            font-size: clamp(16px, 2vw, 22px);
+            font-weight: 700;
+            margin: 0;
+
+            /* Gradient text */
+            background: linear-gradient(90deg, #262727, #00c6ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            /* For Firefox */
+            background-clip: text;
+            color: transparent;
+        }
+
+
+        .text-gray-600 {
+            color: #6b7280;
+        }
+
+        .text-gray-900 {
+            color: #1f2937;
+        }
+
+        .bg-primary {
+            background-color: var(--primary);
+        }
+
+        .bg-white {
+            background-color: white;
+        }
+
+        .bg-gray-50 {
+            background-color: #f9fafb;
+        }
+
+        .shadow-sm {
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .shadow-md {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .shadow-xl {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .shadow-2xl {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .rounded-lg {
+            border-radius: 0.5rem;
+        }
+
+        .rounded-xl {
+            border-radius: 0.75rem;
+        }
+
+        .rounded-2xl {
+            border-radius: 1rem;
+        }
+
+        .rounded-full {
+            border-radius: 9999px;
+        }
+
+        /* Header Styles */
+        .header {
+            background: white;
+            box-shadow: var(--shadow-sm);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            padding: 0.5rem 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 4rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo {
+            width: 50px;
+            height: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--muted-foreground);
+            text-decoration: none;
+            transition: color 0.2s;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: large
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 2rem;
+            height: 2rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .mobile-menu-btn span {
+            width: 2rem;
+            height: 0.25rem;
+            background: var(--primary);
+            border-radius: 10px;
+            transition: all 0.3s linear;
+            position: relative;
+            transform-origin: 1px;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.375rem;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+        }
+
+        .btn-primary:hover {
+            background: #1e90c0;
+            transform: translateY(-2px);
+        }
+
+        .btn-lg {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+        }
+
+
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            padding: 1rem 0 1rem;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .hero-text {
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 0.8s ease-out 0.2s forwards;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out 0.4s forwards;
+            color: #27AADC;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--muted-foreground);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out 0.6s forwards;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out 0.8s forwards;
+        }
+
+        @media (min-width: 640px) {
+            .hero-buttons {
+                flex-direction: row;
+            }
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out 1s forwards;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+
+        .hero-stat-label {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+        }
+
+        .hero-image {
+            position: relative;
+            opacity: 0;
+            transform: translateX(50px);
+            animation: fadeInRight 0.8s ease-out 0.3s forwards;
+        }
+
+        .hero-image-container {
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-2xl);
+            transition: transform 0.3s;
+        }
+
+        .hero-image-container:hover {
+            transform: scale(1.02);
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        /* Floating Animation Elements */
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .floating-1 {
+            top: 5rem;
+            left: 2.5rem;
+            width: 1rem;
+            height: 1rem;
+            background: rgba(3, 2, 19, 0.2);
+            animation: float1 4s ease-in-out infinite;
+        }
+
+        .floating-2 {
+            top: 10rem;
+            right: 5rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            background: rgba(59, 130, 246, 0.2);
+            animation: float2 6s ease-in-out infinite 1s;
+        }
+
+        .floating-3 {
+            bottom: 10rem;
+            left: 5rem;
+            width: 0.75rem;
+            height: 0.75rem;
+            background: rgba(147, 51, 234, 0.2);
+            animation: float3 5s ease-in-out infinite 2s;
+        }
+
+        /* Why Us Section */
+        .why-us {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #27AADC;
+        }
+
+        @media (min-width: 1024px) {
+            .section-title {
+                font-size: 3rem;
+            }
+        }
+
+        .section-subtitle {
+            font-size: 1.25rem;
+            color: var(--muted-foreground);
+            max-width: 48rem;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            box-shadow: var(--shadow-xl);
+            transform: translateY(-5px);
+        }
+
+        .feature-image {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .feature-image img {
+            width: 100%;
+            height: 12rem;
+            object-fit: cover;
+            border-radius: 0.5rem 0.5rem 0 0;
+        }
+
+        .feature-icon {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: white;
+            padding: 0.75rem;
+            border-radius: 50%;
+            box-shadow: var(--shadow-lg);
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .feature-content {
+            padding: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            transition: color 0.3s;
+            color: #1f2937;
+        }
+
+        .feature-card:hover .feature-title {
+            color: var(--primary);
+        }
+
+        .feature-description {
+            color: var(--muted-foreground);
+            line-height: 1.6;
+        }
+
+        /* Departments Section */
+        .departments {
+            padding: 5rem 0;
+            background: var(--bg-gray-50);
+        }
+
+        .departments-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (min-width: 768px) {
+            .departments-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .departments-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .department-card {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-md);
+            padding: 1.5rem;
+            transition: all 0.3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .department-card:hover {
+            box-shadow: var(--shadow-xl);
+            transform: translateY(-5px);
+        }
+
+        .department-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            transition: transform 0.3s;
+            font-size: 1.5rem;
+        }
+
+        .department-card:hover .department-icon {
+            transform: scale(1.1);
+        }
+
+        .department-icon.blue {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .department-icon.green {
+            background: #10b981;
+            color: white;
+        }
+
+        .department-icon.purple {
+            background: #8b5cf6;
+            color: white;
+        }
+
+        .department-icon.orange {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .department-title {
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+            transition: color 0.3s;
+            color: #1f2937;
+        }
+
+        .department-card:hover .department-title {
+            color: var(--primary);
+        }
+
+        .department-description {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+
+
+        /* Footer */
+        .footer {
+            background: #1f2937;
+            color: white;
+            padding: 2rem 0;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .footer-content {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .footer-logo-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo img {
+            width: 100%;
+            height: auto;
+        }
+
+        .footer-logo h3 {
+            color: white;
+            font-size: 1.25rem;
+        }
+
+        .footer-copyright {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+
+        /* Modal Styles - IMPROVED */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+            font-family: var(--font-family);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .modal-header h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #27AADC;
+            margin-bottom: 10px;
+            font-family: var(--font-family);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #777;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .modal-switch {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 16px;
+            color: #6b7280;
+        }
+
+        .modal-switch a {
+            color: #27AADC;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .modal-switch a:hover {
+            color: #1e90c0;
+            text-decoration: underline;
+        }
+
+        /* Form Styles - IMPROVED */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #374151;
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            outline: none;
+            transition: all 0.3s;
+            font-size: 16px;
+            font-family: var(--font-family);
+        }
+
+        .form-group input:focus {
+            border-color: #27AADC;
+            box-shadow: 0 0 0 3px rgba(39, 170, 220, 0.2);
+        }
+
+        .error {
+            color: var(--error);
+            font-size: 14px;
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        .form-button {
+            width: 100%;
+            padding: 14px;
+            background: #27AADC;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            font-family: var(--font-family);
+        }
+
+        .form-button:hover {
+            background: #1e90c0;
+            transform: translateY(-2px);
+        }
+
+        .form-divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: #6b7280;
+        }
+
+        .form-divider::before,
+        .form-divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background-color: #e5e7eb;
+        }
+
+        .form-divider span {
+            padding: 0 15px;
+            font-size: 14px;
+        }
+
+        /* Success Message */
+        .success-message {
+            background-color: var(--success);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+            display: none;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes float1 {
+
+            0%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.3;
+            }
+
+            50% {
+                transform: translateY(-20px);
+                opacity: 0.7;
+            }
+        }
+
+        @keyframes float2 {
+
+            0%,
+            100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0.2;
+            }
+
+            50% {
+                transform: translateY(-30px) translateX(10px);
+                opacity: 0.6;
+            }
+        }
+
+        @keyframes float3 {
+
+            0%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.4;
+            }
+
+            50% {
+                transform: translateY(-15px);
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 5rem;
+                right: -100%;
+                flex-direction: column;
+                background-color: white;
+                width: 80%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: var(--shadow-xl);
+                padding: 2rem;
+                border-radius: 0 0 0 1rem;
+                gap: 1.5rem;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .hero-content {
+                text-align: center;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .departments-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .hero {
+                padding: 2rem 0 3rem;
+                min-height: auto;
+            }
+
+            .hero-title {
+                font-size: 1.75rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            .section-subtitle {
+                font-size: 1rem;
+            }
+
+            .modal-content {
+                padding: 20px;
+                margin: 0 15px;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -87,7 +1085,7 @@
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title text-gray-900">
-                   Our Key Benefits
+                    Our Key Benefits
                 </h2>
                 <p class="section-subtitle">
                     We provide everything you need to succeed in your cloud technology journey.
@@ -227,27 +1225,27 @@
                 <button class="modal-close">&times;</button>
             </div>
 
+            <div id="loginSuccessMessage" class="success-message">
+                Login successful! Redirecting...
+            </div>
+
             <!-- Email -->
-             <form id="loginForm"  method="post">
+            <form id="loginForm" method="post">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                    <p class="error" id="loginEmailError"></p>
+                </div>
 
-                 <div class="form-group">
-                     <label>Email</label>
-                     <input type="email" id="loginEmail" placeholder="Enter your email">
-                     <p class="error" id="loginEmailError"></p>
-                    </div>
-                    
-                    <!-- Password -->
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" id="loginPassword" placeholder="Enter your password">
-                        <p class="error" id="loginPasswordError"></p>
-                    </div>
-                   <button class="form-button" type="submit" onclick="window.location.href='profile_dashboard.html'">
-                    Login
-                </button>
-             </form>
+                <!-- Password -->
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                    <p class="error" id="loginPasswordError"></p>
+                </div>
 
-            <!-- Button -->
+                <button class="form-button" type="submit">Login</button>
+            </form>
 
             <div class="modal-switch">
                 <p>Don't have an account? <a id="switchToSignup">Sign Up</a></p>
@@ -261,6 +1259,10 @@
             <div class="modal-header">
                 <h2>Create Account</h2>
                 <button class="modal-close">&times;</button>
+            </div>
+
+            <div id="signupSuccessMessage" class="success-message">
+                Account created successfully! You can now login.
             </div>
 
             <form id="signupForm">
@@ -292,9 +1294,7 @@
                     <div class="error" id="confirmPasswordError"></div>
                 </div>
 
-               <button class="form-button" type="submit" onclick="window.location.href='profile_dashboard.html'">
-                    Sign Up
-                </button>
+                <button type="submit" class="form-button">Sign Up</button>
             </form>
 
             <div class="modal-switch">
@@ -303,9 +1303,433 @@
         </div>
     </div>
 
-    <script src="js/landing.js">
-        
+    <!-- <script>
+        // DOM Elements
+        const loginBtn = document.getElementById('loginBtn');
+        const startLearningBtn = document.getElementById('startLearningBtn');
+        const loginModal = document.getElementById('loginModal');
+        const signupModal = document.getElementById('signupModal');
+        const switchToSignup = document.getElementById('switchToSignup');
+        const switchToLogin = document.getElementById('switchToLogin');
+        const modalCloseButtons = document.querySelectorAll('.modal-close');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+
+        // Open Login Modal
+        function openLoginModal() {
+            loginModal.classList.add('active');
+            signupModal.classList.remove('active');
+        }
+
+        // Open Signup Modal
+        function openSignupModal() {
+            signupModal.classList.add('active');
+            loginModal.classList.remove('active');
+        }
+
+        // Close Modals
+        function closeModals() {
+            loginModal.classList.remove('active');
+            signupModal.classList.remove('active');
+        }
+
+        // Event Listeners
+        loginBtn.addEventListener('click', openLoginModal);
+        startLearningBtn.addEventListener('click', openLoginModal);
+        switchToSignup.addEventListener('click', openSignupModal);
+        switchToLogin.addEventListener('click', openLoginModal);
+
+        modalCloseButtons.forEach(button => {
+            button.addEventListener('click', closeModals);
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal || e.target === signupModal) {
+                closeModals();
+            }
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.classList.toggle('active');
+        });
+
+        // Form Validation and localStorage Handling
+        signupForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Get form values
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Reset error messages
+            document.getElementById('usernameError').textContent = '';
+            document.getElementById('emailError').textContent = '';
+            document.getElementById('passwordError').textContent = '';
+            document.getElementById('confirmPasswordError').textContent = '';
+
+            let isValid = true;
+
+            // Validate username
+            if (username.length < 3) {
+                document.getElementById('usernameError').textContent = 'Username must be at least 3 characters';
+                isValid = false;
+            }
+
+            // Validate email
+            // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            // if (!emailRegex.test(email)) {
+            //     document.getElementById('emailError').textContent = 'Please enter a valid email address';
+            //     isValid = false;
+            // }
+            document.getElementById("email").addEventListener("input", function () {
+                let email = this.value.trim();
+                let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // standard email format
+                let errorMsg = "";
+
+                if (email !== "" && !emailRegex.test(email)) {
+                    errorMsg = "Please enter a valid email address.";
+                }
+
+                document.getElementById("emailError").textContent = errorMsg;
+            });
+
+            // Validate password
+            // if (password.length < 6) {
+            //     document.getElementById('passwordError').textContent = 'Password must be at least 6 characters';
+            //     isValid = false;
+            // }
+            document.getElementById("password").addEventListener("input", function () {
+                let password = this.value;
+                let errorMsg = "";
+
+                // Regex for strong password: at least 8 chars, 1 uppercase, 1 number, 1 special char
+                let strongRegex =
+                    /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+                if (password === "") {
+                    errorMsg = "Password cannot be empty.";
+                } else if (!strongRegex.test(password)) {
+                    errorMsg =
+                        "Password must be at least 8 characters, include 1 uppercase, 1 number, and 1 special character.";
+                } else {
+                    errorMsg = ""; // ✅ No message if password is valid
+                }
+
+                document.getElementById("passwordError").textContent = errorMsg;
+            });
+
+            // Validate confirm password
+
+
+            // if (password !== confirmPassword) {
+            //     document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
+            //     isValid = false;
+            // }
+            document.getElementById("confirmPassword").addEventListener("input", function () {
+                let confirmPassword = this.value;
+                let password = document.getElementById("password").value;
+                let errorMsg = "";
+
+                if (confirmPassword === "") {
+                    errorMsg = "Confirm Password cannot be empty.";
+                } else if (confirmPassword !== password) {
+                    errorMsg = "Passwords do not match.";
+                } else {
+                    errorMsg = ""; // ✅ No success message, just clear error
+                }
+
+                document.getElementById("confirmPasswordError").textContent = errorMsg;
+            });
+
+            if (isValid) {
+                // Check if user already exists
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                const userExists = users.find(user => user.email === email);
+
+                if (userExists) {
+                    document.getElementById('emailError').textContent = 'An account with this email already exists';
+                    return;
+                }
+
+                // Store user data in localStorage
+                users.push({ username, email, password });
+                localStorage.setItem('users', JSON.stringify(users));
+
+                // Show success message
+                const successMessage = document.getElementById('signupSuccessMessage');
+                successMessage.style.display = 'block';
+
+                // Clear form
+                signupForm.reset();
+
+                // Switch to login after a delay
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                    openLoginModal();
+                }, 2000);
+            }
+        });
+
+        // Login Form Handling
+        loginForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Get form values
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            // Reset error messages
+            document.getElementById('loginEmailError').textContent = '';
+            document.getElementById('loginPasswordError').textContent = '';
+
+            let isValid = true;
+
+            // Validate email
+            if (!email) {
+                document.getElementById('loginEmailError').textContent = 'Email is required';
+                isValid = false;
+            }
+
+            // Validate password
+            if (!password) {
+                document.getElementById('loginPasswordError').textContent = 'Password is required';
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Check if user exists in localStorage
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                const user = users.find(user => user.email === email && user.password === password);
+
+                if (user) {
+                    // Store current user in localStorage
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+
+                    // Show success message
+                    const successMessage = document.getElementById('loginSuccessMessage');
+                    successMessage.style.display = 'block';
+
+                    // clear form
+                    loginForm.reset();
+
+                    // Redirect to dashboard after a delay
+                    setTimeout(() => {
+                        window.location.href = 'profile_dashboard.html';
+                    }, 1500);
+                } else {
+                    document.getElementById('loginPasswordError').textContent = 'Invalid email or password';
+                }
+            }
+        });
+
+        // Initialize - Check if users array exists in localStorage
+        if (!localStorage.getItem('users')) {
+            localStorage.setItem('users', JSON.stringify([]));
+        }
+    </script> -->
+
+    <script>
+        // DOM Elements
+        const loginBtn = document.getElementById('loginBtn');
+        const startLearningBtn = document.getElementById('startLearningBtn');
+        const loginModal = document.getElementById('loginModal');
+        const signupModal = document.getElementById('signupModal');
+        const switchToSignup = document.getElementById('switchToSignup');
+        const switchToLogin = document.getElementById('switchToLogin');
+        const modalCloseButtons = document.querySelectorAll('.modal-close');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+
+        // Open Login Modal
+        function openLoginModal() {
+            loginModal.classList.add('active');
+            signupModal.classList.remove('active');
+        }
+
+        // Open Signup Modal
+        function openSignupModal() {
+            signupModal.classList.add('active');
+            loginModal.classList.remove('active');
+        }
+
+        // Close Modals
+        function closeModals() {
+            loginModal.classList.remove('active');
+            signupModal.classList.remove('active');
+        }
+
+        // Event Listeners
+        loginBtn.addEventListener('click', openLoginModal);
+        startLearningBtn.addEventListener('click', openSignupModal);
+        switchToSignup.addEventListener('click', openSignupModal);
+        switchToLogin.addEventListener('click', openLoginModal);
+
+        modalCloseButtons.forEach(button => {
+            button.addEventListener('click', closeModals);
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal || e.target === signupModal) {
+                closeModals();
+            }
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.classList.toggle('active');
+        });
+
+        // ✅ Signup Form Validation & localStorage
+        signupForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Get form values
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Reset error messages
+            document.getElementById('usernameError').textContent = '';
+            document.getElementById('emailError').textContent = '';
+            document.getElementById('passwordError').textContent = '';
+            document.getElementById('confirmPasswordError').textContent = '';
+
+            let isValid = true;
+
+            // Username validation (First letter capital & only letters)
+            if (!username) {
+                document.getElementById('usernameError').textContent = 'Username cannot be empty.';
+                isValid = false;
+            } else if (username[0] !== username[0].toUpperCase()) {
+                document.getElementById('usernameError').textContent = 'First letter must be capital.';
+                isValid = false;
+            } else if (!/^[A-Za-z]*$/.test(username)) {
+                document.getElementById('usernameError').textContent = 'Username can only contain letters.';
+                isValid = false;
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email) {
+                document.getElementById('emailError').textContent = 'Email cannot be empty.';
+                isValid = false;
+            } else if (!emailRegex.test(email)) {
+                document.getElementById('emailError').textContent = 'Please enter a valid email address.';
+                isValid = false;
+            }
+
+            // Password validation (Strong password)
+            const strongRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!password) {
+                document.getElementById('passwordError').textContent = 'Password cannot be empty.';
+                isValid = false;
+            } else if (!strongRegex.test(password)) {
+                document.getElementById('passwordError').textContent = 'Password must be at least 8 characters, include 1 uppercase, 1 number, and 1 special character.';
+                isValid = false;
+            }
+
+            // Confirm password validation
+            if (!confirmPassword) {
+                document.getElementById('confirmPasswordError').textContent = 'Confirm Password cannot be empty.';
+                isValid = false;
+            } else if (confirmPassword !== password) {
+                document.getElementById('confirmPasswordError').textContent = 'Passwords does not match.';
+                isValid = false;
+            }
+
+            // If valid -> store in localStorage
+            if (isValid) {
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                const userExists = users.find(user => user.email === email);
+
+                if (userExists) {
+                    document.getElementById('emailError').textContent = 'An account with this email already exists';
+                    return;
+                }
+
+                // Save user
+                users.push({ username, email, password });
+                localStorage.setItem('users', JSON.stringify(users));
+
+                // Success message
+                document.getElementById('signupSuccessMessage').style.display = 'block';
+                signupForm.reset();
+
+                // Switch to login after 2s
+                setTimeout(() => {
+                    document.getElementById('signupSuccessMessage').style.display = 'none';
+                    openLoginModal();
+                }, 2000);
+            }
+        });
+
+        // ✅ Login Form Validation
+        loginForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            document.getElementById('loginEmailError').textContent = '';
+            document.getElementById('loginPasswordError').textContent = '';
+
+            let isValid = true;
+
+            if (!email) {
+                document.getElementById('loginEmailError').textContent = 'Email cannot be empty.';
+                isValid = false;
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                document.getElementById('loginEmailError').textContent = 'Enter a valid email.';
+                isValid = false;
+            }
+
+            if (!password) {
+                document.getElementById('loginPasswordError').textContent = 'Password cannot be empty.';
+                isValid = false;
+            } else if (password.length < 8) {
+                document.getElementById('loginPasswordError').textContent = 'Password must be at least 8 characters.';
+                isValid = false;
+            }
+
+            if (isValid) {
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                const user = users.find(user => user.email === email && user.password === password);
+
+                if (user) {
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+
+                    document.getElementById('loginSuccessMessage').style.display = 'block';
+                    loginForm.reset();
+
+                    setTimeout(() => {
+                        window.location.href = 'profile_dashboard.html';
+                    }, 1500);
+                } else {
+                    document.getElementById('loginPasswordError').textContent = 'Invalid email or password';
+                }
+            }
+        });
+
+        // Initialize users storage
+        if (!localStorage.getItem('users')) {
+            localStorage.setItem('users', JSON.stringify([]));
+        }
     </script>
+
 </body>
 
 </html>
