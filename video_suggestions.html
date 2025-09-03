@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cloud Odyssey - Video Gallery</title>
+         <link rel="icon" type="image/jpg" href="https://superbcompanies.s3.eu-central-1.amazonaws.com/images/companies/logos/2ff8d2b0-31e2-11ee-8644-91804827fca0.jpg">
+     <link rel="icon" type="image/jpg" href="https://superbcompanies.s3.eu-central-1.amazonaws.com/images/companies/logos/2ff8d2b0-31e2-11ee-8644-91804827fca0.jpg">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* CSS Variables */
@@ -297,6 +300,19 @@
             align-items: center;
             margin-left: 10px;
         }
+     
+        .back-btn {
+        display: flex;
+        justify-content: flex-end; /* push button to right */
+       margin-left: 100vh; /* span full row */
+        }
+
+        @media (max-width: 968px) {
+        .back-btn {
+            justify-content: center;
+            margin-top: 10px;
+        }
+        }
         
         i.fas.fa-history {
             margin-right: 10px;
@@ -305,7 +321,9 @@
         i.fas.fa-heart {
             margin-right: 10px;
         }
-
+        i.fas.fa-arrow-left{
+             margin-right: 10px;
+        }
         /* Bubble Categories */
         .bubble-categories {
             display: flex;
@@ -623,40 +641,55 @@
         }
 
         /* Footer */
-        .footer {
-            background: #1f2937;
-            color: white;
-            padding: 2rem 0;
-            margin-top: 3rem;
-        }
+.footer {
+    background: #1f2937;
+    color: white;
+    padding: 2rem 0;
+}
 
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-        }
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
 
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
+@media (min-width: 768px) {
+    .footer-content {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
 
-        .footer-logo img {
-            width: 40px;
-            height: auto;
-        }
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
 
-        .footer-logo h3 {
-            color: white;
-            font-size: 1.25rem;
-        }
+.footer-logo-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        .footer-copyright {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
+.footer-logo img {
+    width: 100%;
+    height: auto;
+}
+
+.footer-logo h3 {
+    color: white;
+    font-size: 1.25rem;
+}
+
+.footer-copyright {
+    font-size: 0.875rem;
+    opacity: 0.9;
+}
+
 
         /* Responsive adjustments */
         @media (max-width: 968px) {
@@ -840,7 +873,7 @@
                 <!-- Navigation Links -->
                 <div class="nav-links">
                     <a href="index.html" class="nav-link">Home</a>
-                    <a href="course-dashboard.html" class="nav-link">Courses</a>
+                    <a href="course_dashboard.html" class="nav-link">Courses</a>
                 </div>
                  <!-- Mobile Menu Toggle -->
                 <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">
@@ -858,7 +891,7 @@
         <a href="index.html" class="mobile-nav-link">
             <i class="fas fa-home"></i> Home
         </a>
-        <a href="courses.html" class="mobile-nav-link">
+        <a href="course_dashboard.html" class="mobile-nav-link">
             <i class="fas fa-book"></i> Courses
         </a>
     </nav>
@@ -883,6 +916,13 @@
                 <button class="btn btn-primary" onclick="showFavourites()">
                     <i class="fas fa-heart"></i> View Favorites
                 </button>
+                <!-- With this updated version -->
+                 <div class="back-btn">
+            <button class="btn btn-primary" onclick="goBackToDashboard()">
+            <i class="fas fa-arrow-left"></i>
+                Back to Dashboard
+                </button>
+                </div>
             </div>
         </div>
 
@@ -936,10 +976,18 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
+                <!-- Logo and Company Name -->
                 <div class="footer-logo">
-                    <img src="https://superbcompanies.s3.eu-central-1.amazonaws.com/images/companies/logos/2ff8d2b0-31e2-11ee-8644-91804827fca0.jpg" alt="Logo" class="logo">
-                    <h3>Cloud Odyssey Training Platform</h3>
+                    <div class="footer-logo-icon">
+                        <img src="https://superbcompanies.s3.eu-central-1.amazonaws.com/images/companies/logos/2ff8d2b0-31e2-11ee-8644-91804827fca0.jpg"
+                            alt="Logo" class="logo">
+                    </div>
+                    <div>
+                        <h3>Cloud Odyssey Training Platform</h3>
+                    </div>
                 </div>
+
+                <!-- Copyright -->
                 <div class="footer-copyright">
                     <p>© 2025 Cloud Odyssey Training Platform. All rights reserved.</p>
                 </div>
@@ -1032,7 +1080,11 @@
             "AIzaSyDTcv9gLihbaM4Wq5V1sYh6rbxTDX_aLUA",
             "AIzaSyAYcjjQfqU3aJrnKBIxYPGI-Um67kG4lec",
             "AIzaSyCybsouCljby7-HzWmDA2z3HHMk4yG-oOo",
-            "AIzaSyAloXYUbtNaioq53VrGdbgJt02nU2V_vEo"
+            "AIzaSyAloXYUbtNaioq53VrGdbgJt02nU2V_vEo",
+            "AIzaSyDubxraWk-AF6pX2cxny6x615Ge1VInlQA",
+            "AIzaSyBn5h9M7travBaY7MMZLH7S-LO_1naXvmM",
+            "AIzaSyCMqeIISHje35F9tbU3upzSRsnWp3tRzbo",
+            "AIzaSyB6eSFDytWhD_nm12vKWXkbaYDC8bS4aYc"
         ];
 
         let currentApiIndex = parseInt(localStorage.getItem("currentApiIndex")) || 0;
@@ -1431,6 +1483,19 @@
             showHistory();
         }
 
+        function goBackToDashboard() {
+  // Get the course from URL parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  const courseName = urlParams.get('course');
+  
+  // Redirect to dashboard with course parameter
+  if (courseName) {
+    window.location.href = `course_dashboard.html?course=${encodeURIComponent(courseName)}`;
+  } else {
+    window.location.href = 'course_dashboard.html';
+  }
+}
+
         // Close modal
         function closeModal(id) {
             document.getElementById(id).style.display = "none";
@@ -1516,6 +1581,7 @@
                 favBtn.innerHTML = `<i class="fas fa-heart"></i> Add to Favourites`;
             }
         }  
+
     </script>
 </body>
 </html>
