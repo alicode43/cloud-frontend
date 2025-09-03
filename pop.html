@@ -399,6 +399,14 @@
             font-size: 0.875rem;
             margin-bottom: 0.75rem;
         }
+
+        .placeholder {
+            content: attr(data-placeholder);
+            /* use the value from data-placeholder */
+            color: gray;
+            font-style: italic;
+            opacity: 0.7;
+        }
     </style>
 </head>
 
@@ -419,23 +427,23 @@
                     <div class="profile-card card-back">
                         <div class="profile-image">
                             <img id="profileImage"
-                                src="https://img.freepik.com/premium-photo/happy-man-ai-generated-portrait-user-profile_1119669-1.jpg?w=2000"
+                                src="https://www.bing.com/th/id/OIP.PKlD9uuBX0m4S8cViqXZHAHaHa?w=196&h=211&c=8&rs=1&qlt=90&o=6&cb=thwsc4&pid=3.1&rm=2"
                                 alt="Profile Picture">
                             <input type="file" id="fileInput" accept="image/*">
                         </div>
-                        <h3 class="student-name" id="cardName">Jayakumar gada</h3>
+                        <h3 class="student-name class=" placeholder"" id="cardName">___Name___</h3>
                         <div class="basic-info-table">
                             <table class="info-table">
                                 <tbody>
                                     <tr>
                                         <td class="card-headings">Emp.Id</td>
                                         <td>:</td>
-                                        <td id="cardEmp.id">321000001</td>
+                                        <td id="cardEmp.id" class="placeholder">___________</td>
                                     </tr>
                                     <tr>
                                         <td class="card-headings">Course</td>
                                         <td>:</td>
-                                        <td id="cardCourse">SFMC</td>
+                                        <td id="cardCourse" class="placeholder">___________</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -458,37 +466,38 @@
                                 <tr>
                                     <td class="card-headings">Phone No</td>
                                     <td>:</td>
-                                    <td id="cardPhone">9347909241</td>
+                                    <td id="cardPhone" type="number" placeholder="Enter Email" class="placeholder">Enter
+                                        your Number</td>
                                 </tr>
                                 <tr>
                                     <td class="card-headings">Email Id</td>
                                     <td>:</td>
-                                    <td id="cardEmail">jayakumar934790@gmail.com</td>
+                                    <td id="cardEmail" class="placeholder">Enter your Email</td>
                                 </tr>
                                 <tr>
                                     <td class="card-headings">Gender</td>
                                     <td>:</td>
-                                    <td id="cardGender">Male</td>
+                                    <td id="cardGender" class="placeholder">Enter your gender</td>
                                 </tr>
                                 <tr>
-                                    <td class="card-headings">Qualification</td>
+                                    <td class="card-headings" class="placeholder">Qualification</td>
                                     <td>:</td>
-                                    <td id="cardQualification">B.tech</td>
+                                    <td id="cardQualification" class="placeholder">Enter your collification</td>
                                 </tr>
                                 <tr>
-                                    <td class="card-headings">Skills</td>
+                                    <td class="card-headings" class="placeholder">Skills</td>
                                     <td>:</td>
-                                    <td id="cardSkills">HTML , java Script , CSS</td>
+                                    <td id="cardSkills" class="placeholder">Enter your Skills</td>
                                 </tr>
                                 <tr>
                                     <td class="card-headings">Address</td>
                                     <td>:</td>
-                                    <td id="cardAddress">Kakinada , Andhra Pradesh</td>
+                                    <td id="cardAddress" class="placeholder">Enter your Address</td>
                                 </tr>
                                 <tr>
                                     <td class="card-headings">D.O.B</td>
                                     <td>:</td>
-                                    <td id="cardDob">01/08/2025</td>
+                                    <td id="cardDob" class="placeholder">Enter your DOB</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -636,6 +645,8 @@
 
             // Load saved profile data
             function loadSavedData() {
+
+                document.querySelector('.student-name').innerHTML = localStorage.getItem('users').split(",")[0].split(":")[1].replace(/"/g, "");
                 const savedData = localStorage.getItem("studentProfile");
                 if (!savedData) return;
 
@@ -645,9 +656,9 @@
                     if (val != null) {
                         const profileElement = document.getElementById(fieldMap[inputId]);
                         if (profileElement) profileElement.textContent = val;
-
                         const formInput = document.getElementById(inputId);
                         if (formInput) formInput.value = val;
+                        profileElement.classList.remove("placeholder")
                     }
                 }
                 if (parsedData.profileImage && profileImage) {
@@ -692,6 +703,7 @@
                         const profileElement = document.getElementById(fieldMap[inputId]);
                         if (profileElement) {
                             profileElement.textContent = value;
+                            profileElement.classList.remove("placeholder")
                         }
                     }
 

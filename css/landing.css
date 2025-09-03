@@ -1019,3 +1019,14 @@ p {
         font-size: 1rem;
     }
 }
+
+/* Success Message */
+        .success-message {
+            background-color: var(--success);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+            display: none;
+        }

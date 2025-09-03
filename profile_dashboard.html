@@ -100,12 +100,26 @@
             gap: 1rem;
         }
 
+
+        .profile-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            /* space between image and text */
+            padding: 5px 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
         .avatar {
             width: 45px;
             height: 45px;
             border-radius: 50%;
             overflow: hidden;
             border: 2px solid rgba(255, 255, 255, 0.3);
+            flex-shrink: 0;
+            /* prevent shrinking */
         }
 
         .avatar-image {
@@ -436,35 +450,7 @@
 
         }
 
-        .weekly-progress {
-            margin-bottom: 1.5rem;
-        }
 
-        .day-progress {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.75rem;
-        }
-
-        .day-progress span {
-            width: 90px;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .progress-bar.small {
-            flex: 1;
-            height: 6px;
-        }
-
-        .weekly-total {
-            text-align: center;
-            font-weight: 600;
-            color: var(--primary);
-            padding: 0.75rem;
-            background: var(--primary-light);
-            border-radius: 8px;
-        }
 
         /* Courses Section */
         .courses-section {
@@ -595,6 +581,58 @@
             background: #e9ecef;
         }
 
+        /* Footer */
+        .footer {
+            background: #1f2937;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 100px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .footer-content {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .footer-logo-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo img {
+            width: 100%;
+            height: auto;
+        }
+
+        .footer-logo h3 {
+            color: white;
+            font-size: 1.25rem;
+        }
+
+        .footer-copyright {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+
 
 
         /* Responsive Design */
@@ -707,7 +745,9 @@
             <!-- view profile button -->
             <div class="nav-right">
                 <button class="profile-button" data-toggle="modal" data-target="#pageModal" style="outline: none;">
-                    <i class="fas fa-user-circle"></i> View Profile
+                    <div class="avatar">
+                        <img id="smallImage" src="your-image.jpg" alt="User Avatar" class="avatar-image">
+                    </div>
                 </button>
             </div>
         </div>
@@ -748,10 +788,10 @@
                             <i class="fas fa-book-open stat-icon"></i>
                         </div>
                         <div class="stat-content">
-                            <div class="stat-value">1</div>
+                            <div class="stat-value">0</div>
                             <p class="stat-description">Out of 3 enrolled</p>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 33%"></div>
+                                <div class="progress-fill" style="width: 0%"></div>
                             </div>
                         </div>
                     </div>
@@ -776,16 +816,16 @@
                             <i class="fas fa-fire stat-icon"></i>
                         </div>
                         <div class="stat-content">
-                            <div class="stat-value">12</div>
+                            <div class="stat-value">0</div>
                             <p class="stat-description">Days consecutive</p>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 12%"></div>
+                                <div class="progress-fill" style="width: 0%"></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Recent Activity Grid -->
+
 
         </section>
 
@@ -793,17 +833,15 @@
         <section class="courses-section">
             <div id="section2">
                 <div class="section-header">
-                    <h2>Training Courses</h2>
+                    <h2>Learning Programs</h2>
                     <p>Comprehensive Salesforce training programs to advance your career</p>
                 </div>
 
                 <div class="courses-grid">
                     <div class="course-card">
                         <div class="course-image"
-                            style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=200&fit=crop')">
-                            <div class="course-overlay">
-                                <span class="level-badge intermediate">Intermediate</span>
-                            </div>
+                            style="background-image: url('https://dianapps.com/blog/wp-content/uploads/2024/06/blog-image-1.jpg')">
+
                         </div>
                         <div class="course-content">
                             <h3>Salesforce Marketing Cloud (SFMC)</h3>
@@ -824,7 +862,7 @@
                             <div class="course-progress">
                                 <div class="progress-header">
                                     <span>Progress</span>
-                                    <span>8/12 modules</span>
+                                    <span>0/12 modules</span>
                                 </div>
                                 <div class="progress-bar">
                                     <div class="progress-fill" style="width: 0%"></div>
@@ -832,24 +870,10 @@
                                 <p class="progress-text">0% complete</p>
                             </div>
 
-                            <!-- <div class="course-actions">
-                                
-                                <button class="primary-button" style="outline: none;">Continue</button>
-                                <button class="icon-button">
-                                    <i class="fas fa-book"></i>
-                                </button>
-                            </div> -->
-
-                            <!-- <div class="course-actions">
-                                <a href="courses-dashboard.html" class="primary-button">Continue</a>
-                                <button class="icon-button">
-                                    <i class="fas fa-book"></i>
-                                </button>
-                            </div> -->
 
                             <div class="course-actions">
                                 <button class="primary-button" style="outline: none;"
-                                    onclick="window.location.href='course-dashboard.html'">Continue</button>
+                                    onclick="window.location.href='Course-dashboard.html'">Continue</button>
                                 <button class="icon-button">
                                     <i class="fas fa-book"></i>
                                 </button>
@@ -863,9 +887,9 @@
 
                     <div class="course-card">
                         <div class="course-image"
-                            style="background-image: url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=200&fit=crop')">
+                            style="background-image: url('https://www.techforceservices.com/wp-content/uploads/2023/01/what-is-salesforce-commerce-cloud.jpg')">
                             <div class="course-overlay">
-                                <span class="level-badge intermediate">Intermediate</span>
+                                <span class="level-badge intermediate">Coming Soon</span>
                             </div>
                         </div>
                         <div class="course-content">
@@ -886,7 +910,7 @@
                             <div class="course-progress">
                                 <div class="progress-header">
                                     <span>Progress</span>
-                                    <span>3/10 modules</span>
+                                    <span>0/10 modules</span>
                                 </div>
                                 <div class="progress-bar">
                                     <div class="progress-fill" style="width: 0%"></div>
@@ -905,9 +929,9 @@
 
                     <div class="course-card">
                         <div class="course-image"
-                            style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=200&fit=crop')">
+                            style="background-image: url('https://www.inventateq.com/top-stories/wp-content/uploads/2024/05/mulesoft2.jpg')">
                             <div class="course-overlay">
-                                <span class="level-badge intermediate">Advanced</span>
+                                <span class="level-badge intermediate">Coming Soon</span>
                             </div>
                         </div>
                         <div class="course-content">
@@ -928,7 +952,7 @@
                             <div class="course-progress">
                                 <div class="progress-header">
                                     <span>Progress</span>
-                                    <span>10/14 modules</span>
+                                    <span>0/14 modules</span>
                                 </div>
                                 <div class="progress-bar">
                                     <div class="progress-fill" style="width: 0%"></div>
@@ -948,9 +972,32 @@
             </div>
         </section>
     </main>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Logo and Company Name -->
+                <div class="footer-logo">
+                    <div class="footer-logo-icon">
+                        <img src="https://superbcompanies.s3.eu-central-1.amazonaws.com/images/companies/logos/2ff8d2b0-31e2-11ee-8644-91804827fca0.jpg"
+                            alt="Logo" class="logo">
+                    </div>
+                    <div>
+                        <h3>Cloud Odyssey Training Platform</h3>
+                    </div>
+                </div>
+
+                <!-- Copyright -->
+                <div class="footer-copyright">
+                    <p>© 2025 Cloud Odyssey Training Platform. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <script>
         // Get saved object from localStorage
+        document.getElementById("smallImage").src = "https://www.bing.com/th/id/OIP.PKlD9uuBX0m4S8cViqXZHAHaHa?w=196&h=211&c=8&rs=1&qlt=90&o=6&cb=thwsc4&pid=3.1&rm=2";
         const savedData = JSON.parse(localStorage.getItem("studentProfile"));
 
         if (savedData) {
