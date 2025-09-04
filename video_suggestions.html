@@ -297,13 +297,19 @@
             align-items: center;
             margin-left: 10px;
         }
-        
+        .back_link{
+            position: relative;
+            left: 125vh;
+        }
         i.fas.fa-history {
             margin-right: 10px;
         }
 
         i.fas.fa-heart {
             margin-right: 10px;
+        }
+        i.fas.fa-arrow-left{
+             margin-right: 10px;
         }
 
         /* Bubble Categories */
@@ -885,10 +891,12 @@
                     <i class="fas fa-heart"></i> View Favorites
                 </button>
                             <!-- With this updated version -->
+                <div class="back_link">
             <button class="btn btn-primary" onclick="goBackToDashboard()">
             <i class="fas fa-arrow-left"></i>
             Back to Dashboard
             </button>
+            </div>
             </div>
         </div>
 
