@@ -727,9 +727,6 @@ function init() {
   // Render initial state
   renderCourseGrid();
   renderSidebar();
-
-    // Check for URL parameters to auto-select course
-  handleUrlParameters();
   
   // Add smooth scrolling to page
   document.documentElement.style.scrollBehavior = 'smooth';
@@ -763,17 +760,3 @@ window.addEventListener('load', () => {
 
 // Start the application when DOM is loaded
 document.addEventListener('DOMContentLoaded', init);
-
-// Function to handle URL parameters and auto-select course
-function handleUrlParameters() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const courseName = urlParams.get('course');
-  
-  if (courseName) {
-    // Find the course by name
-    const course = courses.find(c => c.name === courseName);
-    if (course) {
-      selectCourse(course.id);
-    }
-  }
-}
