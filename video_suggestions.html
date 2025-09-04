@@ -297,9 +297,9 @@
             align-items: center;
             margin-left: 10px;
         }
-        .back_link{
-            position: relative;
-            left: 125vh;
+        .gallery-container #back_link{
+            position: fixed;
+            left: 155vh;
         }
         i.fas.fa-history {
             margin-right: 10px;
@@ -891,7 +891,7 @@
                     <i class="fas fa-heart"></i> View Favorites
                 </button>
                             <!-- With this updated version -->
-                <div class="back_link">
+                <div id="back_link">
             <button class="btn btn-primary" onclick="goBackToDashboard()">
             <i class="fas fa-arrow-left"></i>
             Back to Dashboard
