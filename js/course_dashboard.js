@@ -537,6 +537,73 @@ function selectQuizAnswer(questionIndex, optionIndex) {
   });
 }
 
+// function submitQuiz() {
+//   if (!appState.currentQuiz) return;
+  
+//   appState.quizSubmitted = true;
+//   const quiz = appState.currentQuiz.quiz;
+//   let score = 0;
+  
+//   quiz.forEach((question, questionIndex) => {
+//     const userAnswer = appState.quizAnswers[questionIndex];
+//     const correctAnswer = question.correct;
+    
+//     if (userAnswer === correctAnswer) {
+//       score++;
+//     }
+    
+//     // Update UI to show results
+//     const options = document.querySelectorAll(`input[name="question-${questionIndex}"]`);
+//     options.forEach((option, optionIndex) => {
+//       const label = option.parentElement;
+//       option.disabled = true;
+      
+//       if (optionIndex === correctAnswer) {
+//         label.classList.add('correct');   
+//         const icon = document.createElement('i');
+//         icon.className = 'fas fa-check';
+//         icon.style.color = '#22c55e';
+//         icon.style.marginLeft = 'auto';
+//         label.appendChild(icon);
+//       } else if (optionIndex === userAnswer && userAnswer !== correctAnswer) {
+//         label.classList.add('incorrect');
+//         const icon = document.createElement('i');
+//         icon.className = 'fas fa-times';
+//         icon.style.color = '#ef4444';
+//         icon.style.marginLeft = 'auto';
+//         label.appendChild(icon);
+//       }
+//     });
+//   });
+  
+//   const percentage = Math.round((score / quiz.length) * 100);
+  
+//   // Show results with a delay for better UX
+//   setTimeout(() => {
+//     if (percentage >= 70) {
+//       showToast(
+//         '🎉 Great job!', 
+//         `You scored ${score} out of ${quiz.length} (${percentage}%). Excellent work!`,
+//         'success'
+//       );
+//       if (percentage === 100) {
+//         createConfetti();
+//       }
+//     } else {
+//       showToast(
+//         '📚 Keep learning!', 
+//         `You scored ${score} out of ${quiz.length} (${percentage}%). Review the material and try again!`,
+//         'info'
+//       );
+//     }
+//   }, 1000);
+  
+//   document.getElementById('submit-quiz-btn').style.display = 'none';
+//   document.getElementById('quiz-close-btn').textContent = 'Close';
+// }
+
+
+
 function submitQuiz() {
   if (!appState.currentQuiz) return;
   
@@ -577,30 +644,47 @@ function submitQuiz() {
   });
   
   const percentage = Math.round((score / quiz.length) * 100);
-  
-  // Show results with a delay for better UX
-  setTimeout(() => {
-    if (percentage >= 70) {
-      showToast(
-        '🎉 Great job!', 
-        `You scored ${score} out of ${quiz.length} (${percentage}%). Excellent work!`,
-        'success'
-      );
-      if (percentage === 100) {
-        createConfetti();
-      }
-    } else {
-      showToast(
-        '📚 Keep learning!', 
-        `You scored ${score} out of ${quiz.length} (${percentage}%). Review the material and try again!`,
-        'info'
-      );
-    }
-  }, 1000);
+
+  // ✅ Require 80% minimum to mark as completed
+  const courseId = appState.selectedCourse.id;
+  const topicId = appState.currentQuiz.id;
+
+  if (!appState.userProgress[courseId]) {
+    appState.userProgress[courseId] = {};
+  }
+
+  if (percentage >= 80) {
+    appState.userProgress[courseId][topicId] = true; // completed
+    saveProgress(appState.userProgress);
+
+    showToast(
+      '🎉 Great job!', 
+      `You scored ${score} out of ${quiz.length} (${percentage}%). Topic marked as completed!`,
+      'success'
+    );
+    if (percentage === 100) createConfetti();
+
+    // Refresh UI
+    renderCourseGrid();
+    renderSidebar();
+    updateTopicCompletionDisplay();
+
+  } else {
+    appState.userProgress[courseId][topicId] = false; // not completed
+    saveProgress(appState.userProgress);
+
+    showToast(
+      '📚 Keep learning!', 
+      `You scored ${score} out of ${quiz.length} (${percentage}%). You need at least 80% to complete this topic.`,
+      'info'
+    );
+  }
   
   document.getElementById('submit-quiz-btn').style.display = 'none';
   document.getElementById('quiz-close-btn').textContent = 'Close';
 }
+
+
 
 function closeQuizModal() {
   const modal = document.getElementById('quiz-modal');
