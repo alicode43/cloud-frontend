@@ -15,6 +15,7 @@ body {
 /* Navigation styles */
 .navbar {
   background: linear-gradient(135deg, #27aadc 0%, #27aadc 0%, #27aadc 100%);
+   background: white;
   backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   position: sticky;
