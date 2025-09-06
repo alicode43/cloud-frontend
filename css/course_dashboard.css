@@ -1520,6 +1520,28 @@ body {
   }
 }
 
+@keyframes toastSlideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
 /* Animation delays for staggered loading */
 .course-card:nth-child(1) { animation-delay: 0.1s; }
 .course-card:nth-child(2) { animation-delay: 0.2s; }
