@@ -1729,7 +1729,21 @@
             localStorage.setItem('users', JSON.stringify([]));
         }
     </script>
+<script type='text/javascript'>
+piAId = '1069342';
+piCId = '124915';
+piHostname = 'info.cloudodyssey.co';
 
+(function() {
+	function async_load(){
+		var s = document.createElement('script'); s.type = 'text/javascript';
+		s.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + piHostname + '/pd.js';
+		var c = document.getElementsByTagName('script')[0]; c.parentNode.insertBefore(s, c);
+	}
+	if(window.attachEvent) { window.attachEvent('onload', async_load); }
+	else { window.addEventListener('load', async_load, false); }
+})();
+</script>
 </body>
 
 </html>
